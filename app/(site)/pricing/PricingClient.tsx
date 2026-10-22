@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { estimateLongForm, perMinute, perVideo, plans, volumes, type Volume } from "@/data/pricing";
 import { Tabs } from "@/components/ui/Tabs";
-import { Button } from "@/components/ui/Button";
+import { PricingCards, type PriceCard } from "@/components/sections/PricingCards";
 import { track } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
 
 type Mode = "per-video" | "monthly";
 
+/** Per Video / Monthly toggle (spring pill) over the shared pricing cards, plus the per-minute calculator. */
 export function PricingClient() {
   const [mode, setMode] = useState<Mode>("per-video");
   const [vol, setVol] = useState<Volume>(8);
@@ -21,74 +21,67 @@ export function PricingClient() {
     track("pricing_toggle", { mode: m });
   };
 
+  const cards: PriceCard[] =
+    mode === "per-video"
+      ? perVideo.map((p) => ({ name: p.name, desc: p.desc, price: `$${p.from}`, unit: `${p.unit}, from`, features: p.features }))
+      : plans.map((p) => ({
+          name: p.name,
+          desc: `${vol} videos · $${p.pricePerVideo[vol]} each`,
+          price: `$${(p.pricePerVideo[vol] * vol).toLocaleString("en-US")}`,
+          unit: "/month",
+          features: p.features,
+          cta: { label: `Choose ${p.name}`, href: "/contact" },
+        }));
+  const list: { featured?: boolean }[] = mode === "per-video" ? perVideo : plans;
+  const featured = Math.max(0, list.findIndex((p) => p.featured));
+
   return (
     <div>
-      <div className="mb-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Tabs id="pricing" value={mode} onChange={switchMode} options={[{ label: "Per Video", value: "per-video" }, { label: "Monthly Plans", value: "monthly" }]} />
-        {mode === "monthly" && (
-          <div className="flex items-center gap-3 text-sm">
-            <span className="text-muted">Videos / month</span>
-            <Tabs id="volume" value={String(vol) as `${Volume}`} onChange={(v) => setVol(Number(v) as Volume)} options={volumes.map((v) => ({ label: String(v), value: String(v) as `${Volume}` }))} />
-          </div>
-        )}
+      <div className="mb-14 flex flex-col items-center gap-4">
+        <Tabs id="pricing" value={mode} onChange={switchMode} options={[{ label: "Per Video", value: "per-video" }, { label: "Monthly", value: "monthly" }]} />
+        <div className={mode === "monthly" ? "flex items-center gap-3 text-sm" : "invisible flex items-center gap-3 text-sm max-sm:hidden"} aria-hidden={mode !== "monthly"}>
+          <span className="text-muted">Videos / month</span>
+          <Tabs id="volume" value={String(vol) as `${Volume}`} onChange={(v) => setVol(Number(v) as Volume)} options={volumes.map((v) => ({ label: String(v), value: String(v) as `${Volume}` }))} />
+        </div>
       </div>
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={mode}
-          initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: reduce ? 0 : -10 }}
+          initial={{ opacity: 0, transform: reduce ? "none" : "translateY(10px)" }}
+          animate={{ opacity: 1, transform: "translateY(0px)" }}
+          exit={{ opacity: 0, transform: reduce ? "none" : "translateY(-10px)" }}
           transition={{ type: "spring", bounce: 0, duration: 0.3 }}
-          className="grid gap-5 md:grid-cols-3"
         >
-          {mode === "per-video"
-            ? perVideo.map((p) => (
-                <div key={p.name} className={cn("card flex flex-col p-7", p.featured && "border-accent/60")}>
-                  <h2 className="text-xl font-semibold">{p.name}</h2>
-                  <p className="mt-1 text-sm text-muted">{p.desc}</p>
-                  <p className="display mt-6 text-5xl font-bold"><span className="text-base font-medium text-muted">from </span>${p.from}<span className="text-base font-medium text-muted"> {p.unit}</span></p>
-                  <ul className="mt-6 mb-8 space-y-2.5 text-sm">{p.features.map((f) => <li key={f} className="flex gap-2"><Check className="size-4 shrink-0 text-accent" aria-hidden />{f}</li>)}</ul>
-                  <Button href="/contact" variant={p.featured ? "primary" : "outline"} className="mt-auto w-full">Get started</Button>
-                </div>
-              ))
-            : plans.map((p) => {
-                const total = p.pricePerVideo[vol] * vol;
-                return (
-                  <div key={p.name} className={cn("card relative flex flex-col p-7", p.featured && "border-accent/60")}>
-                    {p.featured && <span className="absolute -top-3 left-7 rounded-full bg-accent px-3 py-1 text-xs font-semibold">Most popular</span>}
-                    <h2 className="text-xl font-semibold">{p.name}</h2>
-                    <p className="mt-1 text-sm text-muted">{p.desc}</p>
-                    <p className="display mt-6 text-5xl font-bold tabular-nums">${total.toLocaleString("en-US")}<span className="text-base font-medium text-muted"> /month</span></p>
-                    <p className="mt-1 text-sm text-muted">{vol} videos · ${p.pricePerVideo[vol]} each</p>
-                    <ul className="mt-6 mb-8 space-y-2.5 text-sm">{p.features.map((f) => <li key={f} className="flex gap-2"><Check className="size-4 shrink-0 text-accent" aria-hidden />{f}</li>)}</ul>
-                    <Button href="/contact" variant={p.featured ? "primary" : "outline"} className="mt-auto w-full">Choose {p.name}</Button>
-                  </div>
-                );
-              })}
+          <PricingCards plans={cards} featured={featured} />
         </motion.div>
       </AnimatePresence>
 
-      <div className="card mt-10 grid gap-8 p-7 md:grid-cols-[1.4fr_1fr] md:items-center md:p-10">
-        <div>
-          <h2 className="text-2xl font-semibold">Long-form price calculator</h2>
-          <p className="mt-2 text-sm text-muted">Priced per finished minute: ${perMinute.base} base (includes {perMinute.includedMinutes} min) + ${perMinute.perMinute} per extra minute.</p>
-          <label htmlFor="minutes" className="mt-6 block text-sm font-medium">Final video length: <span className="tabular-nums">{minutes}</span> min</label>
-          <input
-            id="minutes"
-            type="range"
-            min={perMinute.min}
-            max={perMinute.max}
-            value={minutes}
-            onChange={(e) => setMinutes(Number(e.target.value))}
-            className="mt-3 w-full accent-[var(--color-accent)]"
-          />
-          <div className="mt-1 flex justify-between text-xs text-muted"><span>{perMinute.min} min</span><span>{perMinute.max} min</span></div>
-        </div>
-        <div className="rounded-2xl bg-bg p-6 text-center">
-          <p className="text-sm text-muted">Estimated price</p>
-          <p className="display mt-1 text-5xl font-bold tabular-nums">${estimateLongForm(minutes)}</p>
-          <p className="mt-1 text-xs text-muted">per video · final quote after brief</p>
+      {/* Per-minute calculator in a glass panel */}
+      <div className="relative mt-20 overflow-hidden rounded-3xl border border-white/10 bg-surface/60 p-7 shadow-[0_40px_120px_-50px_rgba(198,244,50,0.35)] backdrop-blur-xl md:p-10">
+        <div aria-hidden className="pointer-events-none absolute -top-32 -right-24 size-80 rounded-full bg-accent/10 blur-3xl" />
+        <div className="relative grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-center">
+          <div>
+            <p className="eyebrow mb-3 flex items-center gap-2"><Calculator className="size-4" aria-hidden /> Calculator</p>
+            <h2 className="text-2xl font-semibold md:text-3xl">Long-form, priced per minute</h2>
+            <p className="mt-2 text-sm text-muted">${perMinute.base} base (includes {perMinute.includedMinutes} min) + ${perMinute.perMinute} per extra finished minute.</p>
+            <label htmlFor="minutes" className="mt-6 block text-sm font-medium">Final video length: <span className="tabular-nums text-accent">{minutes}</span> min</label>
+            <input
+              id="minutes"
+              type="range"
+              min={perMinute.min}
+              max={perMinute.max}
+              value={minutes}
+              onChange={(e) => setMinutes(Number(e.target.value))}
+              className="mt-3 w-full accent-[var(--color-accent)]"
+            />
+            <div className="mt-1 flex justify-between text-xs text-muted"><span>{perMinute.min} min</span><span>{perMinute.max} min</span></div>
+          </div>
+          <div className="rounded-2xl border border-line bg-bg/70 p-6 text-center">
+            <p className="text-sm text-muted">Estimated price</p>
+            <p className="mt-1 font-sans text-6xl font-bold tracking-[-0.04em] tabular-nums">${estimateLongForm(minutes)}</p>
+            <p className="mt-1 text-xs text-muted">per video · final quote after brief</p>
+          </div>
         </div>
       </div>
     </div>
