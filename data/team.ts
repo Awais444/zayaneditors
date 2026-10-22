@@ -40,7 +40,7 @@ export const team: Editor[] = [
     specialty: "Reels, TikTok, Shorts & music videos",
     software: ["Premiere Pro", "CapCut", "After Effects"],
     bio: "Turns long videos and performance footage into scroll-stopping vertical content every day.",
-    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=70",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=70",
     reel: sampleVideo("Omar Haddad reel", 2),
   },
   {

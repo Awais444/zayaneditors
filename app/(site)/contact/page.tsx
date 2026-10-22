@@ -81,7 +81,7 @@ export default function ContactPage() {
 
             {quote && (
               <figure className="card p-6">
-                <div className="flex gap-0.5 text-accent" aria-label={`${quote.rating} out of 5 stars`}>
+                <div className="flex gap-0.5 text-accent" role="img" aria-label={`${quote.rating} out of 5 stars`}>
                   {Array.from({ length: quote.rating }, (_, i) => <Star key={i} className="size-4 fill-current" aria-hidden />)}
                 </div>
                 <blockquote className="mt-3">“{quote.quote}”</blockquote>
