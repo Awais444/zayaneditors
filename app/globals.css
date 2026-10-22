@@ -275,3 +275,15 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
   .chip-in { animation: word-fade 250ms ease both; }
   .chip-float, .export-bar { animation: none; }
 }
+
+/* Process visuals: armed = start state; active = play once. Unarmed (no JS / reduced motion) = final state */
+.pv-armed:not(.pv-active) [data-a] { opacity: 0; transform: var(--from); }
+.pv-active [data-a] { animation: pv-in 650ms cubic-bezier(0.23, 1, 0.32, 1) backwards; animation-delay: var(--d, 0ms); }
+@keyframes pv-in { from { opacity: 0; transform: var(--from); } }
+[data-sweep] { transform: translateX(72%); }
+.pv-armed:not(.pv-active) [data-sweep] { transform: translateX(0); }
+.pv-active [data-sweep] { animation: pv-sweep 2.6s cubic-bezier(0.65, 0, 0.35, 1) 800ms both; }
+@keyframes pv-sweep { from { transform: translateX(0); } to { transform: translateX(72%); } }
+.pv-pulse { position: relative; }
+.pv-active .pv-pulse::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 1px solid var(--color-accent); animation: pv-ring 1.4s ease-out 2.5s 2 both; }
+@keyframes pv-ring { from { opacity: 0.8; transform: scale(1); } to { opacity: 0; transform: scale(1.12); } }
