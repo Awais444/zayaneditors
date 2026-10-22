@@ -22,6 +22,7 @@ export function MasterTimeline() {
   const pathname = usePathname();
   const [clips, setClips] = useState<Clip[]>([]);
   const [enabled, setEnabled] = useState(false);
+  const [trackW, setTrackW] = useState(0);
   const head = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -38,6 +39,7 @@ export function MasterTimeline() {
   useEffect(() => {
     if (!enabled) return;
     const measure = () => {
+      setTrackW(track.current?.clientWidth ?? 0);
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const els = [...document.querySelectorAll<HTMLElement>("[data-tl]")];
       setClips(
@@ -62,6 +64,14 @@ export function MasterTimeline() {
       ro.disconnect();
     };
   }, [enabled, pathname]);
+
+  // Track width (for label fitting) once the bar has rendered, and on resize
+  useEffect(() => {
+    if (!track.current) return;
+    const ro = new ResizeObserver(([e]) => setTrackW(e.contentRect.width));
+    ro.observe(track.current);
+    return () => ro.disconnect();
+  }, [clips.length]);
 
   // Playhead follows scroll (rAF-throttled, transform only)
   useEffect(() => {
@@ -104,7 +114,10 @@ export function MasterTimeline() {
             className="group absolute inset-y-0 overflow-hidden rounded-[3px] px-1 text-left transition-[filter] duration-150 hover:brightness-150"
             style={{ left: `calc(${c.start * 100}% + 1px)`, width: `calc(${(c.end - c.start) * 100}% - 2px)`, background: c.color }}
           >
-            <span className="block truncate text-[9px] leading-4 font-semibold tracking-wider text-white/80 uppercase">{c.label}</span>
+            {/* Full label when it fits; otherwise the initial (full name in the tooltip) — never an ellipsis */}
+            <span className="block overflow-hidden text-[9px] leading-4 font-semibold tracking-wider whitespace-nowrap text-white/80 uppercase">
+              {(c.end - c.start) * trackW >= c.label.length * 6.5 + 12 ? c.label : c.label[0]}
+            </span>
           </button>
         ))}
         <div ref={head} className="pointer-events-none absolute -top-1 -bottom-1 left-0 w-0.5 bg-accent will-change-transform">

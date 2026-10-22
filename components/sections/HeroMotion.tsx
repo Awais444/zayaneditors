@@ -49,6 +49,11 @@ export function HeroMotion({ children }: { children: React.ReactNode }) {
             onUpdate: (st) => (media.style.clipPath = st.progress > 0.72 ? "none" : clip),
           },
         });
+        // Collage layers drift up at different speeds (deeper = faster) and fade as the reel takes over
+        section.querySelectorAll<HTMLElement>("[data-collage] [data-depth]").forEach((el) => {
+          const d = Number(el.dataset.depth);
+          tl.to(el, { y: -d * 14, opacity: 0, duration: 0.35 }, 0);
+        });
         tl.to(fades, { opacity: 0, y: -40, duration: 0.25 }, 0)
           .to(word, { x: () => fit().x, y: () => fit().y, scale: () => fit().scale, duration: 0.8, transformOrigin: "50% 50%" }, 0.05)
           .to({}, { duration: 0.25 }); // hold on the full-bleed reel before unpinning

@@ -263,3 +263,15 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
 
 /* Skip rendering work for heavy below-the-fold sections until they approach the viewport */
 .cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+/* Hero workspace chips: staggered entrance (80ms), then a slow ≤6px float */
+.chip-in { animation: chip-in 700ms cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: calc(var(--i, 0) * 80ms + 250ms); }
+@keyframes chip-in { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: none; } }
+.chip-float { animation: chip-float 6s ease-in-out infinite alternate; animation-delay: calc(var(--f, 0) * -1.3s); }
+@keyframes chip-float { from { transform: translateY(-3px); } to { transform: translateY(3px); } }
+.export-bar { transform-origin: left; animation: export-fill 2.4s cubic-bezier(0.23, 1, 0.32, 1) 900ms both; }
+@keyframes export-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .chip-in { animation: word-fade 250ms ease both; }
+  .chip-float, .export-bar { animation: none; }
+}
