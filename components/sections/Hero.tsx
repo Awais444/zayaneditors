@@ -3,16 +3,13 @@ import Link from "next/link";
 import { Star } from "lucide-react";
 import { site } from "@/data/site";
 import { editors } from "@/data/team";
-import { sampleVideo } from "@/data/media";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { VideoText } from "@/components/ui/VideoText";
-import { InViewVideo } from "@/components/home/InViewVideo";
 import { HeroMotion } from "./HeroMotion";
-import { EditingWorkspace } from "./EditingWorkspace";
+import { EditingWorkspace, PhoneReel } from "./EditingWorkspace";
 
 const tail = ["for", "every", "kind", "of", "video"];
-const shortClip = sampleVideo("Short-form clip", 2);
 const big = "block text-[clamp(3rem,min(6.6vw,15svh),7.25rem)] leading-[0.9]";
 
 /**
@@ -68,10 +65,8 @@ export function Hero() {
               </span>
               <span><strong className="font-semibold text-fg">{site.trust.videosDelivered}</strong> videos delivered</span>
             </div>
-            {/* Mobile: one vertical short-form card instead of the collage */}
-            <div className="relative mx-auto mt-10 aspect-[9/16] w-56 overflow-hidden rounded-[28px] border-4 border-surface-2 bg-surface shadow-[0_30px_80px_-30px_rgba(198,244,50,0.35)] lg:hidden">
-              <InViewVideo src={shortClip.src} poster={shortClip.poster} className="size-full object-cover" />
-            </div>
+            {/* Mobile: only the phone card (centered, 70% wide) instead of the collage */}
+            <PhoneReel className="mx-auto mt-10 w-[70%] max-w-xs lg:hidden" />
           </div>
         </div>
         <EditingWorkspace />

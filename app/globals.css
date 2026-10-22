@@ -287,3 +287,8 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
 .pv-pulse { position: relative; }
 .pv-active .pv-pulse::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 1px solid var(--color-accent); animation: pv-ring 1.4s ease-out 2.5s 2 both; }
 @keyframes pv-ring { from { opacity: 0.8; transform: scale(1); } to { opacity: 0; transform: scale(1.12); } }
+
+/* Phone reel captions: each word lights up lime in turn (burned-in caption style) */
+.caption-word { color: #fff; animation: caption-hl calc(var(--n) * 0.6s) steps(1, end) infinite; animation-delay: calc(var(--i) * 0.6s); }
+@keyframes caption-hl { 0% { color: var(--color-accent); } 20% { color: #fff; } }
+@media (prefers-reduced-motion: reduce) { .caption-word { animation: none; } .caption-word:nth-child(3) { color: var(--color-accent); } }

@@ -3,30 +3,33 @@ import { motion, useReducedMotion, useSpring, useTransform, type MotionValue } f
 import { useEffect } from "react";
 import { Check } from "lucide-react";
 import { site } from "@/data/site";
-import { sampleVideo } from "@/data/media";
+import { getCaseStudy } from "@/data/portfolio";
 import { InViewVideo } from "@/components/home/InViewVideo";
 import { cn } from "@/lib/utils";
 
-const shortClip = sampleVideo("Short-form clip", 2);
-const bars = [40, 70, 55, 90, 65, 35, 80, 60, 95, 50, 70, 45, 85, 55, 30, 75];
+// TODO: swap for a real showreel poster frame and a real talking-head / UGC vertical reel
+const reelPoster = getCaseStudy("travel-vlog-rebrand")!.video.poster;
+const verticalReel = getCaseStudy("dtc-skincare-ugc-ads")!.video;
+const captionWords = ["This", "edit", "doubled", "our", "sales"];
+const bars = [45, 80, 60, 95, 55, 75, 40, 85];
 
-/** Layer that shifts with the pointer by `depth` px (critically damped spring, full transform string). */
-function Depth({ px, py, depth, className, children }: { px: MotionValue<number>; py: MotionValue<number>; depth: number; className?: string; children: React.ReactNode }) {
+/** Absolutely positioned layer (positions in % of the 5:4 wrapper) that shifts with the pointer by `depth` px. */
+function Layer({ px, py, depth, className, children }: { px: MotionValue<number>; py: MotionValue<number>; depth: number; className: string; children: React.ReactNode }) {
   const transform = useTransform([px, py], ([x, y]: number[]) => `translate3d(${(x * depth).toFixed(2)}px, ${(y * depth).toFixed(2)}px, 0)`);
   return (
     <motion.div style={{ transform }} className={cn("absolute", className)}>
-      {/* Separate element for HeroMotion's scroll drift so GSAP and the parallax don't fight over one transform */}
+      {/* Inner element for HeroMotion's scroll drift, so GSAP and the parallax never share a transform */}
       <div data-depth={depth}>{children}</div>
     </motion.div>
   );
 }
 
-/** Glass chip: enters with a staggered spring-like rise, then floats gently (CSS, composited). */
+/** Glass chip: staggered entrance, then a slow ≤3px float. Solid-enough background for legibility. */
 function Chip({ i, children, className }: { i: number; children: React.ReactNode; className?: string }) {
   return (
     <div className="chip-in" style={{ "--i": i } as React.CSSProperties}>
       <div className="chip-float" style={{ "--f": i } as React.CSSProperties}>
-        <div className={cn("flex items-center gap-2 rounded-2xl border border-white/10 bg-surface/80 px-4 py-2.5 text-sm font-medium shadow-[0_18px_40px_-18px_rgba(0,0,0,0.8)] backdrop-blur-md", className)}>
+        <div className={cn("flex items-center gap-2 rounded-2xl border border-white/10 bg-surface/90 px-4 py-2.5 text-sm font-medium whitespace-nowrap shadow-[0_18px_40px_-18px_rgba(0,0,0,0.9)] backdrop-blur-md", className)}>
           {children}
         </div>
       </div>
@@ -34,11 +37,30 @@ function Chip({ i, children, className }: { i: number; children: React.ReactNode
   );
 }
 
+/** 9:16 phone with a vertical reel and burned-in style captions (word-by-word lime highlight). */
+export function PhoneReel({ className }: { className?: string }) {
+  return (
+    <div className={cn("rounded-[28px] border-[5px] border-surface-2 bg-surface shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]", className)}>
+      <div className="relative aspect-[9/16] overflow-hidden rounded-[23px] bg-black">
+        <InViewVideo src={verticalReel.src} poster={verticalReel.poster} className="size-full object-cover" />
+        <span className="absolute top-2 left-1/2 h-1.5 w-10 -translate-x-1/2 rounded-full bg-black/70" />
+        <p className="absolute inset-x-2 bottom-[18%] flex flex-wrap justify-center gap-x-1 text-center text-[clamp(0.75rem,1.1vw,0.95rem)] leading-tight font-extrabold uppercase [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">
+          {captionWords.map((w, i) => (
+            <span key={w} className="caption-word" style={{ "--i": i, "--n": captionWords.length } as React.CSSProperties}>
+              {w}
+            </span>
+          ))}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 /**
- * "Editing Workspace" collage for the hero's right column (desktop only):
- * a 16:9 showreel card, an overlapping 9:16 phone card, and floating status chips.
- * Pointer parallax at different depths (fine pointer, motion allowed); scroll drift is
- * driven by HeroMotion's timeline via the [data-depth] layers.
+ * "Editing Workspace" collage (desktop): a fixed 5:4 wrapper with children positioned in %,
+ * inset by a 32px safe area so nothing is clipped. Main 16:9 card (80%), phone card (30%)
+ * overlapping only its bottom-right corner, and three chips on the card edges.
+ * Pointer parallax at small, separated depths so chips never collide; scroll drift via HeroMotion.
  */
 export function EditingWorkspace() {
   const reduce = useReducedMotion();
@@ -56,51 +78,45 @@ export function EditingWorkspace() {
   }, [reduce, px, py]);
 
   return (
-    <div aria-hidden data-collage className="relative hidden h-[34rem] lg:block">
-      {/* Main 16:9 showreel card */}
-      <Depth px={px} py={py} depth={8} className="top-16 left-0 w-[min(32.5rem,84%)]">
-        <div className="chip-in" style={{ "--i": 0 } as React.CSSProperties}>
-          <div className="relative aspect-video overflow-hidden rounded-[20px] border border-line bg-surface shadow-[0_40px_120px_-40px_rgba(198,244,50,0.35)]">
-            <InViewVideo src={site.showreel.src} poster={site.showreel.poster} className="size-full object-cover" />
-            <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 bg-gradient-to-t from-black/70 to-transparent px-4 pt-8 pb-3 text-xs text-white/80">
-              <span className="size-2 rounded-full bg-accent" /> showreel_final_v3.mp4
+    <div aria-hidden data-collage className="hidden p-8 lg:block">
+      <div className="relative mx-auto aspect-[5/4] w-full max-w-[38rem]">
+        {/* Main 16:9 showreel card: 80% wide, top-left, subtle -2° */}
+        <Layer px={px} py={py} depth={6} className="top-[6%] left-[2%] w-[80%]">
+          <div className="chip-in" style={{ "--i": 0 } as React.CSSProperties}>
+            <div className="relative aspect-video -rotate-2 overflow-hidden rounded-[20px] border border-line bg-surface shadow-[0_40px_120px_-40px_rgba(198,244,50,0.35)]">
+              <InViewVideo src={site.showreel.src} poster={reelPoster} className="size-full object-cover" />
             </div>
           </div>
-        </div>
-      </Depth>
+        </Layer>
 
-      {/* 9:16 phone card overlapping the top-right corner */}
-      <Depth px={px} py={py} depth={14} className="top-0 right-[2%] w-[12.5rem]">
-        <div className="chip-in" style={{ "--i": 1 } as React.CSSProperties}>
-          <div className="rotate-[4deg] rounded-[28px] border-[5px] border-surface-2 bg-surface p-0 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]">
-            <div className="relative aspect-[9/16] overflow-hidden rounded-[23px]">
-              <InViewVideo src={shortClip.src} poster={shortClip.poster} className="size-full object-cover" />
-              <span className="absolute top-2 left-1/2 h-1.5 w-12 -translate-x-1/2 rounded-full bg-black/60" />
-            </div>
+        {/* Phone card: 30% wide, bottom-right, overlapping only the main card's corner */}
+        <Layer px={px} py={py} depth={12} className="right-[1%] bottom-[1%] w-[30%]">
+          <div className="chip-in" style={{ "--i": 1 } as React.CSSProperties}>
+            <PhoneReel className="rotate-[4deg]" />
           </div>
-        </div>
-      </Depth>
+        </Layer>
 
-      {/* Floating chips at different depths */}
-      <Depth px={px} py={py} depth={12} className="top-[18.5rem] -left-6">
-        <Chip i={2}><Check className="size-4 text-accent" /> Color graded</Chip>
-      </Depth>
-      <Depth px={px} py={py} depth={10} className="top-[22.5rem] left-[38%]">
-        <Chip i={3}><Check className="size-4 text-accent" /> Captions added</Chip>
-      </Depth>
-      <Depth px={px} py={py} depth={13} className="top-[27rem] left-[6%]">
-        <Chip i={4} className="w-60 flex-col items-stretch gap-1.5">
-          <span className="flex justify-between"><span>Export 4K</span><span className="text-accent">100%</span></span>
-          <span className="block h-1.5 overflow-hidden rounded-full bg-white/10"><span className="export-bar block h-full rounded-full bg-accent" /></span>
-        </Chip>
-      </Depth>
-      <Depth px={px} py={py} depth={9} className="top-[26rem] right-[4%]">
-        <Chip i={5} className="h-11 gap-[3px] px-3">
-          {bars.map((h, i) => (
-            <span key={i} className="wave-bar w-[3px] rounded-full bg-accent" style={{ height: `${h}%`, "--i": i } as React.CSSProperties} />
-          ))}
-        </Chip>
-      </Depth>
+        {/* Chips, each anchored to a card edge */}
+        <Layer px={px} py={py} depth={9} className="top-[1%] left-0">
+          <Chip i={2}><Check className="size-4 text-accent" aria-hidden /> Color graded</Chip>
+        </Layer>
+        <Layer px={px} py={py} depth={10} className="right-[30%] bottom-[30%]">
+          <Chip i={3}><Check className="size-4 text-accent" aria-hidden /> Captions added</Chip>
+        </Layer>
+        <Layer px={px} py={py} depth={8} className="bottom-[2%] left-[2%] w-[52%]">
+          <Chip i={4} className="gap-3">
+            <span className="flex h-6 items-center gap-[2px]" aria-hidden>
+              {bars.map((h, i) => (
+                <span key={i} className="wave-bar w-[3px] rounded-full bg-accent" style={{ height: `${h}%`, "--i": i } as React.CSSProperties} />
+              ))}
+            </span>
+            <span className="flex flex-1 flex-col gap-1.5">
+              <span className="flex justify-between gap-3"><span>Export 4K</span><span className="text-accent">100%</span></span>
+              <span className="block h-1.5 overflow-hidden rounded-full bg-white/10"><span className="export-bar block h-full rounded-full bg-accent" /></span>
+            </span>
+          </Chip>
+        </Layer>
+      </div>
     </div>
   );
 }
