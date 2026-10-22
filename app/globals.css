@@ -261,6 +261,26 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
 }
 @keyframes reveal-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
+/* 404 "CUT!" glitch: two offset colour copies jitter via clip-path slices; static under reduced motion */
+.glitch { position: relative; display: inline-block; }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; inset: 0; pointer-events: none; }
+.glitch::before { color: var(--color-accent-2); transform: translateX(-0.04em); mix-blend-mode: screen; animation: glitch-a 2.4s steps(1) infinite; }
+.glitch::after { color: #38bdf8; transform: translateX(0.04em); mix-blend-mode: screen; animation: glitch-b 2.4s steps(1) infinite; }
+@keyframes glitch-a {
+  0%, 62%, 100% { clip-path: inset(0 0 100% 0); }
+  64% { clip-path: inset(12% 0 60% 0); transform: translateX(-0.06em); }
+  68% { clip-path: inset(55% 0 20% 0); transform: translateX(0.03em); }
+  72% { clip-path: inset(30% 0 45% 0); transform: translateX(-0.04em); }
+  76% { clip-path: inset(0 0 100% 0); }
+}
+@keyframes glitch-b {
+  0%, 64%, 100% { clip-path: inset(0 0 100% 0); }
+  66% { clip-path: inset(70% 0 5% 0); transform: translateX(0.06em); }
+  70% { clip-path: inset(20% 0 62% 0); transform: translateX(-0.03em); }
+  74% { clip-path: inset(0 0 100% 0); }
+}
+@media (prefers-reduced-motion: reduce) { .glitch::before, .glitch::after { animation: none; clip-path: inset(0 0 100% 0); } }
+
 /* Blog post reading progress: lime bar under the header, driven by page scroll (CSS-only) */
 .read-progress { transform: scaleX(0); transform-origin: left; }
 @supports (animation-timeline: scroll()) {

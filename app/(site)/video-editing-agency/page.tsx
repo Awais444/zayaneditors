@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Check, Minus, X } from "lucide-react";
 import { site } from "@/data/site";
@@ -9,10 +8,15 @@ import { pageMeta } from "@/lib/metadata";
 import { faqPage } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Process } from "@/components/sections/Process";
+import { caseStudies } from "@/data/portfolio";
+import { processSteps, shortProcess } from "@/data/process";
+import { processVisuals } from "@/components/home/ProcessVisuals";
+import { PageHero } from "@/components/sections/PageHero";
+import { HeroVideoCard } from "@/components/sections/HeroVideoCard";
+import { SectionHeader } from "@/components/sections/SectionHeader";
+import { StickySteps } from "@/components/sections/StickySteps";
+import { TeamCard } from "@/components/sections/TeamCard";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { QuoteSection } from "@/components/sections/QuoteSection";
@@ -105,23 +109,16 @@ export default function AgencyPage() {
   return (
     <>
       <JsonLd data={[serviceSchema, faqPage(faqs)]} />
-      <section className="section relative pt-10">
-        <div className="glow -top-40 right-0 size-[34rem]" />
-        <div className="container-x">
-          <Breadcrumbs items={[{ name: "Video Editing Agency", href: path }]} />
-          <p className="eyebrow mb-5">Video editing agency alternative</p>
-          <h1 className="h-display max-w-4xl text-[clamp(2.25rem,5vw,4.25rem)] font-bold">Looking for a Video Editing Agency? Meet Your Dedicated Team of Editors</h1>
-          <p className="mt-6 max-w-3xl text-lg text-muted">
-            If you&apos;re searching for a video editing agency, you probably want three things: reliable capacity, consistent quality and someone who understands your brand. We deliver all three — as a dedicated team of professional video editors rather than a faceless production line. You get one named editor who learns your style, specialists in colour, sound and motion when a project needs them, and prices that make sense for growing creators and businesses.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/free-trial-edit" size="lg">Get a Free Trial Edit</Button>
-            <Button href="/team" size="lg" variant="outline">Meet the editors</Button>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        breadcrumbs={[{ name: "Video Editing Agency", href: path }]}
+        eyebrow="Video editing agency alternative"
+        title="Looking for a Video Editing Agency? Meet Your Dedicated Team of Editors"
+        sub="If you're searching for a video editing agency, you probably want three things: reliable capacity, consistent quality and someone who understands your brand. We deliver all three — as a dedicated team of professional video editors rather than a faceless production line. You get one named editor who learns your style, specialists in colour, sound and motion when a project needs them, and prices that make sense for growing creators and businesses."
+        ctas={[{ label: "Get a Free Trial Edit", href: "/free-trial-edit" }, { label: "Meet the editors", href: "/team", variant: "outline" }]}
+        visual={<HeroVideoCard video={caseStudies[0].video} chips={["One named editor", `First cut in ${site.turnaround}`]} />}
+      />
 
-      <section className="section pt-0">
+      <section data-tl="Why us" data-tl-color="rgba(244,244,245,0.2)" className="section cv-auto pt-4">
         <div className="container-x grid gap-12 lg:grid-cols-[1.6fr_1fr]">
           <div className="prose-site">
             <h2>Why people look for a video editing company</h2>
@@ -152,9 +149,9 @@ export default function AgencyPage() {
         </div>
       </section>
 
-      <section className="section pt-0">
+      <section data-tl="Compare" data-tl-color="rgba(56,189,248,0.4)" className="section cv-auto pt-0">
         <div className="container-x">
-          <SectionHeading eyebrow="Compare" title="Our team vs. a typical agency vs. a solo freelancer" />
+          <SectionHeader eyebrow="Compare" title="Our team vs. a typical agency vs. a solo freelancer" />
           <div className="overflow-x-auto rounded-2xl border border-line">
             <table className="w-full min-w-[46rem] text-left text-sm">
               <thead className="bg-surface">
@@ -181,26 +178,18 @@ export default function AgencyPage() {
         </div>
       </section>
 
-      <Process />
+      <StickySteps steps={shortProcess.map((i) => processSteps[i])} visuals={shortProcess.map((i) => processVisuals[i])} title="How it works" tl="Process" />
 
-      <section className="section pt-0">
+      <section data-tl="Team" data-tl-color="rgba(139,92,246,0.45)" className="section cv-auto pt-0">
         <div className="container-x">
-          <SectionHeading eyebrow="Your team" title="The editors you'll actually work with" />
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {editors.map((m) => (
-              <li key={m.slug}>
-                <Link href={`/team#${m.slug}`} className="card pressable block h-full p-5 text-center hover:border-white/20">
-                  <Image src={m.avatar} alt={m.name} width={80} height={80} className="mx-auto size-20 rounded-full object-cover" />
-                  <p className="mt-4 font-semibold">{m.name}</p>
-                  <p className="mt-1 text-xs text-muted">{m.specialty}</p>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <SectionHeader eyebrow="Your team" title="The editors you'll actually work with" intro="Hover a portrait to play their reel." />
+          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
+            {editors.slice(0, 4).map((m) => <TeamCard key={m.slug} m={m} href={`/team#${m.slug}`} />)}
+          </div>
         </div>
       </section>
 
-      <section className="section pt-0">
+      <section data-tl="Choosing" data-tl-color="rgba(251,191,36,0.4)" className="section cv-auto pt-0">
         <div className="container-x prose-site max-w-3xl">
           <h2>How to choose the right video editing partner</h2>
           <p>Whether you pick us, another video editing company or a freelancer, a few questions will tell you a lot. Who will actually edit my videos, and will it be the same person each time? How quickly do first cuts and revisions come back? Do you have work in my niche? How is music licensed? Who owns the final files? Can I see a sample on my own footage before committing?</p>
