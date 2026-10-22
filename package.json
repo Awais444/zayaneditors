@@ -1,0 +1,45 @@
+{
+  "name": "video-editing-agency",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
+    "framer-motion": "^12.23.12",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^0.544.0",
+    "next": "^15.5.4",
+    "next-mdx-remote": "^5.0.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "reading-time": "^1.5.0",
+    "remark-gfm": "^4.0.1",
+    "resend": "^6.1.0",
+    "sonner": "^2.0.7",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^22.18.6",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.36.0",
+    "eslint-config-next": "^15.5.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2"
+  },
+  "overrides": {
+    "motion-dom": "12.23.12",
+    "motion-utils": "12.23.6"
+  }
+}
