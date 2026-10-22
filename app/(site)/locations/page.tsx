@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { countries } from "@/data/locations";
 import { pageMeta } from "@/lib/metadata";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageHero } from "@/components/sections/PageHero";
 
 export const metadata = pageMeta({
   title: "Locations We Serve | Remote Video Editing Worldwide",
@@ -15,18 +14,17 @@ export const metadata = pageMeta({
 export default function LocationsPage() {
   return (
     <>
-      <section className="section pt-10">
+      <PageHero
+        breadcrumbs={[{ name: "Locations", href: "/locations" }]}
+        eyebrow="Locations"
+        title="Remote editing, local hours"
+        sub="We work with creators worldwide. These are the markets where we have the most clients."
+      />
+      <section data-tl="Markets" data-tl-color="rgba(139,92,246,0.45)" className="section pt-0">
         <div className="container-x">
-          <Breadcrumbs items={[{ name: "Locations", href: "/locations" }]} />
-          <SectionHeading
-            as="h1"
-            eyebrow="Locations"
-            title="Remote editing, local hours"
-            sub="We work with creators worldwide. These are the markets where we have the most clients."
-          />
           <div className="grid gap-6 md:grid-cols-2">
             {countries.map((c) => (
-              <div key={c.slug} className="card p-7">
+              <div key={c.slug} className="glow-card card p-7">
                 <h2 className="text-2xl font-semibold">
                   <Link href={`/locations/${c.slug}`} className="hover:text-accent">
                     {c.name}
