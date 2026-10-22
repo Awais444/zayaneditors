@@ -6,7 +6,7 @@ import { CalendlyLink } from "./CalendlyLink";
 
 export function QuoteSection({ service, title = "Get a quote in a few hours" }: { service?: string; title?: string }) {
   return (
-    <section className="section" id="quote">
+    <section data-tl="Quote" data-tl-color="rgba(198,244,50,0.3)" className="section cv-auto" id="quote">
       <div className="container-x grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
         <div>
           <p className="eyebrow mb-4">Start here</p>

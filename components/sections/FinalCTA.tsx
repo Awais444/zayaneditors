@@ -28,7 +28,7 @@ export function FinalCTA({ text = "LET’S EDIT", sub }: { text?: string; sub?: 
   }, []);
 
   return (
-    <section data-tl="Start" data-tl-color="rgba(198,244,50,0.5)" className="section relative overflow-hidden text-center">
+    <section data-tl="Start" data-tl-color="rgba(198,244,50,0.5)" className="section cv-auto relative overflow-hidden text-center">
       <div className="container-x">
         <div ref={box} onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)} className="inline-block">
           <h2 className="text-[clamp(4rem,16vw,15rem)] leading-[0.85] font-bold tracking-[-0.05em] uppercase">

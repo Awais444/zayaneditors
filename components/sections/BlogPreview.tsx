@@ -19,7 +19,7 @@ export function PostCard({ p }: { p: PostMeta }) {
 export function BlogPreview({ posts, title = "From the blog" }: { posts: PostMeta[]; title?: string }) {
   if (!posts.length) return null;
   return (
-    <section className="section">
+    <section data-tl="Reading" data-tl-color="rgba(56,189,248,0.35)" className="section cv-auto">
       <div className="container-x">
         <SectionHeading eyebrow="Blog" title={title} />
         <div className="grid gap-8 md:grid-cols-3">

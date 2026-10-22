@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { nav } from "@/data/site";
-import { serviceCategories, servicesByCategory } from "@/data/services";
+
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
@@ -13,7 +13,10 @@ import { cn } from "@/lib/utils";
 
 const spring = { type: "spring" as const, bounce: 0, duration: 0.35 };
 
-export function Header() {
+/** Slim nav data passed from the server layout, so the full service copy never ships to the browser. */
+export type NavGroup = { name: string; items: { slug: string; name: string }[] };
+
+export function Header({ groups }: { groups: NavGroup[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [mega, setMega] = useState(false);
   const [mobile, setMobile] = useState(false);
@@ -232,11 +235,11 @@ export function Header() {
           >
             <div className="container-x pt-2">
               <div ref={panelRef} aria-label="Services" className="mega-panel grid max-h-[calc(100dvh-8rem)] grid-cols-6 gap-x-5 gap-y-6 overflow-y-auto overscroll-contain rounded-2xl p-7">
-                {serviceCategories.map((cat) => (
+                {groups.map(({ name: cat, items }) => (
                   <div key={cat}>
                     <p className="mb-3 text-xs font-semibold tracking-[0.12em] text-muted uppercase">{cat}</p>
                     <ul className="space-y-1.5">
-                      {servicesByCategory(cat).map((s) => (
+                      {items.map((s) => (
                         <li key={s.slug}>
                           <Link href={`/${s.slug}`} className="block rounded-md py-1 text-sm text-muted transition-colors hover:text-fg">
                             {s.name}
@@ -286,10 +289,10 @@ export function Header() {
                   Browse all services <ChevronDown className="size-5 transition-transform group-open:rotate-180" />
                 </summary>
                 <div className="mt-4 grid gap-5 sm:grid-cols-2">
-                  {serviceCategories.map((cat) => (
+                  {groups.map(({ name: cat, items }) => (
                     <div key={cat}>
                       <p className="mb-2 text-xs font-semibold tracking-[0.12em] text-muted uppercase">{cat}</p>
-                      {servicesByCategory(cat).map((s) => (
+                      {items.map((s) => (
                         <Link key={s.slug} href={`/${s.slug}`} className="block py-1.5 text-muted active:text-fg">
                           {s.name}
                         </Link>
