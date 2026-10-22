@@ -10,7 +10,7 @@ const bars = Array.from({ length: 72 }, (_, i) => Math.round(30 + 70 * Math.abs(
 export function StatsBand() {
   return (
     <section data-tl="Results" data-tl-color="rgba(198,244,50,0.3)" aria-label="Results in numbers" className="relative overflow-hidden border-y border-line bg-surface/60 py-16 md:py-24">
-      <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center gap-[3px] px-2 opacity-[0.12]">
+      <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center gap-[3px] px-2 opacity-[0.15] [mask-image:linear-gradient(90deg,#000,transparent_28%,transparent_72%,#000)]">
         {bars.map((h, i) => (
           <span key={i} className="wave-bar flex-1 rounded-full bg-accent" style={{ height: `${h}%`, "--i": i } as React.CSSProperties} />
         ))}
@@ -20,7 +20,7 @@ export function StatsBand() {
           const Icon = icons[i] ?? Film;
           return (
             <div key={s.label} className="flex flex-col items-center text-center">
-              <Icon className="mb-3 size-[18px] text-muted" aria-hidden />
+              <Icon className="mb-3 size-5 text-muted" aria-hidden />
               <dt className="order-last mt-2 text-[0.95rem] text-muted">{s.label}</dt>
               <dd className="font-sans text-[clamp(2.75rem,6vw,5rem)] leading-none font-bold tracking-[-0.04em] whitespace-nowrap">
                 <Counter value={s.value} />

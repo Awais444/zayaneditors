@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CalendarDays, Clock, Mail, MessageCircle, Star } from "lucide-react";
 import { site, whatsappUrl } from "@/data/site";
 import { editors } from "@/data/team";
-import { testimonials } from "@/data/testimonials";
+import { publicTestimonials } from "@/data/testimonials";
 import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ContactForm } from "@/components/forms/ContactForm";
@@ -19,7 +19,7 @@ export const metadata = pageMeta({
 const title = "Let's make your next video the best one yet";
 
 export default function ContactPage() {
-  const quote = testimonials[1];
+  const quote = publicTestimonials[0];
   return (
     <section data-tl="Start" data-tl-color="rgba(198,244,50,0.35)" className="relative isolate overflow-hidden pb-24">
       <div aria-hidden className="glow -top-48 -left-40 -z-10 size-[36rem]" />
@@ -71,6 +71,7 @@ export default function ContactPage() {
               </span>
             </CalendlyLink>
 
+            {site.email && (
             <a href={`mailto:${site.email}`} className="pressable card flex items-center gap-4 p-5 hover:border-white/20">
               <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white/5"><Mail className="size-5 text-muted" aria-hidden /></span>
               <span>
@@ -78,6 +79,7 @@ export default function ContactPage() {
                 <span className="text-sm text-muted">Email</span>
               </span>
             </a>
+            )}
 
             {quote && (
               <figure className="card p-6">

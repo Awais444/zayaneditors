@@ -31,11 +31,16 @@ export function StickySteps({
 }) {
   const list = useRef<HTMLOListElement>(null);
 
-  // Arm visuals (hide their start state) and play each once when its card becomes active
+  const stage = useRef<HTMLDivElement>(null);
+  const bar = useRef<HTMLSpanElement>(null);
+
+  // Arm visuals (hide their start state) and play each once when its card becomes active.
+  // Mobile: as each card scrolls into view. Desktop: driven by the pinned timeline below.
   useEffect(() => {
     if (prefersReducedMotion() || !list.current) return;
     const cards = [...list.current.querySelectorAll<HTMLElement>("[data-step]")];
     cards.forEach((c) => c.classList.add("pv-armed"));
+    if (window.matchMedia(DESKTOP_MOTION).matches) return;
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -50,19 +55,48 @@ export function StickySteps({
     return () => io.disconnect();
   }, []);
 
-  // Desktop stacking: previous card scales down and dims as the next one arrives
+  // Desktop: pin the stage and swap cards in place, ~20vh of scroll per step. The incoming card
+  // slides up over the active one (opaque, so nothing shows through); the previous two shrink
+  // back to thin edges above it and anything older fades out. One scrubbed progress bar.
   useEffect(() => {
     let revert = () => {};
     let cancelled = false;
     loadGsap().then(({ gsap }) => {
-      if (cancelled || !list.current) return;
+      if (cancelled || !list.current || !stage.current) return;
       const mm = gsap.matchMedia();
       mm.add(DESKTOP_MOTION, () => {
-        const cards = gsap.utils.toArray<HTMLElement>(list.current!.querySelectorAll("[data-step]"));
-        cards.slice(0, -1).forEach((card, i) => {
-          const st = { trigger: cards[i + 1], start: "top bottom", end: "top 30%", scrub: true };
-          gsap.to(card, { scale: 0.95, ease: "none", scrollTrigger: st });
-          gsap.to(card.querySelector("[data-dim]"), { opacity: 0.4, ease: "none", scrollTrigger: st });
+        const ol = list.current!;
+        const items = gsap.utils.toArray<HTMLElement>(ol.children);
+        const cards = items.map((li) => li.querySelector<HTMLElement>("[data-step]")!);
+        const h = Math.max(...cards.map((c) => c.offsetHeight));
+        gsap.set(ol, { position: "relative", height: h + 32, overflow: "hidden" });
+        gsap.set(items, { position: "absolute", left: 0, right: 0, top: 32 });
+        gsap.set(items.slice(1), { yPercent: 110 });
+        cards[0].classList.add("pv-active");
+
+        const tl = gsap.timeline({
+          defaults: { ease: "none", duration: 1 },
+          scrollTrigger: {
+            trigger: stage.current,
+            start: "top 88px",
+            end: () => `+=${(items.length - 1) * window.innerHeight * 0.2}`,
+            pin: true,
+            scrub: 0.4,
+            invalidateOnRefresh: true,
+            onUpdate: (st) => {
+              const active = Math.round(st.progress * (items.length - 1));
+              cards.slice(0, active + 1).forEach((c) => c.classList.add("pv-active"));
+            },
+          },
+        });
+        tl.fromTo(bar.current, { scaleX: 1 / items.length }, { scaleX: 1, duration: items.length - 1 }, 0);
+        items.slice(1).forEach((li, i) => {
+          const at = i;
+          tl.to(li, { yPercent: 0 }, at);
+          tl.to(items[i], { y: -12, scale: 0.96 }, at);
+          tl.to(cards[i].querySelector("[data-dim]"), { opacity: 0.45 }, at);
+          if (items[i - 1]) tl.to(items[i - 1], { y: -24, scale: 0.92 }, at);
+          if (items[i - 2]) tl.to(items[i - 2], { autoAlpha: 0 }, at);
         });
       });
       revert = () => mm.revert();
@@ -78,11 +112,16 @@ export function StickySteps({
       <div className="container-x">
         <p className="eyebrow mb-4">{eyebrow}</p>
         <h2 className="h-section mb-12 max-w-3xl">{title}</h2>
-        <ol ref={list} className="mx-auto max-w-[75rem] space-y-6 lg:space-y-0">
+        <div ref={stage} className="mx-auto max-w-[75rem]">
+        {/* The one progress bar (desktop pinned stage only) */}
+        <div aria-hidden className="hidden h-[3px] overflow-hidden rounded-full bg-white/10 lg:block">
+          <span ref={bar} className="block h-full origin-left scale-x-0 bg-accent" />
+        </div>
+        <ol ref={list} className="space-y-6 lg:space-y-0">
           {steps.map((s, i) => {
             const Visual = visuals[i];
             return (
-              <li key={s.title} className="lg:sticky lg:pb-10" style={{ top: `calc(6.5rem + ${i * 16}px)` }}>
+              <li key={s.title} className="origin-top">
                 <article
                   data-step
                   className={cn(
@@ -92,10 +131,6 @@ export function StickySteps({
                 >
                   {/* Corner glow alternates lime / violet */}
                   <div aria-hidden className={cn("pointer-events-none absolute size-96 rounded-full blur-3xl", i % 2 ? "-right-32 -bottom-40 bg-accent-2/15" : "-top-40 -left-32 bg-accent/10")} />
-                  {/* Step progress */}
-                  <div className="absolute inset-x-0 top-0 h-[3px] bg-white/5">
-                    <span className="block h-full origin-left bg-accent" style={{ transform: `scaleX(${(i + 1) / steps.length})` }} />
-                  </div>
 
                   <div className="relative order-2 flex flex-col p-6 md:p-8 lg:order-1">
                     <p className="text-xs font-semibold tracking-[0.12em] text-muted uppercase">Step {i + 1} of {steps.length}</p>
@@ -128,6 +163,7 @@ export function StickySteps({
             );
           })}
         </ol>
+        </div>
       </div>
     </section>
   );

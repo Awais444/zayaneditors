@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "postbuild": "node scripts/check-placeholders.mjs",
+    "check:placeholders": "node scripts/check-placeholders.mjs",
+    "predev": "node scripts/media-manifest.mjs",
+    "prebuild": "node scripts/media-manifest.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

@@ -15,7 +15,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <SmoothScroll />
       <AnnouncementBar />
       <Header groups={navGroups} />
-      <main id="main">{children}</main>
+      <main id="main" className="lg:pb-8">{children}</main>
       <Footer />
       <MasterTimeline />
     </>

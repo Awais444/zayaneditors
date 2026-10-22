@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { caseStudies, portfolioFilters } from "@/data/portfolio";
+import { portfolioFilters, type CaseStudy } from "@/data/portfolio";
 import { VideoCard } from "@/components/ui/VideoCard";
 import { DESKTOP_MOTION, loadGsap } from "@/lib/motion";
 
@@ -12,12 +12,11 @@ const catLabel = (v: string) => portfolioFilters.find((f) => f.value === v)?.lab
  * label updates as each card passes. Elsewhere (touch, narrow, reduced motion): a native
  * horizontal swipe carousel with snap.
  */
-export function PortfolioRail() {
+export function PortfolioRail({ items }: { items: CaseStudy[] }) {
   const section = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
-  const items = caseStudies;
 
   useEffect(() => {
     let revert = () => {};
@@ -63,6 +62,9 @@ export function PortfolioRail() {
       revert();
     };
   }, [items]);
+
+  // Real media only: with no real projects yet the section is hidden rather than showing stock
+  if (!items.length) return null;
 
   return (
     <section ref={section} data-tl="Work" data-tl-color="rgba(56,189,248,0.4)" className="relative flex min-h-[100svh] flex-col justify-center py-16" id="work">

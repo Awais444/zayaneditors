@@ -7,6 +7,7 @@ import { professionalService, videoObject } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
 import { LazyBeforeAfter } from "@/components/sections/Lazy";
+import { beforeAfterMedia, caseStudiesWithRealMedia, showreel } from "@/data/real-media";
 import { LogoRows } from "@/components/home/LogoRows";
 import { BentoServices } from "@/components/home/BentoServices";
 import { PortfolioRail } from "@/components/home/PortfolioRail";
@@ -24,22 +25,26 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function Home() {
+  const work = caseStudiesWithRealMedia();
+  const ba = beforeAfterMedia();
   return (
     <>
-      <JsonLd data={[professionalService(undefined, verifiedTestimonials), videoObject({ ...site.showreel, description: `${site.name} showreel` })]} />
+      <JsonLd data={[professionalService(undefined, verifiedTestimonials), videoObject({ ...showreel, title: "Showreel", duration: "PT1M30S", uploadDate: "2026-01-15", description: `${site.name} showreel` })]} />
       <Hero />
       <LogoRows />
       <BentoServices />
-      <PortfolioRail />
+      <PortfolioRail items={work} />
+      {ba && (
       <section data-tl="Before/After" data-tl-color="rgba(248,113,113,0.4)" className="section">
         <div className="container-x">
           <p className="eyebrow mb-4">Before / after</p>
           <h2 className="h-section mb-10 max-w-3xl">Same footage. Different result.</h2>
         </div>
         <div className="mx-auto max-w-[96rem] px-4 md:px-8">
-          <LazyBeforeAfter />
+          <LazyBeforeAfter {...ba} />
         </div>
       </section>
+      )}
       <StatsBand />
       <ProcessStack />
       <TestimonialsMasonry />

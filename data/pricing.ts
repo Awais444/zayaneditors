@@ -1,4 +1,4 @@
-// TODO: all prices are placeholders — confirm before launch. Currency: USD.
+// Prices in USD. Confirm before launch.
 
 export const perVideo = [
   {
@@ -97,3 +97,6 @@ export const perProject = [
   { name: "Ad campaign", from: 399, unit: "per concept", href: "/video-ad-editing", features: ["5 hooks × 3 lengths", "All aspect ratios", "Ad-licensed music", "Named for your ad account"] },
   { name: "Corporate video", from: 449, unit: "per video", href: "/corporate-video-editing", features: ["Up to 5 minutes", "Brand template + motion", "Accessible captions", "Stakeholder review rounds"] },
 ];
+
+/** Lowest per-video starting price: drives the announcement bar and schema so they always match the pricing section. */
+export const lowestPrice = Math.min(...perVideo.map((p) => p.from));

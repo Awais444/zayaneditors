@@ -1,8 +1,7 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
+import { FrameArt as Frame } from "@/components/ui/FrameArt";
 import { Check, FileVideo, Film, MessageSquare, Package, UploadCloud } from "lucide-react";
-import { site } from "@/data/site";
 
 /**
  * Lightweight HTML/CSS visuals for each process step. Every animated element carries
@@ -93,7 +92,11 @@ function Revisions() {
   ];
   return (
     <Panel className="p-0">
-      <Image src={site.showreel.poster} alt="" fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover opacity-60" />
+      <Frame className="opacity-70" />
+      {/* Review timeline with comment markers */}
+      <div className="absolute inset-x-5 bottom-3 h-1.5 rounded-full bg-white/15">
+        {[12, 47, 82].map((p) => <span key={p} className="absolute -top-1 size-3.5 -translate-x-1/2 rounded-full border-2 border-surface bg-accent" style={{ left: `${p}%` }} />)}
+      </div>
       {notes.map((n, i) => (
         <div key={n.t} {...a("translateY(10px) scale(0.95)", 250 + i * 300)} className={`absolute ${n.x} flex items-center gap-2 rounded-xl bg-surface/90 px-3 py-2 text-xs shadow-xl backdrop-blur`}>
           <MessageSquare className="size-3.5 text-accent" aria-hidden />
@@ -110,9 +113,9 @@ function ColorSound() {
   return (
     <Panel className="flex flex-col gap-3">
       <div className="relative flex-1 overflow-hidden rounded-xl" data-cursor="drag">
-        <Image src={site.showreel.poster} alt="" fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover [filter:saturate(0.25)_contrast(0.8)_brightness(1.15)]" />
+        <Frame className="[filter:saturate(0.2)_contrast(0.7)_brightness(1.15)]" />
         <div className="absolute inset-0" style={{ clipPath: `inset(0 0 0 ${split}%)` }}>
-          <Image src={site.showreel.poster} alt="" fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover [filter:saturate(1.35)_contrast(1.1)]" />
+          <Frame className="[filter:saturate(1.3)_contrast(1.12)]" />
         </div>
         <span className="pointer-events-none absolute inset-y-0 w-0.5 bg-white" style={{ left: `${split}%` }} />
         <span className="absolute top-2 left-2 rounded bg-black/60 px-2 py-0.5 text-[10px] font-bold tracking-wider">FLAT</span>
@@ -140,13 +143,13 @@ function ThumbsCaptions() {
             className={`absolute inset-0 overflow-hidden rounded-lg border-2 shadow-xl ${k === 0 ? "border-accent" : "border-transparent"}`}
             style={{ ...a("translateX(0) rotate(0deg)", 200 + i * 120).style, transform: `translateX(${k * 34}px) rotate(${k * 8}deg)`, zIndex: k === 0 ? 2 : 1 }}
           >
-            <Image src={site.showreel.poster} alt="" fill sizes="200px" className="object-cover" />
+            <Frame />
             {k === 0 && <span {...a("scale(0.4)", 800)} className="absolute top-1.5 right-1.5 grid size-5 place-items-center rounded-full bg-accent text-accent-fg"><Check className="size-3.5" aria-hidden /></span>}
           </div>
         ))}
       </div>
       <div className="relative hidden aspect-[9/16] h-48 overflow-hidden rounded-2xl border-4 border-surface bg-black sm:block">
-        <Image src={site.showreel.poster} alt="" fill sizes="120px" className="object-cover opacity-70" />
+        <Frame className="opacity-70" />
         <p className="absolute inset-x-2 bottom-6 flex flex-wrap justify-center gap-x-1 text-center text-sm font-extrabold uppercase">
           {words.map((w, i) => (
             <span key={w} {...a("translateY(6px) scale(0.9)", 600 + i * 220)} className={i === 2 ? "text-accent" : "text-white"}>{w}</span>

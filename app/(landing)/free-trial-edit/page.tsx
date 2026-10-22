@@ -1,3 +1,4 @@
+import { showreel } from "@/data/real-media";
 import Link from "next/link";
 import { Check, Clock, CreditCard, Film } from "lucide-react";
 import { site } from "@/data/site";
@@ -43,7 +44,7 @@ export default function FreeTrialPage() {
               <li key={t} className="card flex items-center gap-3 p-4 text-sm font-medium"><Icon className="size-5 text-accent" aria-hidden />{t}</li>
             ))}
           </ul>
-          <VideoFacade video={site.showreel} className="mt-10" />
+          <VideoFacade video={{ ...showreel, title: "Showreel" }} className="mt-10" />
           <ul className="mt-8 space-y-2 text-sm text-muted">
             {["Hook restructure", "Captions & motion text", "Music & sound design", "Colour correction"].map((x) => (
               <li key={x} className="flex gap-2"><Check className="size-4 text-accent" aria-hidden />{x}</li>

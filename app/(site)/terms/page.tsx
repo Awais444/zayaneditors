@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/data/site";
 import { pageMeta } from "@/lib/metadata";
 import { LegalPage } from "@/components/sections/LegalPage";
@@ -23,7 +24,7 @@ export default function TermsPage() {
       <h2>Liability</h2>
       <p>Our total liability is limited to the fees paid for the specific video concerned. We are not liable for platform decisions such as demonetisation or copyright claims arising from materials you supply.</p>
       <h2>Contact</h2>
-      <p>Questions? Email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <p>Questions? Reach us via {site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : <Link href="/contact">our contact page</Link>}.</p>
     </LegalPage>
   );
 }

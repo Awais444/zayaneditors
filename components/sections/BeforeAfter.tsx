@@ -3,10 +3,6 @@ import { animate, motion, useMotionValue, useMotionTemplate, useReducedMotion, u
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 
-// TODO: replace with a real raw vs final pair of the same clip
-const RAW = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
-const FINAL = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
-const POSTER = "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=1400&q=70";
 
 /** Snap stops for the divider: all raw, half/half, all edited (and the quarters). */
 const SNAPS = [0, 25, 50, 75, 100];
@@ -15,7 +11,8 @@ const SNAPS = [0, 25, 50, 75, 100];
 const rubber = (v: number, min: number, max: number, c = 0.25) =>
   v < min ? min - (min - v) * c : v > max ? max + (v - max) * c : v;
 
-export default function BeforeAfter() {
+/** One real clip in two versions (raw vs final edit) with identical framing; see lib/real-media.ts. */
+export default function BeforeAfter({ raw: RAW, final: FINAL, poster: POSTER }: { raw: string; final: string; poster: string }) {
   const box = useRef<HTMLDivElement>(null);
   const raw = useRef<HTMLVideoElement>(null);
   const fin = useRef<HTMLVideoElement>(null);

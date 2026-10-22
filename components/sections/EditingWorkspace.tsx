@@ -2,15 +2,12 @@
 import { motion, useReducedMotion, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { useEffect } from "react";
 import { Check } from "lucide-react";
-import { site } from "@/data/site";
-import { getCaseStudy } from "@/data/portfolio";
+import { showreel, verticalReel } from "@/data/real-media";
 import { InViewVideo } from "@/components/ui/InViewVideo";
 import { cn } from "@/lib/utils";
 import { GlassChip as Chip } from "./GlassChip";
 
-// TODO: swap for a real showreel poster frame and a real talking-head / UGC vertical reel
-const reelPoster = getCaseStudy("travel-vlog-rebrand")!.video.poster;
-const verticalReel = getCaseStudy("dtc-skincare-ugc-ads")!.video;
+// Real showreel / vertical reel from /public/videos when present, stock samples until then
 const captionWords = ["This", "edit", "doubled", "our", "sales"];
 const bars = [45, 80, 60, 95, 55, 75, 40, 85];
 
@@ -72,7 +69,7 @@ export function EditingWorkspace() {
         <Layer px={px} py={py} depth={6} className="top-[6%] left-[2%] w-[80%]">
           <div className="chip-in" style={{ "--i": 0 } as React.CSSProperties}>
             <div className="relative aspect-video -rotate-2 overflow-hidden rounded-[20px] border border-line bg-surface shadow-[0_40px_120px_-40px_rgba(198,244,50,0.35)]">
-              <InViewVideo src={site.showreel.src} poster={reelPoster} className="size-full object-cover" />
+              <InViewVideo src={showreel.src} poster={showreel.poster} className="size-full object-cover" />
             </div>
           </div>
         </Layer>

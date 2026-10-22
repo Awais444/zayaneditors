@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/data/site";
 import { pageMeta } from "@/lib/metadata";
 import { LegalPage } from "@/components/sections/LegalPage";
@@ -25,7 +26,7 @@ export default function PrivacyPage() {
       <h2>Retention</h2>
       <p>Enquiry data is kept for up to 24 months. Project footage is deleted within 90 days of final delivery unless you ask us to keep it.</p>
       <h2>Your rights</h2>
-      <p>You can request access, correction or deletion of your data at any time by emailing <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <p>You can request access, correction or deletion of your data at any time via {site.email ? <a href={`mailto:${site.email}`}>{site.email}</a> : <Link href="/contact">our contact page</Link>}.</p>
     </LegalPage>
   );
 }

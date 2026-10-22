@@ -40,6 +40,7 @@ export function MasterTimeline() {
   const [clips, setClips] = useState<Clip[]>([]);
   const [enabled, setEnabled] = useState(false);
   const [trackW, setTrackW] = useState(0);
+  const [footerVisible, setFooterVisible] = useState(false);
   const head = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
   const track = useRef<HTMLDivElement>(null);
@@ -115,10 +116,20 @@ export function MasterTimeline() {
     };
   }, [enabled, clips]);
 
+  // Hide while the footer is on screen so it never covers footer links
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!enabled || !footer) return;
+    const io = new IntersectionObserver(([e]) => setFooterVisible(e.isIntersecting));
+    io.observe(footer);
+    return () => io.disconnect();
+  }, [enabled, pathname]);
+
   if (!enabled || clips.length < 3) return null;
 
   return (
-    <nav aria-label="Page timeline" className="chrome fixed inset-x-0 bottom-0 z-40 hidden h-8 items-center gap-3 border-t border-line/60 px-4 lg:flex">
+    <nav aria-label="Page timeline" aria-hidden={footerVisible || undefined}
+      className={`chrome fixed inset-x-0 bottom-0 z-40 hidden h-8 items-center gap-3 border-t border-line/60 px-4 transition-[transform,opacity] duration-300 lg:flex ${footerVisible ? "pointer-events-none translate-y-full opacity-0" : ""}`}>
       <span ref={label} className="w-20 shrink-0 font-mono text-[11px] text-muted tabular-nums">00:00:00</span>
       <div ref={track} className="relative h-4 flex-1">
         {clips.map((c) => (

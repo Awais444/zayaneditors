@@ -1,4 +1,5 @@
 import { site } from "@/data/site";
+import { lowestPrice } from "@/data/pricing";
 import { absoluteUrl } from "./utils";
 import type { Testimonial } from "@/data/testimonials";
 
@@ -12,8 +13,8 @@ export const organization = () => ({
   description: site.description,
   url: site.url,
   logo: absoluteUrl(site.logo),
-  email: site.email,
-  sameAs: Object.values(site.socials),
+  ...(site.email ? { email: site.email } : {}),
+  sameAs: Object.values(site.socials).filter(Boolean),
 });
 
 export const website = () => ({
@@ -33,8 +34,8 @@ export const professionalService = (areaServed: string[] = [...site.markets], re
   description: site.description,
   url: site.url,
   image: absoluteUrl("/opengraph-image"),
-  email: site.email,
-  priceRange: `$${site.priceFrom}+`,
+  ...(site.email ? { email: site.email } : {}),
+  priceRange: `$${lowestPrice}+`,
   areaServed: areaServed.map((name) => ({ "@type": "Place", name })),
   ...(reviews.length
     ? {

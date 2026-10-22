@@ -66,7 +66,7 @@ export default async function CaseStudyPage({ params }: Props) {
             ))}
           </h1>
           <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-3 text-sm">
-            {[["Client", c.client], ["Platform", c.platform]].map(([k, v]) => (
+            {[["Client", c.client], ["Platform", c.platform]].filter(([, v]) => v).map(([k, v]) => (
               <div key={k}><dt className="text-muted">{k}</dt><dd className="font-medium">{v}</dd></div>
             ))}
             {editor && <div><dt className="text-muted">Edited by</dt><dd className="font-medium"><Link href={`/team#${editor.slug}`} className="hover:text-accent">{editor.name}</Link></dd></div>}
@@ -89,7 +89,6 @@ export default async function CaseStudyPage({ params }: Props) {
             );
           })}
         </dl>
-        <p className="container-x mt-8 text-center text-xs text-muted">TODO: sample figures — replace with verified client results.</p>
       </section>
 
       <section data-tl="The edit" data-tl-color="rgba(56,189,248,0.4)" className="section">

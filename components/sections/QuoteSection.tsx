@@ -25,12 +25,12 @@ export function QuoteSection({ service, title = "Get a quote in a few hours" }: 
                 <span><span className="block font-semibold">Book a 15-min call</span><span className="text-sm text-muted">Pick a time on Calendly</span></span>
               </CalendlyLink>
             </li>
-            <li>
+            {site.email && <li>
               <a href={`mailto:${site.email}`} className="pressable card flex items-center gap-4 p-4 hover:border-white/20">
                 <Mail className="size-5 text-muted" aria-hidden />
                 <span><span className="block font-semibold">{site.email}</span><span className="text-sm text-muted">Email us anytime</span></span>
               </a>
-            </li>
+            </li>}
           </ul>
         </div>
         <QuoteForm service={service} />

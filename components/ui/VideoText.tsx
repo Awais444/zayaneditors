@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { site } from "@/data/site";
+import { showreel } from "@/data/real-media";
 import { prefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -91,7 +91,7 @@ export function VideoText({
         {load && (
           <video
             ref={vid}
-            src={site.showreel.src}
+            src={showreel.src}
             muted
             loop
             playsInline
