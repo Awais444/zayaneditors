@@ -2,7 +2,9 @@ import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { WorkGrid } from "@/components/sections/WorkGrid";
-import { CTABand } from "@/components/sections/CTABand";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { homeFaqs } from "@/data/faqs";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
   title: "Video Editing Portfolio & Case Studies",
@@ -20,7 +22,8 @@ export default function PortfolioPage() {
           <WorkGrid search />
         </div>
       </section>
-      <CTABand />
+      <FAQAccordion items={homeFaqs.slice(5, 10)} />
+      <FinalCTA />
     </>
   );
 }

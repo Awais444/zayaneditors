@@ -8,7 +8,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { VideoFacade } from "@/components/ui/VideoFacade";
 import { VideoCard } from "@/components/ui/VideoCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { CTABand } from "@/components/sections/CTABand";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { getEditor } from "@/data/team";
 import Link from "next/link";
 
@@ -96,7 +96,7 @@ export default async function CaseStudyPage({ params }: Props) {
           </div>
         </section>
       )}
-      <CTABand title="Want results like these?" />
+      <FinalCTA />
     </>
   );
 }

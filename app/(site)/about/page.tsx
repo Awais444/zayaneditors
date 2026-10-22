@@ -3,8 +3,10 @@ import { site } from "@/data/site";
 import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Stats } from "@/components/sections/Stats";
-import { CTABand } from "@/components/sections/CTABand";
+import { StatsBand } from "@/components/sections/StatsBand";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { homeFaqs } from "@/data/faqs";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
   title: `About ${site.name} | A Team of Professional Video Editors`,
@@ -35,7 +37,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <Stats />
+      <StatsBand />
       <section className="section pt-0">
         <div className="container-x">
           <SectionHeading title="What we believe" />
@@ -46,7 +48,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <CTABand />
+      <FAQAccordion items={homeFaqs.slice(4, 10)} />
+      <FinalCTA />
     </>
   );
 }

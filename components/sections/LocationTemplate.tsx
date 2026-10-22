@@ -9,8 +9,8 @@ import { professionalService } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
-import { FAQ } from "./FAQ";
-import { CTABand } from "./CTABand";
+import { FAQAccordion } from "./FAQAccordion";
+import { FinalCTA } from "./FinalCTA";
 
 const topServices = ["youtube-video-editing", "short-form-video-editing", "podcast-video-editing", "video-editing-for-coaches"];
 
@@ -119,8 +119,8 @@ export function LocationTemplate({
           </div>
         </div>
       </section>
-      <FAQ items={place.faqs} title={`${place.name} FAQs`} />
-      <CTABand />
+      <FAQAccordion items={place.faqs} title={`${place.name} FAQs`} />
+      <FinalCTA />
     </>
   );
 }

@@ -5,8 +5,8 @@ import { addons, comparison, guarantee, perProject, plans, pricingFaqs } from "@
 import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { FAQ } from "@/components/sections/FAQ";
-import { CTABand } from "@/components/sections/CTABand";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PricingClient } from "./PricingClient";
 
 export const metadata = pageMeta({
@@ -84,8 +84,8 @@ export default function PricingPage() {
           </div>
         </div>
       </section>
-      <FAQ items={pricingFaqs} title="Pricing FAQs" />
-      <CTABand />
+      <FAQAccordion items={pricingFaqs} title="Pricing FAQs" />
+      <FinalCTA />
     </>
   );
 }

@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Accordion } from "@/components/ui/Accordion";
-import { CTABand } from "@/components/sections/CTABand";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { slugify } from "@/lib/blog";
 import Link from "next/link";
 
@@ -39,7 +39,7 @@ export default function FaqPage() {
           <p className="mt-16 text-muted">Comparing us with a video editing agency? See <Link href="/video-editing-agency" className="text-fg underline decoration-accent underline-offset-4">how our dedicated team of editors compares</Link>.</p>
         </div>
       </section>
-      <CTABand />
+      <FinalCTA />
     </>
   );
 }

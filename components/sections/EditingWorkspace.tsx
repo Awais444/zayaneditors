@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { Check } from "lucide-react";
 import { site } from "@/data/site";
 import { getCaseStudy } from "@/data/portfolio";
-import { InViewVideo } from "@/components/home/InViewVideo";
+import { InViewVideo } from "@/components/ui/InViewVideo";
 import { cn } from "@/lib/utils";
+import { GlassChip as Chip } from "./GlassChip";
 
 // TODO: swap for a real showreel poster frame and a real talking-head / UGC vertical reel
 const reelPoster = getCaseStudy("travel-vlog-rebrand")!.video.poster;
@@ -21,19 +22,6 @@ function Layer({ px, py, depth, className, children }: { px: MotionValue<number>
       {/* Inner element for HeroMotion's scroll drift, so GSAP and the parallax never share a transform */}
       <div data-depth={depth}>{children}</div>
     </motion.div>
-  );
-}
-
-/** Glass chip: staggered entrance, then a slow ≤3px float. Solid-enough background for legibility. */
-function Chip({ i, children, className }: { i: number; children: React.ReactNode; className?: string }) {
-  return (
-    <div className="chip-in" style={{ "--i": i } as React.CSSProperties}>
-      <div className="chip-float" style={{ "--f": i } as React.CSSProperties}>
-        <div className={cn("flex items-center gap-2 rounded-2xl border border-white/10 bg-surface/90 px-4 py-2.5 text-sm font-medium whitespace-nowrap shadow-[0_18px_40px_-18px_rgba(0,0,0,0.9)] backdrop-blur-md", className)}>
-          {children}
-        </div>
-      </div>
-    </div>
   );
 }
 

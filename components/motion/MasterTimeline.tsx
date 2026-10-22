@@ -13,6 +13,23 @@ const tc = (p: number) => {
   return `${pad(Math.floor(f / 1500))}:${pad(Math.floor(f / 25) % 60)}:${pad(f % 25)}`;
 };
 
+const PALETTE = ["rgba(198,244,50,0.35)", "rgba(139,92,246,0.45)", "rgba(56,189,248,0.4)", "rgba(248,113,113,0.4)", "rgba(251,191,36,0.4)", "rgba(244,114,182,0.4)", "rgba(52,211,153,0.4)"];
+
+/** Short clip label from a section's first heading (pages without explicit data-tl labels). */
+const headingLabel = (el: HTMLElement) => {
+  const h = el.querySelector("h1, h2")?.textContent?.trim() ?? "Section";
+  return h.split(/\s+/).slice(0, 2).join(" ");
+};
+
+/**
+ * Sections that become clips: explicit [data-tl] sections, plus any other top-level <section>
+ * inside <main> so every page gets a timeline of its own sections.
+ */
+const timelineSections = () =>
+  [...document.querySelectorAll<HTMLElement>("main section")].filter(
+    (el) => !el.parentElement?.closest("main section") && el.offsetHeight > 120,
+  );
+
 /**
  * Scroll-linked "master timeline" fixed to the bottom (desktop only).
  * Each [data-tl] section becomes a coloured clip; the playhead follows scroll progress;
@@ -41,15 +58,15 @@ export function MasterTimeline() {
     const measure = () => {
       setTrackW(track.current?.clientWidth ?? 0);
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      const els = [...document.querySelectorAll<HTMLElement>("[data-tl]")];
+      const els = timelineSections();
       setClips(
         els.map((el, i) => {
           const top = el.getBoundingClientRect().top + window.scrollY;
           return {
             id: `${i}`,
             el,
-            label: el.dataset.tl!,
-            color: el.dataset.tlColor || "rgba(244,244,245,0.18)",
+            label: el.dataset.tl || headingLabel(el),
+            color: el.dataset.tlColor || PALETTE[i % PALETTE.length],
             start: Math.max(0, Math.min(1, top / max)),
             end: Math.max(0, Math.min(1, (top + el.offsetHeight) / max)),
           };

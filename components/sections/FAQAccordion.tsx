@@ -9,16 +9,27 @@ import { faqPage } from "@/lib/schema";
  * Accordion with a spring on height (the one sanctioned layout animation — there's no transform
  * equivalent). Answers always stay in the DOM for SEO; closed panels are hidden from AT via `inert`.
  */
-export function FaqSpring({ items }: { items: { q: string; a: string }[] }) {
+export function FAQAccordion({
+  items,
+  title = "Frequently asked questions",
+  eyebrow = "FAQ",
+  schema = true,
+}: {
+  items: { q: string; a: string }[];
+  title?: string;
+  eyebrow?: string;
+  /** Emit FAQPage JSON-LD (turn off when the page already emits it) */
+  schema?: boolean;
+}) {
   const [open, setOpen] = useState<number | null>(0);
   const reduce = useReducedMotion();
   return (
     <section data-tl="FAQ" data-tl-color="rgba(244,244,245,0.25)" className="section cv-auto">
-      <JsonLd data={faqPage(items)} />
+      {schema && <JsonLd data={faqPage(items)} />}
       <div className="container-x grid gap-10 lg:grid-cols-[1fr_1.6fr]">
         <div>
-          <p className="eyebrow mb-4">FAQ</p>
-          <h2 className="h-section">Frequently asked questions</h2>
+          <p className="eyebrow mb-4">{eyebrow}</p>
+          <h2 className="h-section">{title}</h2>
         </div>
         <div className="divide-y divide-line border-y border-line">
           {items.map((f, i) => {

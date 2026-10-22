@@ -3,7 +3,7 @@ import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PostCard } from "@/components/sections/BlogPreview";
-import { CTABand } from "@/components/sections/CTABand";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
   title: "Video Editing Blog | YouTube Growth & Editing Tips",
@@ -30,7 +30,7 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
-      <CTABand />
+      <FinalCTA />
     </>
   );
 }

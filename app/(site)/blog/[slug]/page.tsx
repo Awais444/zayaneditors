@@ -10,6 +10,7 @@ import { team } from "@/data/team";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { BlogPreview } from "@/components/sections/BlogPreview";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -97,6 +98,7 @@ export default async function PostPage({ params }: Props) {
         </div>
       </article>
       <BlogPreview posts={related} title="Keep reading" />
+      <FinalCTA />
     </>
   );
 }

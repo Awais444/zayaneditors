@@ -14,11 +14,12 @@ import { VideoCard } from "@/components/ui/VideoCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Process } from "@/components/sections/Process";
-import { FAQ } from "@/components/sections/FAQ";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { BlogPreview } from "@/components/sections/BlogPreview";
 import { QuoteSection } from "@/components/sections/QuoteSection";
 import { WhatsAppLink } from "@/components/layout/WhatsAppLink";
 import { whatsappUrl } from "@/data/site";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { cn } from "@/lib/utils";
 
 type Props = { params: Promise<{ service: string }> };
@@ -134,7 +135,6 @@ export default async function ServicePage({ params }: Props) {
       </section>
 
       <JsonLd data={faqPage(s.faqs)} />
-      <FAQ items={s.faqs} title={`${s.name} FAQs`} schema={false} />
 
       <section className="section pt-0">
         <div className="container-x">
@@ -167,6 +167,8 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
       <QuoteSection service={s.name} title={`Get a ${s.name.toLowerCase()} quote`} />
+      <FAQAccordion items={s.faqs} title={`${s.name} FAQs`} schema={false} />
+      <FinalCTA />
     </>
   );
 }

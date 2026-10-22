@@ -12,7 +12,7 @@ import { prefersReducedMotion } from "@/lib/motion";
  * Giant "LET'S EDIT" that fills with the showreel when it scrolls into view (or on hover).
  * Uses the same clipped VideoText as the hero; the video attaches after load and plays only when filled.
  */
-export function FinalCta() {
+export function FinalCTA({ text = "LET’S EDIT", sub }: { text?: string; sub?: string }) {
   const box = useRef<HTMLDivElement>(null);
   const [filled, setFilled] = useState(false);
   const [hover, setHover] = useState(false);
@@ -32,10 +32,10 @@ export function FinalCta() {
       <div className="container-x">
         <div ref={box} onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)} className="inline-block">
           <h2 className="text-[clamp(4rem,16vw,15rem)] leading-[0.85] font-bold tracking-[-0.05em] uppercase">
-            <VideoText text="LET’S EDIT" filled={show} baseClass={show ? "text-transparent transition-colors duration-700" : "text-fg transition-colors duration-700"} />
+            <VideoText text={text} filled={show} baseClass={show ? "text-transparent transition-colors duration-700" : "text-fg transition-colors duration-700"} />
           </h2>
         </div>
-        <p className="mx-auto mt-8 max-w-xl text-lg text-muted">Send a few minutes of footage. Get a free sample edit back in {site.turnaround} — no card, no obligation.</p>
+        <p className="mx-auto mt-8 max-w-xl text-lg text-muted">{sub ?? `Send a few minutes of footage. Get a free sample edit back in ${site.turnaround} — no card, no obligation.`}</p>
         <div className="mt-9 flex justify-center">
           <Magnetic strength={0.4}>
             <Button href="/free-trial-edit" size="lg" className="h-16 px-10 text-lg">Get a Free Trial Edit</Button>

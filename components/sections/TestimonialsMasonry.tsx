@@ -3,7 +3,7 @@ import { testimonials, type Testimonial } from "@/data/testimonials";
 import { VideoCard } from "@/components/ui/VideoCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/utils";
-import { MotionToggle } from "./MotionToggle";
+import { MotionToggle } from "@/components/ui/MotionToggle";
 
 function Quote({ t }: { t: Testimonial }) {
   return (
@@ -26,13 +26,13 @@ function Item({ t }: { t: Testimonial }) {
  * is duplicated once so the loop is seamless; the copy is aria-hidden. Mobile shows one column;
  * reduced motion stops the scroll (see globals.css).
  */
-export function TestimonialsMasonry() {
+export function TestimonialsMasonry({ title = "Creators who stopped editing" }: { title?: string }) {
   const cols = [0, 1, 2].map((c) => testimonials.filter((_, i) => i % 3 === c).concat(testimonials.filter((_, i) => i % 3 !== c).slice(0, 2)));
   return (
     <section data-tl="Reviews" data-tl-color="rgba(244,114,182,0.4)" className="section cv-auto overflow-hidden">
       <div className="container-x">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <SectionHeading eyebrow="Testimonials" title="Creators who stopped editing" />
+          <SectionHeading eyebrow="Testimonials" title={title} />
           <div className="mb-10 md:mb-14"><MotionToggle target="testimonial-masonry" label="reviews" /></div>
         </div>
         <div id="testimonial-masonry" className="masonry relative grid h-[44rem] gap-4 overflow-hidden [mask-image:linear-gradient(transparent,#000_12%,#000_88%,transparent)] md:grid-cols-2 lg:grid-cols-3">

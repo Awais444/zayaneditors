@@ -6,7 +6,9 @@ import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VideoCard } from "@/components/ui/VideoCard";
-import { CTABand } from "@/components/sections/CTABand";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { faqCategories } from "@/data/faqs";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
   title: "Meet Your Editors | Our Team of Video Editors",
@@ -64,7 +66,8 @@ export default function TeamPage() {
           </ul>
         </div>
       </section>
-      <CTABand title="Want to work with one of our editors?" />
+      <FAQAccordion items={faqCategories[1].faqs} />
+      <FinalCTA />
     </>
   );
 }

@@ -23,6 +23,7 @@ const faqs = [
 export default function FreeTrialPage() {
   return (
     <main id="main" className="relative min-h-dvh overflow-hidden">
+      <div aria-hidden className="mesh-bg" />
       <div className="glow -top-60 left-1/2 size-[44rem] -translate-x-1/2" />
       <header className="container-x flex h-18 items-center justify-between">
         <Logo />

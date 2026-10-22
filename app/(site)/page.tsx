@@ -10,12 +10,12 @@ import { LazyBeforeAfter } from "@/components/sections/Lazy";
 import { LogoRows } from "@/components/home/LogoRows";
 import { BentoServices } from "@/components/home/BentoServices";
 import { PortfolioRail } from "@/components/home/PortfolioRail";
-import { StatsBand } from "@/components/home/StatsBand";
+import { StatsBand } from "@/components/sections/StatsBand";
 import { ProcessStack } from "@/components/home/ProcessStack";
-import { TestimonialsMasonry } from "@/components/home/TestimonialsMasonry";
+import { TestimonialsMasonry } from "@/components/sections/TestimonialsMasonry";
 import { PricingFeature } from "@/components/home/PricingFeature";
-import { FaqSpring } from "@/components/home/FaqSpring";
-import { FinalCta } from "@/components/home/FinalCta";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata: Metadata = pageMeta({
   title: `Video Editing Services by a Dedicated Team of Editors | ${site.shortName}`,
@@ -44,8 +44,8 @@ export default function Home() {
       <ProcessStack />
       <TestimonialsMasonry />
       <PricingFeature />
-      <FaqSpring items={homeFaqs} />
-      <FinalCta />
+      <FAQAccordion items={homeFaqs} />
+      <FinalCTA />
     </>
   );
 }

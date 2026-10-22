@@ -4,7 +4,9 @@ import { serviceGroups, services, servicesByCategory } from "@/data/services";
 import { pageMeta } from "@/lib/metadata";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { CTABand } from "@/components/sections/CTABand";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { homeFaqs } from "@/data/faqs";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
   title: "All Video Editing Services | YouTube, Ads, Weddings & More",
@@ -43,7 +45,8 @@ export default function ServicesPage() {
           </div>
         </section>
       ))}
-      <CTABand />
+      <FAQAccordion items={homeFaqs.slice(4, 10)} />
+      <FinalCTA />
     </>
   );
 }

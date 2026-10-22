@@ -13,7 +13,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Process } from "@/components/sections/Process";
-import { FAQ } from "@/components/sections/FAQ";
+import { FAQAccordion } from "@/components/sections/FAQAccordion";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 import { QuoteSection } from "@/components/sections/QuoteSection";
 
 const path = "/video-editing-agency";
@@ -207,8 +208,9 @@ export default function AgencyPage() {
         </div>
       </section>
 
-      <FAQ items={faqs} title="Video editing agency FAQs" schema={false} />
       <QuoteSection title="Get a plan and price from your future editor" />
+      <FAQAccordion items={faqs} title="Video editing agency FAQs" schema={false} />
+      <FinalCTA />
     </>
   );
 }
