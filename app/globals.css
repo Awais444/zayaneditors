@@ -281,6 +281,14 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
 }
 @media (prefers-reduced-motion: reduce) { .glitch::before, .glitch::after { animation: none; clip-path: inset(0 0 100% 0); } }
 
+/* Hero: lines rise with a short stagger (spring-like ease, no bounce). Transform only, so the
+   H1 is painted at first paint (LCP); static under reduced motion. */
+.hero-line { animation: hero-rise 700ms cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes hero-rise { from { transform: translateY(24px); } to { transform: none; } }
+.showreel-ring { animation: showreel-ring 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite; }
+@keyframes showreel-ring { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.45); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .hero-line, .showreel-ring { animation: none; } }
+
 /* Blog post reading progress: lime bar under the header, driven by page scroll (CSS-only) */
 .read-progress { transform: scaleX(0); transform-origin: left; }
 @supports (animation-timeline: scroll()) {
@@ -291,16 +299,14 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
 /* Skip rendering work for heavy below-the-fold sections until they approach the viewport */
 .cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 
-/* Hero workspace chips: staggered entrance (80ms), then a slow ≤6px float */
+/* Glass chips: staggered entrance (80ms), then a slow ≤6px float */
 .chip-in { animation: chip-in 700ms cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: calc(var(--i, 0) * 80ms + 250ms); }
 @keyframes chip-in { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: none; } }
 .chip-float { animation: chip-float 6s ease-in-out infinite alternate; animation-delay: calc(var(--f, 0) * -1.3s); }
 @keyframes chip-float { from { transform: translateY(-3px); } to { transform: translateY(3px); } }
-.export-bar { transform-origin: left; animation: export-fill 2.4s cubic-bezier(0.23, 1, 0.32, 1) 900ms both; }
-@keyframes export-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
   .chip-in { animation: word-fade 250ms ease both; }
-  .chip-float, .export-bar { animation: none; }
+  .chip-float { animation: none; }
 }
 
 /* Process visuals: armed = start state; active = play once. Unarmed (no JS / reduced motion) = final state */
@@ -315,7 +321,3 @@ html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0
 .pv-active .pv-pulse::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 1px solid var(--color-accent); animation: pv-ring 1.4s ease-out 2.5s 2 both; }
 @keyframes pv-ring { from { opacity: 0.8; transform: scale(1); } to { opacity: 0; transform: scale(1.12); } }
 
-/* Phone reel captions: each word lights up lime in turn (burned-in caption style) */
-.caption-word { color: #fff; animation: caption-hl calc(var(--n) * 0.6s) steps(1, end) infinite; animation-delay: calc(var(--i) * 0.6s); }
-@keyframes caption-hl { 0% { color: var(--color-accent); } 20% { color: #fff; } }
-@media (prefers-reduced-motion: reduce) { .caption-word { animation: none; } .caption-word:nth-child(3) { color: var(--color-accent); } }

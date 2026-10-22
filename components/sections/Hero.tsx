@@ -5,72 +5,53 @@ import { site } from "@/data/site";
 import { editors } from "@/data/team";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
-import { VideoText } from "@/components/ui/VideoText";
-import { HeroMotion } from "./HeroMotion";
-import { EditingWorkspace, PhoneReel } from "./EditingWorkspace";
+import { HeroBackdrop } from "./HeroBackdrop";
+import { PlayShowreel } from "./PlayShowreel";
 
-const tail = ["for", "every", "kind", "of", "video"];
-const big = "block text-[clamp(3rem,min(6.6vw,15svh),7.25rem)] leading-[0.9]";
+/** One staggered reveal line (transform only, so the H1 is painted at first paint for LCP). */
+const line = (i: number) => ({ className: "hero-line block", style: { "--i": i } as React.CSSProperties });
 
 /**
- * Kinetic hero: text column (left) + "Editing Workspace" collage (right, desktop).
- * All copy is real DOM text (SEO); the word "EDITING" is a video mask.
- * Desktop: pinned, and the masked word scales up into a full-bleed showreel on scroll.
- * Mobile / reduced motion: stacked layout with a single 9:16 card under the CTAs.
+ * Full-screen showreel hero: background reel with a readability gradient, content anchored
+ * bottom-left in the page container, glass "Play showreel" button bottom-right.
  */
 export function Hero() {
   return (
-    <HeroMotion>
-      <div className="container-x relative grid min-h-[calc(100svh-6.5rem)] items-center gap-12 pt-10 pb-14 lg:grid-cols-2 lg:gap-10">
-        <div>
-          <p className="hero-fade mb-6 text-xs font-semibold tracking-[0.14em] text-accent uppercase">A team of professional video editors</p>
-          <h1 className="font-bold uppercase">
-            <span className={`hero-fade ${big} tracking-[-0.04em]`}>
-              <span className="kinetic-word" style={{ "--i": 0 } as React.CSSProperties}>Video</span>
-            </span>
-            <span className={`${big} tracking-[-0.02em]`}>
-              <span className="kinetic-word" style={{ "--i": 1 } as React.CSSProperties}>
-                <span data-mask-word className="inline-block">
-                  <VideoText text="EDITING" stroke />
-                </span>
-              </span>
-            </span>
-            <span className="hero-fade mt-4 block text-[clamp(1.25rem,2.2vw,2rem)] leading-tight font-semibold tracking-[-0.02em] normal-case text-muted">
-              {tail.map((w, i) => (
-                <span key={w} className="kinetic-word mr-[0.25em]" style={{ "--i": i + 2 } as React.CSSProperties}>
-                  {w}
-                </span>
-              ))}
-            </span>
+    <section data-hero data-tl="Hero" data-tl-color="rgba(198,244,50,0.35)" className="relative isolate flex min-h-[min(100svh,900px)] overflow-hidden">
+      <HeroBackdrop />
+      <div className="container-x relative flex w-full flex-col justify-end gap-10 pt-16 pb-12 md:pb-16">
+        <div className="max-w-6xl">
+          <p {...line(0)} className="hero-line mb-5 text-xs font-semibold tracking-[0.14em] text-accent uppercase">A team of professional video editors</p>
+          <h1 className="text-[clamp(3rem,7vw,6.5rem)] leading-[0.95] font-bold tracking-[-0.03em]">
+            <span {...line(1)}>Video editing</span>
+            <span {...line(2)} className="hero-line block md:whitespace-nowrap">for <span className="text-accent">every kind</span> of video</span>
           </h1>
-          <div className="hero-fade mt-7">
-            <p className="max-w-xl text-lg text-muted">
-              Send raw footage, get a polished first cut in {site.turnaround}. From YouTube to weddings, one dedicated team edits it all.
-            </p>
-            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <Magnetic>
-                <Button href="/free-trial-edit" size="lg">Get a Free Trial Edit</Button>
-              </Magnetic>
-              <Link href="/portfolio" className="font-semibold underline-offset-4 hover:text-accent hover:underline">Watch our work →</Link>
-            </div>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted">
-              <Link href="/team" className="flex -space-x-2.5" aria-label="Meet your editors">
-                {editors.slice(0, 4).map((m) => (
-                  <Image key={m.slug} src={m.avatar} alt={m.name} width={36} height={36} className="size-9 rounded-full border-2 border-bg object-cover" />
-                ))}
-              </Link>
-              <span className="flex items-center gap-1.5">
-                <Star className="size-4 fill-accent text-accent" aria-hidden />
-                <span><strong className="font-semibold text-fg">{site.trust.rating}</strong> from {site.trust.clients} clients</span>
-              </span>
-              <span><strong className="font-semibold text-fg">{site.trust.videosDelivered}</strong> videos delivered</span>
-            </div>
-            {/* Mobile: only the phone card (centered, 70% wide) instead of the collage */}
-            <PhoneReel className="mx-auto mt-10 w-[70%] max-w-xs lg:hidden" />
+          <p {...line(3)} className="hero-line mt-6 max-w-xl text-lg text-white/80">
+            Send raw footage, get a polished first cut in {site.turnaround} — one dedicated team for it all.
+          </p>
+          <div {...line(4)} className="hero-line mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <Magnetic>
+              <Button href="/free-trial-edit" size="lg">Get a Free Trial Edit</Button>
+            </Magnetic>
+            <Link href="/portfolio" className="font-semibold underline-offset-4 hover:text-accent hover:underline">Watch our work →</Link>
+          </div>
+          <div {...line(5)} className="hero-line mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/75">
+            <Link href="/team" className="flex -space-x-2.5" aria-label="Meet your editors">
+              {editors.slice(0, 4).map((m) => (
+                <Image key={m.slug} src={m.avatar} alt={m.name} width={36} height={36} className="size-9 rounded-full border-2 border-bg object-cover" />
+              ))}
+            </Link>
+            <span className="flex items-center gap-1.5">
+              <Star className="size-4 fill-accent text-accent" aria-hidden />
+              <span><strong className="font-semibold text-fg">{site.trust.rating}</strong> from {site.trust.clients} clients</span>
+            </span>
+            <span><strong className="font-semibold text-fg">{site.trust.videosDelivered}</strong> videos delivered</span>
           </div>
         </div>
-        <EditingWorkspace />
+        <div {...line(6)} className="hero-line md:absolute md:right-8 md:bottom-16">
+          <PlayShowreel />
+        </div>
       </div>
-    </HeroMotion>
+    </section>
   );
 }
