@@ -1,27 +1,28 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { showreel, showreelVertical } from "@/data/real-media";
+import { realShowreel, realShowreelVertical } from "@/data/real-media";
 import { DESKTOP_MOTION, loadGsap, prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Full-bleed showreel behind the hero. The poster paints instantly; the muted loop attaches after
- * the page has loaded (16:9 on desktop, the 9:16 cut on phones). Reduced motion: poster only.
- * Desktop scroll: the frame scales 1 → 0.92 and gains 24px corners as the next section arrives.
+ * Hero background. Only the real showreel is used (public/videos/showreel.mp4 with poster
+ * public/posters/showreel.webp; showreel-vertical.* for phones). Until it exists: plain #0B0C0E
+ * with a soft lime/violet glow — never a stock image. The muted loop attaches after the page has
+ * loaded; reduced motion keeps the poster. Desktop scroll: scales 1 → 0.92 with 24px corners.
  */
 export function HeroBackdrop() {
   const frame = useRef<HTMLDivElement>(null);
   const [src, setSrc] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
+  const reel = realShowreel;
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    if (!reel || prefersReducedMotion()) return;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
-    const pick = () => setSrc(window.matchMedia("(max-width: 767px)").matches ? showreelVertical.src : showreel.src);
+    const pick = () => setSrc(window.matchMedia("(max-width: 767px)").matches && realShowreelVertical ? realShowreelVertical.src : reel.src);
     if (document.readyState === "complete") pick();
     else window.addEventListener("load", pick, { once: true });
-  }, []);
+  }, [reel]);
 
   useEffect(() => {
     let revert = () => {};
@@ -46,24 +47,35 @@ export function HeroBackdrop() {
 
   return (
     <div aria-hidden className="absolute inset-0 -z-10">
-      <div ref={frame} className="absolute inset-0 origin-center overflow-hidden bg-surface will-change-transform">
-        <Image src={showreel.poster} alt="" fill sizes="100vw" quality={60} className="object-cover max-md:hidden" />
-        <Image src={showreelVertical.poster} alt="" fill sizes="100vw" quality={60} className="object-cover md:hidden" />
-        {src && (
-          <video
-            src={src}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="auto"
-            onPlaying={() => setPlaying(true)}
-            className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${playing ? "opacity-100" : "opacity-0"}`}
-          />
+      <div ref={frame} className="absolute inset-0 origin-center overflow-hidden bg-bg will-change-transform">
+        {reel ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element -- local WebP poster, already sized */}
+            <img src={realShowreelVertical?.poster ?? reel.poster} alt="" className="absolute inset-0 size-full object-cover md:hidden" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={reel.poster} alt="" className="absolute inset-0 size-full object-cover max-md:hidden" />
+            {src && (
+              <video
+                src={src}
+                muted
+                loop
+                playsInline
+                autoPlay
+                preload="none"
+                onPlaying={() => setPlaying(true)}
+                className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${playing ? "opacity-100" : "opacity-0"}`}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <div className="absolute -top-1/4 right-[-10%] size-[60vmax] rounded-full bg-accent/10 blur-[120px]" />
+            <div className="absolute -bottom-1/3 right-1/4 size-[50vmax] rounded-full bg-accent-2/15 blur-[120px]" />
+          </>
         )}
-        {/* Readability: #0B0C0E at 85% bottom-left fading to clear top-right */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_top_right,rgba(11,12,14,0.85)_15%,rgba(11,12,14,0.55)_50%,transparent_85%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-bg/70 to-transparent" />
+        {/* Calm dark backing for the text: left-to-right scrim plus a bottom fade into the page */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,12,14,0.92)_0%,rgba(11,12,14,0.75)_45%,rgba(11,12,14,0.25)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-bg to-transparent" />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Play } from "lucide-react";
-import { showreel } from "@/data/real-media";
+import { realShowreel, showreel } from "@/data/real-media";
 
 const VideoModal = dynamic(() => import("@/components/ui/VideoModal"), { ssr: false });
 
@@ -26,7 +26,7 @@ export function PlayShowreel({ className = "" }: { className?: string }) {
         </span>
         <span className="text-sm font-semibold">Play showreel</span>
       </button>
-      {origin && <VideoModal video={{ ...showreel, title: "Showreel" }} origin={origin} onClose={() => setOrigin(null)} />}
+      {origin && <VideoModal video={{ ...(realShowreel ?? { src: showreel.src, poster: "" }), title: "Showreel" }} origin={origin} onClose={() => setOrigin(null)} />}
     </>
   );
 }
