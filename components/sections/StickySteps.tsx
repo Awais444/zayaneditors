@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
  * while the previous scales to 0.95 and dims to 60%. Each card's visual plays once when the
  * card becomes active. Mobile: plain vertical cards (visual on top). Reduced motion: final states.
  */
-export type Step = { title: string; text: string; bullets: string[]; duration: string; deliverable: string };
+export type Step = { title: string; text?: string; bullets?: string[]; duration?: string; deliverable?: string };
 
 export function StickySteps({
   steps,
@@ -86,7 +86,7 @@ export function StickySteps({
                 <article
                   data-step
                   className={cn(
-                    "relative grid origin-top overflow-hidden rounded-3xl border border-line bg-surface lg:h-[26.25rem]", Visual && "lg:grid-cols-[2fr_3fr]",
+                    "relative grid origin-top overflow-hidden rounded-3xl border border-line bg-surface", Visual && "lg:h-[26.25rem] lg:grid-cols-[2fr_3fr]",
                     "bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:32px_32px]",
                   )}
                 >
@@ -101,16 +101,20 @@ export function StickySteps({
                     <p className="text-xs font-semibold tracking-[0.12em] text-muted uppercase">Step {i + 1} of {steps.length}</p>
                     <span className="mt-2 font-sans text-[4.5rem] leading-none font-bold tracking-[-0.05em] text-accent">{String(i + 1).padStart(2, "0")}</span>
                     <h3 className="mt-3 text-2xl font-semibold tracking-tight">{s.title}</h3>
-                    <p className="mt-2 text-muted lg:line-clamp-2">{s.text}</p>
-                    <ul className="mt-4 space-y-1.5 text-sm">
-                      {s.bullets.map((b) => (
-                        <li key={b} className="flex gap-2"><Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />{b}</li>
-                      ))}
-                    </ul>
-                    <div className="mt-auto flex flex-wrap gap-2 pt-5 text-xs">
-                      <span className="rounded-full border border-line bg-bg/60 px-3 py-1.5">⏱ {s.duration}</span>
-                      <span className="rounded-full border border-line bg-bg/60 px-3 py-1.5">📦 {s.deliverable}</span>
-                    </div>
+                    {s.text && <p className="mt-2 text-muted lg:line-clamp-2">{s.text}</p>}
+                    {s.bullets && (
+                      <ul className="mt-4 space-y-1.5 text-sm">
+                        {s.bullets.map((b) => (
+                          <li key={b} className="flex gap-2"><Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />{b}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {(s.duration || s.deliverable) && (
+                      <div className="mt-auto flex flex-wrap gap-2 pt-5 text-xs">
+                        {s.duration && <span className="rounded-full border border-line bg-bg/60 px-3 py-1.5">⏱ {s.duration}</span>}
+                        {s.deliverable && <span className="rounded-full border border-line bg-bg/60 px-3 py-1.5">📦 {s.deliverable}</span>}
+                      </div>
+                    )}
                   </div>
                   {Visual && (
                     <div className="relative order-1 p-4 md:p-6 lg:order-2 lg:pl-0">
