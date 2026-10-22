@@ -8,6 +8,7 @@ import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { Toaster } from "@/components/layout/Toaster";
 import { CursorLoader } from "@/components/ui/CursorLoader";
+import { RouteTransitions } from "@/components/motion/RouteTransitions";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organization, website } from "@/lib/schema";
 
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieBanner />
         <Toaster />
         <CursorLoader />
+        <RouteTransitions />
         <Analytics />
         <SpeedInsights />
       </body>

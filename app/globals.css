@@ -184,3 +184,82 @@ html.has-playhead:not(.playhead-kbd) iframe, html.has-playhead:not(.playhead-kbd
 @media (hover: none) {
   .marquee:hover .marquee-track { animation-play-state: running; }
 }
+
+/* ───────────── Cinematic layer ───────────── */
+
+/* Ambient gradient mesh: two large blurred blobs drifting via transform only (composited) */
+.mesh-bg { position: fixed; inset: 0; z-index: -20; pointer-events: none; overflow: hidden; }
+.mesh-bg::before, .mesh-bg::after {
+  content: ""; position: absolute; width: 70vmax; height: 70vmax; border-radius: 9999px;
+}
+.mesh-bg::before { top: -30vmax; right: -20vmax; background: radial-gradient(closest-side, rgba(198,244,50,0.07), transparent); animation: mesh-a 28s ease-in-out infinite alternate; }
+.mesh-bg::after { bottom: -35vmax; left: -25vmax; background: radial-gradient(closest-side, rgba(139,92,246,0.08), transparent); animation: mesh-b 34s ease-in-out infinite alternate; }
+@keyframes mesh-a { to { transform: translate3d(-12vmax, 10vmax, 0) scale(1.15); } }
+@keyframes mesh-b { to { transform: translate3d(14vmax, -8vmax, 0) scale(1.1); } }
+
+/* Route transition: new page wipes in while a lime "cut" bar sweeps across (350ms) */
+.vt-bar { position: fixed; top: 0; bottom: 0; left: -12px; width: 10px; z-index: 100; pointer-events: none; display: none; background: var(--color-accent); box-shadow: 0 0 40px 8px rgba(198,244,50,0.45); view-transition-name: vt-bar; }
+html.vt-cut .vt-bar { display: block; }
+::view-transition-old(vt-bar) { display: none; }
+::view-transition-new(vt-bar) { animation: vt-sweep 350ms cubic-bezier(0.77, 0, 0.175, 1) both; }
+html.vt-cut::view-transition-old(root) { animation: none; }
+html.vt-cut::view-transition-new(root) { animation: vt-wipe 350ms cubic-bezier(0.77, 0, 0.175, 1) both; }
+@keyframes vt-sweep { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 24px)); } }
+@keyframes vt-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* Kinetic headline: each word rises into place, staggered (CSS → off main thread, no LCP delay from JS) */
+.kinetic-word { display: inline-block; animation: word-rise 900ms cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: calc(var(--i, 0) * 70ms + 80ms); }
+@keyframes word-rise { from { transform: translateY(0.35em) rotate(2deg); } to { transform: none; } }
+
+/* Video-in-letters: the overlay multiplies with the video — white glyphs reveal it, dark ground hides it */
+.video-mask { position: relative; display: inline-block; isolation: isolate; line-height: 0.9; }
+.video-mask > video, .video-mask > .video-mask-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.video-mask > .video-mask-ink { position: relative; z-index: 1; display: block; background: var(--color-bg); color: #fff; mix-blend-mode: multiply; padding: 0 0.04em; }
+
+/* Marquee row running the other way */
+.marquee-track.reverse { animation-direction: reverse; }
+
+/* Stats waveform band */
+.wave-bar { transform-origin: center; animation: wave 1.6s ease-in-out infinite alternate; animation-delay: calc(var(--i) * -90ms); }
+@keyframes wave { from { transform: scaleY(0.25); } to { transform: scaleY(1); } }
+
+/* Auto-scrolling testimonial columns (pause on hover) */
+.masonry-col { animation: col-up var(--dur, 40s) linear infinite; }
+.masonry-col.down { animation-direction: reverse; }
+.masonry:hover .masonry-col, .masonry[data-paused="true"] .masonry-col { animation-play-state: paused; }
+@keyframes col-up { to { transform: translate3d(0, -50%, 0); } }
+
+/* Animated lime border for the featured plan: a rotating conic layer behind a 1px gap */
+.border-spin { position: relative; isolation: isolate; overflow: hidden; }
+.border-spin::before { content: ""; position: absolute; inset: -60%; z-index: -2; background: conic-gradient(from 0deg, transparent 0 60%, rgba(198,244,50,0.9) 75%, transparent 90%); animation: spin 4s linear infinite; }
+.border-spin::after { content: ""; position: absolute; inset: 1px; z-index: -1; border-radius: inherit; background: var(--color-surface); }
+@keyframes spin { to { transform: rotate(1turn); } }
+
+/* Bento glow border that follows the pointer */
+.glow-card { position: relative; }
+.glow-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; opacity: 0; transition: opacity 300ms ease; background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(198,244,50,0.65), transparent 60%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+@media (hover: hover) and (pointer: fine) { .glow-card:hover::before { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh-bg::before, .mesh-bg::after, .wave-bar, .masonry-col, .border-spin::before { animation: none !important; }
+  .kinetic-word { animation: word-fade 300ms ease both; }
+  html.vt-cut .vt-bar { display: none; }
+  html.vt-cut::view-transition-new(root) { animation: word-fade 250ms ease both; }
+  html.vt-cut::view-transition-old(root) { animation: word-fade 250ms ease reverse both; }
+}
+@keyframes word-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Scroll-driven reveal (CSS only, compositor-friendly). Never hides content before first paint. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry calc(0% + var(--reveal-offset, 0px)) entry calc(35% + var(--reveal-offset, 0px));
+    }
+  }
+}
+@keyframes reveal-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* Skip rendering work for heavy below-the-fold sections until they approach the viewport */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 900px; }

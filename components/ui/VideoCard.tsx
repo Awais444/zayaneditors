@@ -88,6 +88,7 @@ export function VideoCard({
         </span>
       </div>
       <div className="mt-4">
+        {!href && <span className="sr-only">Play video: </span>}
         <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
         {meta && <p className="mt-1 text-sm text-muted">{meta}</p>}
       </div>
@@ -104,7 +105,6 @@ export function VideoCard({
         <button
           type="button"
           className="block w-full text-left"
-          aria-label={`Play ${title}`}
           onClick={(e) => {
             const r = e.currentTarget.getBoundingClientRect();
             setOrigin({ x: r.left + r.width / 2, y: r.top + r.height / 2 });

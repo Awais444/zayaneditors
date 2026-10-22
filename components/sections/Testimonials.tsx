@@ -32,7 +32,7 @@ export function Testimonials() {
         <ul ref={track} className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain scroll-px-4 px-4 pb-2" aria-label="Client testimonials" data-cursor="drag">
           {testimonials.map((t) => (
             <li key={t.name} className="card flex w-[85%] shrink-0 snap-start flex-col p-7 sm:w-[24rem]">
-              <div className="flex gap-0.5 text-accent" aria-label={`${t.rating} out of 5 stars`}>
+              <div role="img" className="flex gap-0.5 text-accent" aria-label={`${t.rating} out of 5 stars`}>
                 {Array.from({ length: t.rating }, (_, i) => <Star key={i} className="size-4 fill-current" aria-hidden />)}
               </div>
               <blockquote className="mt-4 text-lg leading-relaxed">“{t.quote}”</blockquote>

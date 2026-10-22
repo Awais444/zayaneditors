@@ -8,6 +8,9 @@ const RAW = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEs
 const FINAL = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4";
 const POSTER = "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=1400&q=70";
 
+/** Snap stops for the divider: all raw, half/half, all edited (and the quarters). */
+const SNAPS = [0, 25, 50, 75, 100];
+
 /** Rubber-band past the edges (iOS-style). */
 const rubber = (v: number, min: number, max: number, c = 0.25) =>
   v < min ? min - (min - v) * c : v > max ? max + (v - max) * c : v;
@@ -78,8 +81,9 @@ export default function BeforeAfter() {
       return;
     }
     // Momentum projection, clamped, with a little bounce after a flick
-    const projected = pos.get() + d.v * 120;
-    const target = Math.min(100, Math.max(0, projected));
+    // Project momentum (Apple-style decay), then snap to the nearest stop
+    const projected = pos.get() + ((d.v * 1000) / 1000) * (0.998 / (1 - 0.998)) * 0.2;
+    const target = SNAPS.reduce((a, b) => (Math.abs(b - projected) < Math.abs(a - projected) ? b : a));
     animate(pos, target, { type: "spring", velocity: d.v * 1000, bounce: reduce ? 0 : 0.15, duration: 0.5 });
   };
   const onKey = (e: React.KeyboardEvent) => {
@@ -102,8 +106,8 @@ export default function BeforeAfter() {
       >
         <video ref={raw} src={RAW} poster={POSTER} muted loop playsInline preload="none" className="pointer-events-none absolute inset-0 size-full object-cover grayscale-[0.6] saturate-50 contrast-75" />
         <motion.video ref={fin} src={FINAL} poster={POSTER} muted loop playsInline preload="none" style={{ clipPath: clip }} className="pointer-events-none absolute inset-0 size-full object-cover" />
-        <span className="chrome pointer-events-none absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-semibold">Raw footage</span>
-        <span className="pointer-events-none absolute top-4 right-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold">Final edit</span>
+        <span className="chrome pointer-events-none absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-bold tracking-[0.14em]">RAW</span>
+        <span className="pointer-events-none absolute top-4 right-4 rounded-full bg-accent px-3 py-1 text-xs font-bold tracking-[0.14em] text-accent-fg">EDITED</span>
         <motion.div style={{ left }} className="absolute inset-y-0 w-0.5 -translate-x-1/2 cursor-ew-resize bg-white">
           <div
             role="slider"

@@ -1,7 +1,12 @@
-"use client";
-import { motion, useReducedMotion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-/** Scroll reveal: fade + rise once. Reduced motion → opacity only. */
+/**
+ * Scroll reveal: fade + rise as the element enters the viewport.
+ * Pure CSS scroll-driven animation (see `.reveal` in globals.css): no JS, no hydration wait,
+ * and content is never hidden at first paint — elements already in view render fully visible,
+ * which keeps LCP fast. Browsers without `animation-timeline` simply show the content.
+ * `delay` staggers siblings by shifting the start of the animation range.
+ */
 export function Reveal({
   children,
   delay = 0,
@@ -11,16 +16,9 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: reduce ? 0 : 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-      transition={{ duration: reduce ? 0.2 : 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div className={cn("reveal", className)} style={delay ? ({ "--reveal-offset": `${Math.round(delay * 100)}px` } as React.CSSProperties) : undefined}>
       {children}
-    </motion.div>
+    </div>
   );
 }

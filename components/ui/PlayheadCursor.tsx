@@ -192,7 +192,25 @@ export default function PlayheadCursor() {
       applyState();
       kick();
     };
+    let scrollRaf = 0;
     const onScroll = () => {
+      scrollRaf ||= requestAnimationFrame(onScrollFrame);
+    };
+    // One hit-test per frame at most, not per scroll event
+    const onScrollFrame = () => {
+      scrollRaf = 0;
+      // Content moved under a still pointer: re-resolve what's beneath it
+      if (visible) {
+        const el = document.elementFromPoint(px, py);
+        const next = resolve(el);
+        if (next !== state) {
+          state = next;
+          const shouldShow = next !== "hide" && next !== "native";
+          if (shouldShow !== visible) setVisible(shouldShow);
+          applyState();
+          kick();
+        }
+      }
       measureCard();
     };
     // Left the window, or moved into an iframe (relatedTarget is null in both cases)
@@ -225,6 +243,7 @@ export default function PlayheadCursor() {
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(scrollRaf);
       clearTimeout(squeeze);
       root.classList.remove("has-playhead", "playhead-kbd");
       window.removeEventListener("pointermove", onMove);
