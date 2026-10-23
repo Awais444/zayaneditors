@@ -3,7 +3,7 @@ import Script from "next/script";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { captureUtm } from "@/lib/analytics";
+import { AI_REF_KEY, captureAiReferral, captureUtm } from "@/lib/analytics";
 
 const KEY = "cookie-consent";
 type Consent = "all" | "essential" | null;
@@ -19,6 +19,7 @@ export function CookieBanner() {
 
   useEffect(() => {
     captureUtm();
+    captureAiReferral();
     try {
       setConsent(localStorage.getItem(KEY) as Consent);
     } catch {}
@@ -38,7 +39,7 @@ export function CookieBanner() {
         <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA}`} strategy="lazyOnload" />
           <Script id="ga4" strategy="lazyOnload">
-            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});`}
+            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA}',{anonymize_ip:true});try{var r=sessionStorage.getItem('${AI_REF_KEY}');if(r){gtag('event','ai_referral',JSON.parse(r));sessionStorage.removeItem('${AI_REF_KEY}')}}catch(e){}`}
           </Script>
         </>
       )}

@@ -18,6 +18,7 @@ import { TestimonialsMasonry } from "@/components/sections/TestimonialsMasonry";
 import { PricingFeature } from "@/components/home/PricingFeature";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { AboutBrand } from "@/components/sections/AboutBrand";
 import { ServiceIndex } from "@/components/home/ServiceIndex";
 
 export const metadata: Metadata = pageMeta({
@@ -54,6 +55,7 @@ export default function Home() {
       <TestimonialsMasonry />
       <PricingFeature />
       <ServiceIndex />
+      <AboutBrand />
       <FAQAccordion items={homeFaqs} />
       <FinalCTA videoSrc={ctaClip} />
     </>

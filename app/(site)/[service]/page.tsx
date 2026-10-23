@@ -8,6 +8,9 @@ import { site, whatsappUrl } from "@/data/site";
 import { getPost } from "@/lib/blog";
 import { pageMeta } from "@/lib/metadata";
 import { faqPage, serviceSchema, videoObject } from "@/lib/schema";
+import { QuickAnswer } from "@/components/seo/QuickAnswer";
+import { KeyFacts } from "@/components/seo/KeyFacts";
+import { serviceAnswer, serviceFacts } from "@/lib/answers";
 import { firstPublished, lastModified } from "@/lib/lastmod";
 import { previewDuration } from "@/data/portfolio";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -90,6 +93,8 @@ export default async function ServicePage({ params }: Props) {
         visual={<HeroVideoCard video={work[0] ? toCard(work[0]).video : s.video} chips={[categoryChip[s.category], firstCut]} />}
       />
 
+      <QuickAnswer question={`What does ${s.name} from ${site.shortName} include?`} answer={serviceAnswer(s)} />
+
       <section data-tl="Included" data-tl-color="rgba(139,92,246,0.45)" className="section cv-auto pt-4">
         <div className="container-x">
           <SectionHeader eyebrow="What's included" title={`Everything in a ${s.name.toLowerCase()} edit`} />
@@ -111,6 +116,7 @@ export default async function ServicePage({ params }: Props) {
               Ready to see it on your own footage? Compare <Link href="/pricing">plans and pricing</Link>, browse <Link href="/portfolio">our portfolio</Link>, or{" "}
               <Link href="/contact">start a project</Link> today.
             </p>
+            <KeyFacts title={`${s.name}: key facts`} facts={serviceFacts(s, work.length)} />
             <p className="text-sm text-muted">
               Last updated <time dateTime={updated.toISOString()}>{updated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
             </p>

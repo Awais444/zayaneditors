@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { QuickAnswer } from "@/components/seo/QuickAnswer";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
@@ -76,6 +77,7 @@ export default async function PostPage({ params }: Props) {
               By {meta.author} · <time dateTime={meta.date}>{new Date(meta.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
             </p>
           </header>
+          {meta.summary && <QuickAnswer className="mt-10 [&>div]:mx-0" question={meta.question ?? meta.title} answer={meta.summary} />}
           <div className="relative mt-10 aspect-[2/1] overflow-hidden rounded-3xl border border-line">
             <Image src={meta.cover} alt="" fill priority sizes="100vw" className="object-cover" />
           </div>

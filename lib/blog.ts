@@ -13,6 +13,9 @@ export type PostMeta = {
   author: string;
   cover: string;
   readingTime: string;
+  /** 40–60 word direct answer shown as "Quick answer" */
+  summary?: string;
+  question?: string;
 };
 
 const dir = path.join(process.cwd(), "content/blog");

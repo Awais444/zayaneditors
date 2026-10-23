@@ -11,6 +11,7 @@ import { BentoGrid, type BentoItem } from "@/components/sections/BentoGrid";
 import { StatsBand } from "@/components/sections/StatsBand";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { AboutBrand } from "@/components/sections/AboutBrand";
 
 export const metadata = pageMeta({
   title: `About ${site.name} | Professional Video Editors`,
@@ -43,6 +44,8 @@ export default function AboutPage() {
         sub={`A remote team of editors, colourists, motion designers and sound engineers. You upload footage; your editor cuts a first version within ${site.turnaround} and refines it with you until it's ready to publish.`}
         ctas={[{ label: "Start a Project", href: "/contact" }, { label: "See our work", href: "/portfolio", variant: "outline" }]}
       />
+
+      <AboutBrand />
 
       <section data-tl="Team" data-tl-color="rgba(139,92,246,0.45)" className="section pt-0">
         <div className="container-x">

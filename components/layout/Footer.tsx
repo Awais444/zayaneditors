@@ -28,6 +28,9 @@ const company = [
 const resources = [
   { label: "Free Trial Edit", href: "/free-trial-edit" },
   { label: "Blog", href: "/blog" },
+  { label: "Our Process", href: "/process" },
+  { label: "Pricing Guide 2026", href: "/video-editing-pricing-guide" },
+  { label: "Glossary", href: "/glossary" },
   { label: "FAQ", href: "/faq" },
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms", href: "/terms" },

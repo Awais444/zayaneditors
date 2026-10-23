@@ -74,6 +74,12 @@ for (const [route, html] of pages) {
   const body = text(html);
   if (body.split(" ").length < 120 && !noindex) warn.push(`${route}: only ${body.split(" ").length} words of server-rendered text`);
 
+  // Quick answers must be 40–60 words
+  for (const m of html.matchAll(/data-quick-answer="true">([\s\S]*?)<\/p>/g)) {
+    const n = decode(m[1].replace(/<[^>]+>/g, "")).trim().split(/\s+/).length;
+    if (n < 40 || n > 60) warn.push(`${route}: quick answer ${n} words`);
+  }
+
   // JSON-LD
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     let data;

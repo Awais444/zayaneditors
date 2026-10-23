@@ -21,6 +21,8 @@ import { StickySteps } from "./StickySteps";
 import { LocalTime } from "./LocalTime";
 import { FAQAccordion } from "./FAQAccordion";
 import { FinalCTA } from "./FinalCTA";
+import { QuickAnswer } from "@/components/seo/QuickAnswer";
+import { locationAnswer } from "@/lib/answers";
 
 const topServices: [string, LucideIcon][] = [
   ["youtube-video-editing", Youtube],
@@ -97,6 +99,8 @@ export function LocationTemplate({
           </div>
         </div>
       </section>
+
+      <QuickAnswer question={`Can I hire a video editor in ${place.name}?`} answer={locationAnswer(place)} />
 
       <section data-tl="Services" data-tl-color="rgba(139,92,246,0.45)" className="section cv-auto pt-4">
         <div className="container-x">
