@@ -162,7 +162,10 @@ export default function PlayheadCursor() {
 
     const measureCard = () => {
       // The playhead line spans the media frame only (a [data-cursor-frame] child when present), never the title
-      cardRect = card ? (card.querySelector("[data-cursor-frame]") ?? card).getBoundingClientRect() : null;
+      const r = card ? (card.querySelector("[data-cursor-frame]") ?? card).getBoundingClientRect() : null;
+      // Clip to the visible part: sticky bars ([data-cursor-occlude]: header, portfolio filters) cover the frame's top
+      const cover = r ? Math.max(0, ...[...document.querySelectorAll("[data-cursor-occlude]")].map((el) => el.getBoundingClientRect().bottom)) : 0;
+      cardRect = r && cover > r.top ? new DOMRect(r.x, Math.min(cover, r.bottom), r.width, Math.max(0, r.bottom - cover)) : r;
     };
 
     const onMove = (e: PointerEvent) => {

@@ -92,3 +92,9 @@ export function serviceSamples(map: { exact?: string[]; related?: string[] } | u
   if (related.length) return { mode: "related" as const, items: related, categories: map!.related! };
   return { mode: "none" as const, items: [], categories: [] as string[] };
 }
+
+/** Display names for portfolio categories (data keeps the original folder names). */
+const categoryLabels: Record<string, string> = { "AI Generation": "AI Video", VSL: "VSLs" };
+export const categoryLabel = (c: string) => categoryLabels[c] ?? c;
+/** URL value for ?category= (e.g. "UGC Ads" → "ugc-ads"). */
+export const categorySlug = (c: string) => categoryLabel(c).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");

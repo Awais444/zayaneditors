@@ -133,7 +133,7 @@ export function Header({ groups }: { groups: NavGroup[] }) {
   }, [mega]);
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-50">
+    <header ref={headerRef} data-cursor-occlude className="sticky top-0 z-50">
       <div className={cn("chrome transition-shadow duration-300", scrolled && "shadow-[0_12px_24px_-12px_rgb(0_0_0/0.8)]")}>
         <div className="container-x flex h-16 items-center justify-between gap-6 md:h-18">
           <Logo />

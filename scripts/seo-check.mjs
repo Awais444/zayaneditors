@@ -119,7 +119,7 @@ for (const [r, n] of inbound) if (n === 0 && r !== "/") warn.push(`${r}: orphan 
 // Raw-HTML content spot checks
 const must = [
   ["/pricing", /\$\d+/, "prices"],
-  ["/portfolio", /View project/, "portfolio titles/links"],
+  ["/portfolio", /href="\/portfolio\/[a-z0-9-]+"/, "portfolio titles/links"],
   ["/faq", /<h2/, "FAQ headings"],
 ];
 for (const [r, re, what] of must) if (pages.has(r) && !re.test(pages.get(r))) err(r, `${what} missing from raw HTML`);

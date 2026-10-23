@@ -31,7 +31,7 @@ export function PageHero({
   return (
     <section data-tl="Intro" data-tl-color="rgba(198,244,50,0.35)" className="relative isolate overflow-hidden">
       <div aria-hidden className="glow -top-48 right-0 -z-10 size-[36rem]" />
-      <div className={cn("container-x grid items-center gap-12 pt-10 pb-16 md:pb-20", !!visual && "lg:grid-cols-2 lg:gap-10")}>
+      <div className={cn("container-x grid items-center gap-12 pt-12 pb-16 md:pb-20", !!visual && "lg:grid-cols-2 lg:gap-10")}>
         <div>
           {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
           {eyebrow && <p className="mb-5 text-xs font-semibold tracking-[0.14em] text-accent uppercase">{eyebrow}</p>}
