@@ -21,6 +21,11 @@ export type PortfolioItem = {
   editingStyle: string[];
   poster: string;
   preview: { mp4: string; webm: string };
+  /** 9:16 preview + poster for reel-style cards (featured items); the modal keeps the original ratio */
+  verticalPreview?: string;
+  verticalPoster?: string;
+  /** How the 9:16 version was made: as-is, centre crop or blur-fill */
+  verticalMethod?: string;
   /** Original file inside /portfolio-raw (never committed) */
   source: string;
   // TODO: fill with real, verifiable results (leave empty if none)
@@ -47,6 +52,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["3D animation", "light streaks", "logo lockup", "camera moves"],
     poster: "/posters/news-channel-3d-globe-intro.webp",
     preview: { mp4: "/videos/news-channel-3d-globe-intro.mp4", webm: "/videos/news-channel-3d-globe-intro.webm" },
+    verticalPreview: "/videos/vertical/news-channel-3d-globe-intro.mp4",
+    verticalPoster: "/posters/vertical/news-channel-3d-globe-intro.webp",
+    verticalMethod: "blur-fill",
     source: "3D ANIMATIONS/01.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -113,6 +121,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["AI-generated scenes", "word-by-word captions", "chat bubble overlays", "voiceover"],
     poster: "/posters/locsmart-ai-story-ad.webp",
     preview: { mp4: "/videos/locsmart-ai-story-ad.mp4", webm: "/videos/locsmart-ai-story-ad.webm" },
+    verticalPreview: "/videos/vertical/locsmart-ai-story-ad.mp4",
+    verticalPoster: "/posters/vertical/locsmart-ai-story-ad.webp",
+    verticalMethod: "as-is",
     source: "AI GENERATION & EDITS/02.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -135,6 +146,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["AI-generated scenes", "cinematic grade", "narration", "slow pacing"],
     poster: "/posters/ai-cinematic-short-film.webp",
     preview: { mp4: "/videos/ai-cinematic-short-film.mp4", webm: "/videos/ai-cinematic-short-film.webm" },
+    verticalPreview: "/videos/vertical/ai-cinematic-short-film.mp4",
+    verticalPoster: "/posters/vertical/ai-cinematic-short-film.webp",
+    verticalMethod: "blur-fill",
     source: "AI GENERATION & EDITS/04.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -223,6 +237,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["narration", "archive B-roll", "kinetic headlines", "sound design"],
     poster: "/posters/gas-prices-economy-documentary.webp",
     preview: { mp4: "/videos/gas-prices-economy-documentary.mp4", webm: "/videos/gas-prices-economy-documentary.webm" },
+    verticalPreview: "/videos/vertical/gas-prices-economy-documentary.mp4",
+    verticalPoster: "/posters/vertical/gas-prices-economy-documentary.webp",
+    verticalMethod: "blur-fill",
     source: "DOCUMENTARY_/01.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -245,6 +262,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["bold word captions", "split screens", "product close-ups", "end card"],
     poster: "/posters/locsmart-product-ad-reel.webp",
     preview: { mp4: "/videos/locsmart-product-ad-reel.mp4", webm: "/videos/locsmart-product-ad-reel.webm" },
+    verticalPreview: "/videos/vertical/locsmart-product-ad-reel.mp4",
+    verticalPoster: "/posters/vertical/locsmart-product-ad-reel.webp",
+    verticalMethod: "as-is",
     source: "E COMMERCE ADS VIDEOS/05.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -267,6 +287,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["kinetic script captions", "emotive B-roll", "voiceover", "end card"],
     poster: "/posters/counselling-practice-social-ad.webp",
     preview: { mp4: "/videos/counselling-practice-social-ad.mp4", webm: "/videos/counselling-practice-social-ad.webm" },
+    verticalPreview: "/videos/vertical/counselling-practice-social-ad.mp4",
+    verticalPoster: "/posters/vertical/counselling-practice-social-ad.webp",
+    verticalMethod: "as-is",
     source: "E COMMERCE ADS VIDEOS/03.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -377,6 +400,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["logo reveals", "particles", "3D lighting", "compositing"],
     poster: "/posters/logo-animation-showreel.webp",
     preview: { mp4: "/videos/logo-animation-showreel.mp4", webm: "/videos/logo-animation-showreel.webm" },
+    verticalPreview: "/videos/vertical/logo-animation-showreel.mp4",
+    verticalPoster: "/posters/vertical/logo-animation-showreel.webp",
+    verticalMethod: "blur-fill",
     source: "LOGO ANIMATIONS/ALL LOGO ANIMATIONS.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -399,6 +425,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["drone shots", "walkthrough", "voiceover", "captions"],
     poster: "/posters/arizona-home-tour-reel.webp",
     preview: { mp4: "/videos/arizona-home-tour-reel.mp4", webm: "/videos/arizona-home-tour-reel.webm" },
+    verticalPreview: "/videos/vertical/arizona-home-tour-reel.mp4",
+    verticalPoster: "/posters/vertical/arizona-home-tour-reel.webp",
+    verticalMethod: "as-is",
     source: "REAL ESTATE EDITS/01.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -443,6 +472,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["raw vs edit split", "serif captions", "cutaways", "branded frame"],
     poster: "/posters/doctor-sleep-tips-raw-vs-edit-reel.webp",
     preview: { mp4: "/videos/doctor-sleep-tips-raw-vs-edit-reel.mp4", webm: "/videos/doctor-sleep-tips-raw-vs-edit-reel.webm" },
+    verticalPreview: "/videos/vertical/doctor-sleep-tips-raw-vs-edit-reel.mp4",
+    verticalPoster: "/posters/vertical/doctor-sleep-tips-raw-vs-edit-reel.webp",
+    verticalMethod: "as-is",
     source: "TALKING HEAD/08.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -465,6 +497,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["branded cutaways", "icon animation", "single-word captions", "4K"],
     poster: "/posters/business-coach-talking-head-reel.webp",
     preview: { mp4: "/videos/business-coach-talking-head-reel.mp4", webm: "/videos/business-coach-talking-head-reel.webm" },
+    verticalPreview: "/videos/vertical/business-coach-talking-head-reel.mp4",
+    verticalPoster: "/posters/vertical/business-coach-talking-head-reel.webp",
+    verticalMethod: "as-is",
     source: "TALKING HEAD/04.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -729,6 +764,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["UGC style", "two-tone bold captions", "product page close"],
     poster: "/posters/foundation-cushion-ugc-ad.webp",
     preview: { mp4: "/videos/foundation-cushion-ugc-ad.mp4", webm: "/videos/foundation-cushion-ugc-ad.webm" },
+    verticalPreview: "/videos/vertical/foundation-cushion-ugc-ad.mp4",
+    verticalPoster: "/posters/vertical/foundation-cushion-ugc-ad.webp",
+    verticalMethod: "centre crop (near 9:16 source)",
     source: "UGC ADS/01.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO
@@ -795,6 +833,9 @@ export const portfolioItems: PortfolioItem[] = [
     editingStyle: ["neon motion graphics", "screen animations", "presenter", "headline text"],
     poster: "/posters/dtc-growth-agency-vsl.webp",
     preview: { mp4: "/videos/dtc-growth-agency-vsl.mp4", webm: "/videos/dtc-growth-agency-vsl.webm" },
+    verticalPreview: "/videos/vertical/dtc-growth-agency-vsl.mp4",
+    verticalPoster: "/posters/vertical/dtc-growth-agency-vsl.webp",
+    verticalMethod: "blur-fill",
     source: "VSL/03.mp4",
     client: "", // TODO
     results: { views: "", retention: "", ctr: "", roas: "" }, // TODO

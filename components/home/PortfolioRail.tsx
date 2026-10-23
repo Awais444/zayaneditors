@@ -1,8 +1,11 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { toCard, type PortfolioItem } from "@/data/portfolio";
-import { VideoCard } from "@/components/ui/VideoCard";
+import type { PortfolioItem } from "@/data/portfolio";
+import { ReelCard } from "./ReelCard";
+
+const VideoModal = dynamic(() => import("@/components/ui/VideoModal"), { ssr: false });
 import { DESKTOP_MOTION, loadGsap } from "@/lib/motion";
 
 
@@ -16,6 +19,7 @@ export function PortfolioRail({ items }: { items: PortfolioItem[] }) {
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const label = useRef<HTMLSpanElement>(null);
+  const [open, setOpen] = useState<{ p: PortfolioItem; origin: { x: number; y: number } } | null>(null);
 
   useEffect(() => {
     let revert = () => {};
@@ -76,18 +80,21 @@ export function PortfolioRail({ items }: { items: PortfolioItem[] }) {
           Now showing: <span ref={label} className="font-semibold text-accent">{items[0].category}</span>
         </p>
       </div>
-      <div ref={viewport} className="no-scrollbar snap-x snap-mandatory overflow-x-auto overscroll-x-contain" data-cursor="drag">
-        <div ref={track} className="flex w-max gap-6 px-[max(1rem,calc((100vw-80rem)/2+2rem))] will-change-transform">
+      {/* Right-edge fade so the peeking last card reads as intentional */}
+      <div ref={viewport} className="no-scrollbar snap-x snap-mandatory overflow-x-auto overscroll-x-contain [mask-image:linear-gradient(to_right,#000_85%,transparent)]" data-cursor="drag">
+        <div ref={track} className="flex w-max gap-5 px-[max(1rem,calc((100vw-80rem)/2+2rem))] will-change-transform">
           {items.map((c) => (
-            <div key={c.slug} className="w-[80vw] shrink-0 snap-start sm:w-[55vw] lg:w-[34vw]">
-              <VideoCard video={toCard(c).video} title={c.title} meta={toCard(c).meta} href={`/portfolio/${c.slug}`} />
+            <div key={c.slug} className="w-[70vw] shrink-0 snap-start sm:w-[16rem] lg:w-[17.5rem]">
+              <ReelCard p={c} onOpen={(origin) => setOpen({ p: c, origin })} />
             </div>
           ))}
-          <Link href="/portfolio" className="card pressable grid w-[60vw] shrink-0 snap-start place-items-center p-10 text-center text-2xl font-semibold hover:border-white/20 sm:w-[30vw] lg:w-[20vw]">
+          <Link href="/portfolio" className="card pressable grid aspect-[9/16] w-[70vw] shrink-0 snap-start place-items-center self-start rounded-[20px] p-8 text-center text-2xl font-semibold hover:border-white/20 sm:w-[16rem] lg:w-[17.5rem]">
             See all work →
           </Link>
         </div>
       </div>
+      {/* Modal plays the original preview in its true aspect ratio */}
+      {open && <VideoModal video={{ src: open.p.preview.mp4, poster: open.p.poster, title: open.p.title }} origin={open.origin} onClose={() => setOpen(null)} />}
     </section>
   );
 }

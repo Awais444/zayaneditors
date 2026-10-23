@@ -148,7 +148,8 @@ export default function PlayheadCursor() {
     };
 
     const measureCard = () => {
-      cardRect = card ? card.getBoundingClientRect() : null;
+      // The playhead line spans the media frame only (a [data-cursor-frame] child when present), never the title
+      cardRect = card ? (card.querySelector("[data-cursor-frame]") ?? card).getBoundingClientRect() : null;
     };
 
     const onMove = (e: PointerEvent) => {
