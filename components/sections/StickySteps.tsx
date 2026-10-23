@@ -55,14 +55,14 @@ export function StickySteps({
     return () => io.disconnect();
   }, []);
 
-  // Desktop: one scrubbed ScrollTrigger timeline pins the stack, centred below the header.
+  // Desktop: one scrubbed ScrollTrigger timeline pins the stack 24px below the header.
   // Per step: ~25vh with the active card fully readable (dwell), then ~35vh for the next card to
   // slide up over it. Covered cards fade their content out and sit as blank 12px edges above the
   // active card (max two); older ones disappear. Scrubbing one timeline keeps reverse symmetric.
   useEffect(() => {
     let revert = () => {};
     let cancelled = false;
-    loadGsap().then(({ gsap }) => {
+    loadGsap().then(({ gsap, ScrollTrigger }) => {
       if (cancelled || !list.current || !stage.current) return;
       const mm = gsap.matchMedia();
       mm.add(DESKTOP_MOTION, () => {
@@ -71,16 +71,39 @@ export function StickySteps({
         const cards = items.map((li) => li.querySelector<HTMLElement>("[data-step]")!);
         const content = cards.map((c) => c.querySelectorAll<HTMLElement>("[data-content]"));
         const EDGE = 12;
+        const SHADOW = 40; // room under the active card for its border + shadow (never clipped)
         const DWELL = 25; // vh
         const SLIDE = 35; // vh
-        const h = cards[0].offsetHeight;
-        gsap.set(ol, { position: "relative", height: h + EDGE * 2, overflow: "hidden" });
+        const header = () => document.querySelector("header")?.getBoundingClientRect().height ?? 72;
+        const barSpace = () => stage.current!.offsetHeight - ol.offsetHeight; // progress bar above the list
+
+        // Card height: 440px, reduced on short viewports so the whole card always fits (never clipped);
+        // the stage is sized from the real card height, no overflow clipping at all.
+        const sizeStage = () => gsap.set(ol, { height: cards[0].offsetHeight + EDGE * 2 + SHADOW });
+        const layout = () => {
+          const fit = window.innerHeight - header() - 48 - EDGE * 2 - SHADOW - barSpace();
+          gsap.set(cards, { height: Math.max(320, Math.min(440, fit)) });
+          sizeStage();
+        };
+        gsap.set(ol, { position: "relative" });
         gsap.set(items, { position: "absolute", left: 0, right: 0, top: EDGE * 2 });
-        gsap.set(items.slice(1), { yPercent: 105 });
+        layout();
+        // Viewport changes: re-fit the cards before ScrollTrigger re-measures the pin
+        ScrollTrigger.addEventListener("refreshInit", layout);
+        // The stage always follows the real card height
+        let lastH = cards[0].offsetHeight;
+        const ro = new ResizeObserver(() => {
+          if (cards[0].offsetHeight === lastH) return;
+          lastH = cards[0].offsetHeight;
+          sizeStage();
+          ScrollTrigger.refresh();
+        });
+        ro.observe(cards[0]);
+        // Incoming cards wait below, invisible, and fade in as they start sliding up
+        gsap.set(items.slice(1), { yPercent: 105, autoAlpha: 0 });
         cards[0].classList.add("pv-active");
 
-        const header = () => document.querySelector("header")?.getBoundingClientRect().height ?? 72;
-        const offset = () => Math.max(header() + 8, header() + (window.innerHeight - header() - stage.current!.offsetHeight) / 2);
+        const offset = () => header() + 24;
         const steps = items.length - 1;
 
         const tl = gsap.timeline({
@@ -103,12 +126,17 @@ export function StickySteps({
         items.slice(1).forEach((li, i) => {
           const at = i * (DWELL + SLIDE) + DWELL; // slide starts after the active card's dwell
           tl.to(li, { yPercent: 0, duration: SLIDE }, at);
+          tl.to(li, { autoAlpha: 1, duration: SLIDE * 0.2 }, at);
           tl.to(items[i], { y: -EDGE, scale: 0.97, duration: SLIDE }, at);
           tl.to(content[i], { opacity: 0, duration: SLIDE * 0.45 }, at + SLIDE * 0.55); // fades as it gets covered
           if (items[i - 1]) tl.to(items[i - 1], { y: -EDGE * 2, scale: 0.94, duration: SLIDE }, at);
           if (items[i - 2]) tl.to(items[i - 2], { autoAlpha: 0, duration: SLIDE * 0.5 }, at);
         });
         tl.to({}, { duration: DWELL }); // final card dwell before unpinning
+        return () => {
+          ro.disconnect();
+          ScrollTrigger.removeEventListener("refreshInit", layout);
+        };
       });
       revert = () => mm.revert();
     });
