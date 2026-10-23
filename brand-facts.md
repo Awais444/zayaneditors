@@ -38,7 +38,7 @@ The Home-page stats (videos edited, views, clients, years, rating) in `data/site
 
 ## Where these facts appear on the site
 
-- "What is Frameforge Studio?" section on Home and About (`components/sections/AboutBrand.tsx`)
+- "What is Frameforge Studio?" section on About (`components/sections/AboutBrand.tsx`)
 - `Organization` / `ProfessionalService` schema (`lib/schema.ts`)
 - `/llms.txt` and `/llms-full.txt` (`lib/llms.ts`)
 - Footer

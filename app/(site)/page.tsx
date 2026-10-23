@@ -18,8 +18,7 @@ import { TestimonialsMasonry } from "@/components/sections/TestimonialsMasonry";
 import { PricingFeature } from "@/components/home/PricingFeature";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { AboutBrand } from "@/components/sections/AboutBrand";
-import { ServiceIndex } from "@/components/home/ServiceIndex";
+import { PopularServices } from "@/components/home/PopularServices";
 
 export const metadata: Metadata = pageMeta({
   title: `Video Editing Services | Dedicated Editors | ${site.shortName}`,
@@ -38,6 +37,7 @@ export default function Home() {
       <Hero />
       <LogoRows />
       <BentoServices clips={work.slice(3, 5)} />
+      <PopularServices />
       <PortfolioRail items={work} />
       {ba && (
       <section data-tl="Before/After" data-tl-color="rgba(248,113,113,0.4)" className="section">
@@ -54,8 +54,6 @@ export default function Home() {
       <ProcessStack />
       <TestimonialsMasonry />
       <PricingFeature />
-      <ServiceIndex />
-      <AboutBrand />
       <FAQAccordion items={homeFaqs} />
       <FinalCTA videoSrc={ctaClip} />
     </>
