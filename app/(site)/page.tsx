@@ -21,7 +21,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata: Metadata = pageMeta({
   title: `Video Editing Services by a Dedicated Team of Editors | ${site.shortName}`,
-  description: "Not a faceless video editing agency: a dedicated team of professional editors for YouTube, ads, weddings, podcasts and more. First cut in 48h, free trial.",
+  description: "Dedicated professional editors for every format: talking-head reels, YouTube, ads and podcasts. Not a faceless agency. First cut in 48h, free trial.",
   path: "/",
 });
 

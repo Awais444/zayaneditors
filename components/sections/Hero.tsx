@@ -55,7 +55,7 @@ export function Hero() {
           <p {...line(0)} className="hero-line mb-4 text-xs font-semibold tracking-[0.14em] text-accent uppercase">A team of professional video editors</p>
           <h1 className="text-[clamp(2.5rem,5.2vw,4.75rem)] leading-[1.02] font-bold tracking-[-0.03em]">
             <span {...line(1)}>Video editing</span>
-            <span {...line(2)}>for <span className="text-accent">every kind</span> of video</span>
+            <span {...line(2)}>for <span className="text-accent">every format</span></span>
           </h1>
           <p {...line(3)} className="hero-line mt-5 max-w-xl text-lg text-white/80">
             Send raw footage, get a polished first cut in {site.turnaround} — one dedicated team for it all.
