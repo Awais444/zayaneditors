@@ -87,7 +87,7 @@ export const businessServices: ServiceCopy[] = [
     name: "Corporate Video Editing",
     category: "Business",
     keyword: "corporate video editing services",
-    metaTitle: "Corporate Video Editing Services | Brand & Internal Video",
+    metaTitle: "Corporate Video Editing | Brand & Internal Video",
     metaDescription:
       "Corporate video editing for brand films, testimonials, training, events and internal comms. On-brand, accessible and delivered on deadline.",
     h1: "Corporate Video Editing Services for Brands and Teams",

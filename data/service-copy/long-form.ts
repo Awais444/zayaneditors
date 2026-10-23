@@ -74,7 +74,7 @@ export const longFormServices: ServiceCopy[] = [
     ],
     related: ["long-form-video-editing", "youtube-thumbnail-design", "youtube-shorts-editing", "youtube-channel-management"],
     portfolioTags: ["long-form", "youtube"],
-    blog: ["youtube-video-editing-cost", "increase-youtube-audience-retention"],
+    blog: ["how-to-send-raw-footage-to-video-editor", "youtube-video-editing-cost"],
     video: sampleVideo("YouTube video editing sample", 0),
   },
   {
@@ -222,7 +222,7 @@ export const longFormServices: ServiceCopy[] = [
     ],
     related: ["video-editing-for-coaches", "captions-and-subtitles", "youtube-video-editing", "course-video-editing"],
     portfolioTags: ["long-form", "talking-head"],
-    blog: ["increase-youtube-audience-retention"],
+    blog: ["talking-head-video-editing", "increase-youtube-audience-retention"],
     video: sampleVideo("Talking head editing sample", 2),
   },
   {

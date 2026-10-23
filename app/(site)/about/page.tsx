@@ -13,7 +13,7 @@ import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
-  title: `About ${site.name} | A Team of Professional Video Editors`,
+  title: `About ${site.name} | Professional Video Editors`,
   description: `Meet ${site.name}: a dedicated team of professional video editors working with creators, brands and couples across the US, UK, Canada, Australia and UAE.`,
   path: "/about",
 });

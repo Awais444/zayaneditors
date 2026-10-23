@@ -72,7 +72,7 @@ export const podcastServices: ServiceCopy[] = [
     ],
     related: ["podcast-audio-editing", "podcast-clips-editing", "long-form-video-editing", "youtube-channel-management"],
     portfolioTags: ["podcast", "long-form"],
-    blog: ["youtube-video-editing-cost", "hire-youtube-video-editor"],
+    blog: ["short-form-vs-long-form-video", "youtube-video-editing-cost"],
     video: sampleVideo("Podcast video editing sample", 3),
   },
   {

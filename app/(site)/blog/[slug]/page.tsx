@@ -85,9 +85,10 @@ export default async function PostPage({ params }: Props) {
               <div className="card mt-14 flex gap-5 p-6">
                 <Image src={author.avatar} alt={author.name} width={64} height={64} className="size-16 shrink-0 rounded-full object-cover" />
                 <div>
-                  <p className="font-semibold text-fg">{author.name}</p>
+                  <p className="font-semibold text-fg"><Link href={`/team#${author.slug}`} className="hover:text-accent">{author.name}</Link></p>
                   <p className="text-sm text-muted">{author.role}</p>
                   <p className="mt-2 text-sm">{author.bio}</p>
+                  <p className="mt-3 text-sm">Questions about this topic? <Link href="/contact" className="text-fg underline underline-offset-2">Contact our team</Link>.</p>
                 </div>
               </div>
             </div>

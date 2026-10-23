@@ -18,9 +18,10 @@ import { TestimonialsMasonry } from "@/components/sections/TestimonialsMasonry";
 import { PricingFeature } from "@/components/home/PricingFeature";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { ServiceIndex } from "@/components/home/ServiceIndex";
 
 export const metadata: Metadata = pageMeta({
-  title: `Video Editing Services by a Dedicated Team of Editors | ${site.shortName}`,
+  title: `Video Editing Services | Dedicated Editors | ${site.shortName}`,
   description: "Dedicated professional editors for every format: talking-head reels, YouTube, ads and podcasts. Not a faceless agency. First cut in 48h, free trial.",
   path: "/",
 });
@@ -52,6 +53,7 @@ export default function Home() {
       <ProcessStack />
       <TestimonialsMasonry />
       <PricingFeature />
+      <ServiceIndex />
       <FAQAccordion items={homeFaqs} />
       <FinalCTA videoSrc={ctaClip} />
     </>

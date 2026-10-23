@@ -55,7 +55,7 @@ for (const [route, html] of pages) {
   const canonical = html.match(/<link rel="canonical" href="([^"]*)"/)?.[1];
   const noindex = /<meta name="robots" content="[^"]*noindex/.test(html);
   if (!title) err(route, "missing <title>");
-  else if (title.length > 60) warn.push(`${route}: title ${title.length} chars "${title}"`);
+  else if (title.length > 60) err(route, `title ${title.length} chars "${title}"`);
   if (!desc) err(route, "missing meta description");
   else if (desc.length > 155) err(route, `description ${desc.length} chars`);
   if (!noindex) {

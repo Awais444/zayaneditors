@@ -4,11 +4,11 @@ import { Clock, Film, Layers, Music, Palette, Sparkles, Subtitles, Type, Wand2, 
 import { getService, services, type ServiceCategory } from "@/data/services";
 import { relatedWork, toCard } from "@/data/portfolio";
 import { processSteps, shortProcess } from "@/data/process";
-import { whatsappUrl } from "@/data/site";
+import { site, whatsappUrl } from "@/data/site";
 import { getPost } from "@/lib/blog";
 import { pageMeta } from "@/lib/metadata";
 import { faqPage, serviceSchema, videoObject } from "@/lib/schema";
-import { firstPublished } from "@/lib/lastmod";
+import { firstPublished, lastModified } from "@/lib/lastmod";
 import { previewDuration } from "@/data/portfolio";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/sections/PageHero";
@@ -33,7 +33,8 @@ export const generateStaticParams = () => services.map((s) => ({ service: s.slug
 export async function generateMetadata({ params }: Props) {
   const s = getService((await params).service);
   if (!s) return {};
-  return pageMeta({ title: s.metaTitle, description: s.metaDescription, path: `/${s.slug}` });
+  const brand = `${s.metaTitle} | ${site.shortName}`;
+  return pageMeta({ title: brand.length <= 60 ? brand : s.metaTitle, description: s.metaDescription, path: `/${s.slug}` });
 }
 
 /** First hero chip per category; the second is always the turnaround. */
@@ -51,6 +52,7 @@ export default async function ServicePage({ params }: Props) {
   const s = getService((await params).service);
   if (!s) notFound();
   const work = relatedWork(s.portfolioTags, 6);
+  const updated = lastModified("data/services.ts", "data/service-copy");
   const related = s.related.map(getService).filter((x): x is NonNullable<typeof x> => !!x);
   const posts = s.blog.map((b) => getPost(b)?.meta).filter((x): x is NonNullable<typeof x> => !!x);
   const firstCut = s.turnaround.split("·")[0].trim();
@@ -109,6 +111,9 @@ export default async function ServicePage({ params }: Props) {
               Ready to see it on your own footage? Compare <Link href="/pricing">plans and pricing</Link>, browse <Link href="/portfolio">our portfolio</Link>, or{" "}
               <Link href="/contact">start a project</Link> today.
             </p>
+            <p className="text-sm text-muted">
+              Last updated <time dateTime={updated.toISOString()}>{updated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
+            </p>
           </article>
         </div>
       </section>
@@ -122,7 +127,7 @@ export default async function ServicePage({ params }: Props) {
 
       <section id="pricing" data-tl="Pricing" data-tl-color="rgba(52,211,153,0.4)" className="section cv-auto pt-0">
         <div className="container-x">
-          <SectionHeader eyebrow="Pricing" title={`${s.name} pricing`} intro={`Turnaround: ${s.turnaround}. All prices in USD.`} center />
+          <SectionHeader eyebrow="Pricing" title={`${s.name} pricing`} intro={`Turnaround: ${s.turnaround}. ${s.pricing.some((p) => /d/.test(p.price)) ? "All prices in USD." : "Priced per project — send your brief for a quote."}`} center />
           <PricingCards plans={s.pricing} />
           <p className="mt-10 text-center text-sm text-muted">Need volume? See <Link href="/pricing" className="text-fg underline underline-offset-2">monthly plans</Link>.</p>
         </div>

@@ -11,7 +11,7 @@ export const eventServices: ServiceCopy[] = [
     slug: "event-video-editing",
     name: "Event Video Editing",
     keyword: "event video editing services",
-    metaTitle: "Event Video Editing Services | Recaps, Talks & Highlights",
+    metaTitle: "Event Video Editing | Recaps, Talks & Highlights",
     metaDescription:
       "Event video editing for conferences, launches, festivals and parties: same-week recaps, full session edits and social highlights from multi-camera footage.",
     h1: "Event Video Editing for Recaps People Actually Watch",

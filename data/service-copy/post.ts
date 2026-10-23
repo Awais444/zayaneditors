@@ -143,7 +143,7 @@ export const postServices: ServiceCopy[] = [
     ],
     related: ["podcast-clips-editing", "short-form-video-editing", "social-media-video-editing", "captions-and-subtitles"],
     portfolioTags: ["shorts", "podcast"],
-    blog: ["increase-youtube-audience-retention"],
+    blog: ["short-form-vs-long-form-video", "increase-youtube-audience-retention"],
     video: sampleVideo("Repurposing sample", 3),
   },
 ];

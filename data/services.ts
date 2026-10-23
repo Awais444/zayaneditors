@@ -8,6 +8,7 @@ import { marketingServices } from "./service-copy/marketing";
 import { eventServices } from "./service-copy/events";
 import { postServices } from "./service-copy/post";
 import { extraSections } from "./service-copy/extra-sections";
+import { specialtyServices } from "./service-copy/specialty";
 
 export type ServiceCategory =
   | "YouTube & Long-Form"
@@ -63,7 +64,7 @@ export const serviceGroups: { name: ServiceCategory; blurb: string; slugs: strin
   {
     name: "Marketing & Ads",
     blurb: "Ads, product videos, explainers, brand films, testimonials, corporate and real estate video that sells.",
-    slugs: ["video-ad-editing", "ugc-ad-editing", "product-video-editing", "explainer-video-editing", "corporate-video-editing", "brand-film-editing", "testimonial-video-editing", "real-estate-video-editing", "video-editing-for-coaches"],
+    slugs: ["video-ad-editing", "ugc-ad-editing", "product-video-editing", "explainer-video-editing", "corporate-video-editing", "brand-film-editing", "testimonial-video-editing", "real-estate-video-editing", "video-editing-for-coaches", "vsl-video-editing", "ai-video-editing"],
   },
   {
     name: "Events & Personal",
@@ -77,8 +78,8 @@ export const serviceGroups: { name: ServiceCategory; blurb: string; slugs: strin
   },
   {
     name: "Post-Production Add-ons",
-    blurb: "Colour, motion graphics, sound, captions, thumbnails, repurposing and channel management.",
-    slugs: ["color-grading", "motion-graphics", "sound-design-and-mixing", "captions-and-subtitles", "youtube-thumbnail-design", "video-repurposing", "youtube-channel-management"],
+    blurb: "Colour, motion graphics, 3D and logo animation, sound, captions, thumbnails, repurposing and channel management.",
+    slugs: ["color-grading", "motion-graphics", "sound-design-and-mixing", "captions-and-subtitles", "youtube-thumbnail-design", "video-repurposing", "youtube-channel-management", "3d-animation", "logo-animation"],
   },
 ];
 
@@ -94,6 +95,7 @@ const allCopy: ServiceCopy[] = [
   ...marketingServices,
   ...eventServices,
   ...postServices,
+  ...specialtyServices,
 ];
 
 export const services: Service[] = serviceGroups.flatMap((g) =>

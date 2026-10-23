@@ -9,7 +9,7 @@ import { homeFaqs } from "@/data/faqs";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
-  title: "All Video Editing Services | YouTube, Ads, Weddings & More",
+  title: "All Services: YouTube, Ads, Weddings & More | Frameforge",
   description: "Every video editing service we offer: YouTube, social, ads, brand films, weddings, events, music videos, podcasts, plus colour, sound and motion graphics.",
   path: "/services",
 });

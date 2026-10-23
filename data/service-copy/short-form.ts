@@ -72,7 +72,7 @@ export const shortFormServices: ServiceCopy[] = [
     ],
     related: ["youtube-shorts-editing", "instagram-reels-editing", "tiktok-video-editing", "podcast-clips-editing"],
     portfolioTags: ["shorts"],
-    blog: ["increase-youtube-audience-retention", "youtube-video-editing-cost"],
+    blog: ["short-form-vs-long-form-video", "increase-youtube-audience-retention"],
     video: sampleVideo("Short-form editing sample", 2),
   },
   {
