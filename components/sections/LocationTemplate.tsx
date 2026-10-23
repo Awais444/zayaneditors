@@ -140,10 +140,7 @@ export function LocationTemplate({
       </section>
 
       <section data-tl="Work" data-tl-color="rgba(56,189,248,0.4)" className="section cv-auto pt-0">
-        <div className="container-x">
-          <SectionHeader eyebrow="Work" title="Recent edits" intro="Hover to preview, click for the full case study." />
-          <VideoRow items={work.filter((p) => p.featured).slice(0, 6).map(toCard)} />
-        </div>
+        <VideoRow label="Recent edits" header={<SectionHeader eyebrow="Work" title="Recent edits" intro="Hover to preview, click for the full case study." />} items={work.filter((p) => p.featured).slice(0, 6).map(toCard)} />
       </section>
 
       <section data-tl="Pricing" data-tl-color="rgba(52,211,153,0.4)" className="section cv-auto pt-0">

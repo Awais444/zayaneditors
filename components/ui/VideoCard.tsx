@@ -82,9 +82,9 @@ export function VideoCard({
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-        {/* Centered Play badge: appears on hover (fine pointer); always visible on touch */}
-        <span className="play-badge pointer-events-none absolute top-1/2 left-1/2 grid size-16 place-items-center rounded-full bg-accent text-accent-fg shadow-[0_10px_30px_-8px_rgb(198_244_50/0.35)]">
-          <Play className="size-6 translate-x-0.5 fill-current" aria-hidden />
+        {/* One play affordance: cursor PLAY pill on desktop, small corner icon on touch */}
+        <span aria-hidden className="pointer-events-none absolute right-3 bottom-3 hidden size-9 place-items-center rounded-full bg-black/55 backdrop-blur-md [@media(hover:none)]:grid">
+          <Play className="size-4 translate-x-px fill-accent text-accent" />
         </span>
       </div>
       <div className="mt-4">

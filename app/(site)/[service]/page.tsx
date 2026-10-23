@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock, Film, Layers, Music, Palette, Sparkles, Subtitles, Type, Wand2, type LucideIcon } from "lucide-react";
-import { getService, services, type ServiceCategory } from "@/data/services";
-import { relatedWork, toCard } from "@/data/portfolio";
+import { servicePortfolio, getService, services, type ServiceCategory } from "@/data/services";
+import { isVertical, serviceSamples, toCard, verticalOf } from "@/data/portfolio";
 import { processSteps, shortProcess } from "@/data/process";
 import { site, whatsappUrl } from "@/data/site";
 import { getPost } from "@/lib/blog";
@@ -54,7 +54,13 @@ const includedIcons: LucideIcon[] = [Wand2, Layers, Film, Type, Music, Palette, 
 export default async function ServicePage({ params }: Props) {
   const s = getService((await params).service);
   if (!s) notFound();
-  const work = relatedWork(s.portfolioTags, 6);
+  const samples = serviceSamples(servicePortfolio[s.slug]);
+  const work = samples.items;
+  // Every published portfolio item has a case-study page (portfolio/[slug] is generated from `work`)
+  // Talking head, UGC and most social work is 9:16: show the row vertically when most samples are
+  const vertical = work.length > 0 && work.filter(isVertical).length * 2 >= work.length;
+  const cards = work.map((p) => (vertical ? { ...toCard(p), video: { ...verticalOf(p), title: p.title } } : toCard(p)));
+  const clickCopy = "click for the full case study";
   const updated = lastModified("data/services.ts", "data/service-copy");
   const related = s.related.map(getService).filter((x): x is NonNullable<typeof x> => !!x);
   const posts = s.blog.map((b) => getPost(b)?.meta).filter((x): x is NonNullable<typeof x> => !!x);
@@ -72,7 +78,7 @@ export default async function ServicePage({ params }: Props) {
         data={[
           serviceSchema(s),
           // A real portfolio clip for this service (never the stock sample)
-          ...(work[0]
+          ...(samples.mode === "exact" && work[0]
             ? [videoObject({ title: work[0].title, description: work[0].description, poster: work[0].poster, src: work[0].preview.mp4, uploadDate: firstPublished("data/portfolio-items.ts").toISOString(), duration: `PT${previewDuration(work[0])}S`, page: `/portfolio/${work[0].slug}` })]
             : []),
           faqPage(s.faqs),
@@ -125,10 +131,27 @@ export default async function ServicePage({ params }: Props) {
       </section>
 
       <section data-tl="Work" data-tl-color="rgba(56,189,248,0.4)" className="section cv-auto pt-0">
-        <div className="container-x">
-          <SectionHeader eyebrow="Work" title={`${s.name} samples`} intro="Real projects from this category. Hover to preview, click for the full case study." />
-          <VideoRow items={work.map(toCard)} />
-        </div>
+        {samples.mode === "none" ? (
+          <div className="container-x">
+            <div className="card flex flex-wrap items-center justify-between gap-4 p-6">
+              <p className="text-lg font-semibold">Want to see samples for this?</p>
+              <WhatsAppLink href={whatsappUrl(`Hi! Can I see samples of your ${s.name.toLowerCase()} work?`)} className="font-semibold text-accent">Ask us on WhatsApp →</WhatsAppLink>
+            </div>
+          </div>
+        ) : (
+          <VideoRow
+            label={samples.mode === "exact" ? `${s.name} samples` : "Related work"}
+            header={
+              samples.mode === "exact" ? (
+                <SectionHeader eyebrow="Work" title={`${s.name} samples`} intro={`Real projects from this category. Hover to preview, ${clickCopy}.`} />
+              ) : (
+                <SectionHeader eyebrow="Work" title="Related work from our editors" intro="Examples of the editing we deliver for channels like yours." />
+              )
+            }
+            vertical={vertical}
+            items={cards}
+          />
+        )}
       </section>
 
       <section id="pricing" data-tl="Pricing" data-tl-color="rgba(52,211,153,0.4)" className="section cv-auto pt-0">

@@ -73,3 +73,22 @@ export const verticalOf = (p: PortfolioItem) => ({
 
 /** Length in seconds of the hosted preview clip (what contentUrl points at): up to 12s of the original. */
 export const previewDuration = (p: PortfolioItem) => Math.max(1, Math.min(12, Math.round(p.duration)));
+
+/**
+ * Samples for a service page from its explicit category mapping (data/services.ts → servicePortfolio).
+ * Exact matches first; related categories only when there is no exact work; otherwise nothing.
+ */
+export function serviceSamples(map: { exact?: string[]; related?: string[] } | undefined, limit = 8) {
+  // Round-robin across the mapped categories so a secondary category isn't crowded out
+  const pick = (cats: string[] = []) => {
+    const lists = cats.map((c) => work.filter((p) => p.category === c).sort((a, b) => Number(b.featured) - Number(a.featured)));
+    const out: PortfolioItem[] = [];
+    for (let i = 0; out.length < limit && lists.some((l) => l[i]); i++) for (const l of lists) if (l[i] && out.length < limit) out.push(l[i]);
+    return out;
+  };
+  const exact = pick(map?.exact);
+  if (exact.length) return { mode: "exact" as const, items: exact, categories: map!.exact! };
+  const related = pick(map?.related);
+  if (related.length) return { mode: "related" as const, items: related, categories: map!.related! };
+  return { mode: "none" as const, items: [], categories: [] as string[] };
+}

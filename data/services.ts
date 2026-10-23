@@ -112,3 +112,43 @@ export const servicesByCategory = (category: ServiceCategory) =>
   services.filter((s) => s.category === category);
 
 export { sampleVideo } from "./media";
+
+/**
+ * Which real portfolio categories each service page may show. `exact` = work of that service itself;
+ * `related` = adjacent work shown under "Related work from our editors" when no exact match exists.
+ * Services not listed (or with nothing in data) hide the samples section. Never padded with random items.
+ */
+type SampleCategory = "Talking Head" | "UGC Ads" | "E-commerce Ads" | "VSL" | "3D Animation" | "Logo Animation" | "AI Generation" | "Documentary" | "Real Estate";
+export const servicePortfolio: Record<string, { exact?: SampleCategory[]; related?: SampleCategory[] }> = {
+  "youtube-video-editing": { exact: ["Talking Head", "Documentary"] },
+  "long-form-video-editing": { exact: ["Talking Head", "Documentary"] },
+  "talking-head-video-editing": { exact: ["Talking Head"] },
+  "vlog-editing": { related: ["Talking Head"] },
+  "documentary-video-editing": { exact: ["Documentary"] },
+  "course-video-editing": { related: ["Talking Head"] },
+  "faceless-youtube-editing": { related: ["Documentary", "AI Generation"] },
+  "short-form-video-editing": { exact: ["Talking Head", "UGC Ads"] },
+  "instagram-reels-editing": { exact: ["Talking Head", "UGC Ads"] },
+  "tiktok-video-editing": { exact: ["Talking Head", "UGC Ads"] },
+  "youtube-shorts-editing": { exact: ["Talking Head", "UGC Ads"] },
+  "social-media-video-editing": { exact: ["Talking Head", "UGC Ads", "E-commerce Ads"] },
+  "video-ad-editing": { exact: ["E-commerce Ads", "UGC Ads"] },
+  "ugc-ad-editing": { exact: ["UGC Ads"] },
+  "product-video-editing": { exact: ["E-commerce Ads"] },
+  "explainer-video-editing": { related: ["AI Generation", "E-commerce Ads"] },
+  "brand-film-editing": { related: ["AI Generation", "Logo Animation"] },
+  "real-estate-video-editing": { exact: ["Real Estate"] },
+  "video-editing-for-coaches": { exact: ["Talking Head", "VSL"] },
+  "vsl-video-editing": { exact: ["VSL"] },
+  "ai-video-editing": { exact: ["AI Generation"] },
+  "podcast-video-editing": { related: ["Talking Head"] },
+  "podcast-clips-editing": { related: ["Talking Head"] },
+  "color-grading": { related: ["Real Estate", "Documentary"] },
+  "motion-graphics": { related: ["Logo Animation", "3D Animation", "E-commerce Ads"] },
+  "captions-and-subtitles": { related: ["Talking Head", "UGC Ads"] },
+  "youtube-thumbnail-design": { related: ["Talking Head", "Documentary"] },
+  "video-repurposing": { related: ["Talking Head"] },
+  "youtube-channel-management": { related: ["Talking Head", "Documentary"] },
+  "3d-animation": { exact: ["3D Animation"] },
+  "logo-animation": { exact: ["Logo Animation"] },
+};

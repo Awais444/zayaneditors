@@ -108,18 +108,6 @@
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
   }
   /* Video card Play badge: scale 0.9→1 + fade, critically damped (no overshoot) */
-  .play-badge {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0;
-    transition: transform 300ms var(--ease-ios), opacity 200ms ease-out;
-  }
-  .group:hover .play-badge, .group:focus-visible .play-badge, .group:focus-within .play-badge {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  @media (hover: none) {
-    .play-badge { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  }
   .mobile-menu { background: rgb(17 17 20 / 0.97); }
   .prose-site { color: #d4d4d8; font-size: 1.0625rem; line-height: 1.75; }
   .prose-site h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 2.75rem 0 1rem; color: var(--color-fg); }

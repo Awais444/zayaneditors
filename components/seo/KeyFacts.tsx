@@ -2,8 +2,8 @@
 export function KeyFacts({ title, facts }: { title: string; facts: { label: string; value: string }[] }) {
   return (
     <div className="card p-6">
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
+      <h2 className="!mt-0 !mb-0 !text-lg font-semibold">{title}</h2>
+      <dl className="!mt-4 !mb-0 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
         {facts.map((f) => (
           <div key={f.label} className="border-t border-line pt-3">
             <dt className="text-muted">{f.label}</dt>

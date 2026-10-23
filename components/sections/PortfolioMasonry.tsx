@@ -95,8 +95,9 @@ function MasonryCard({ c, onOpen }: { c: PortfolioItem; onOpen: (origin: { x: nu
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
         <span className="absolute top-3 left-3 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-accent backdrop-blur-md">{c.category}</span>
-        <span className="play-badge pointer-events-none absolute top-1/2 left-1/2 grid size-14 place-items-center rounded-full bg-accent text-accent-fg">
-          <Play className="size-5 translate-x-0.5 fill-current" aria-hidden />
+        {/* One play affordance: cursor PLAY pill on desktop, small corner icon on touch */}
+        <span aria-hidden className="pointer-events-none absolute right-3 bottom-3 hidden size-9 place-items-center rounded-full bg-black/55 backdrop-blur-md [@media(hover:none)]:grid">
+          <Play className="size-4 translate-x-px fill-accent text-accent" />
         </span>
         <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
           <p className={cn("text-xs text-white/70", vertical && "hidden md:block")}>{c.platform} · {c.aspectRatio}</p>
