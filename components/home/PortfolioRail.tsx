@@ -11,14 +11,13 @@ import { DESKTOP_MOTION, loadGsap } from "@/lib/motion";
 
 /**
  * Desktop: the section pins and vertical scroll drives the row of cards sideways; the category
- * label updates as each card passes. Elsewhere (touch, narrow, reduced motion): a native
+ * row shows the Home (Talking Head) items. Elsewhere (touch, narrow, reduced motion): a native
  * horizontal swipe carousel with snap.
  */
 export function PortfolioRail({ items }: { items: PortfolioItem[] }) {
   const section = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const label = useRef<HTMLSpanElement>(null);
   const [open, setOpen] = useState<{ p: PortfolioItem; origin: { x: number; y: number } } | null>(null);
 
   useEffect(() => {
@@ -33,7 +32,6 @@ export function PortfolioRail({ items }: { items: PortfolioItem[] }) {
         vp.classList.add("overflow-hidden");
         vp.classList.remove("overflow-x-auto", "snap-x");
         const distance = () => tr.scrollWidth - vp.clientWidth;
-        let last = -1;
         gsap.to(tr, {
           x: () => -distance(),
           ease: "none",
@@ -44,13 +42,6 @@ export function PortfolioRail({ items }: { items: PortfolioItem[] }) {
             scrub: 0.5,
             pin: true,
             invalidateOnRefresh: true,
-            onUpdate: (st) => {
-              const i = Math.min(items.length - 1, Math.round(st.progress * (items.length - 1)));
-              if (i !== last && label.current) {
-                last = i;
-                label.current.textContent = items[i].category;
-              }
-            },
           },
         });
         return () => {
@@ -74,11 +65,8 @@ export function PortfolioRail({ items }: { items: PortfolioItem[] }) {
       <div className="container-x mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="eyebrow mb-4">Featured work</p>
-          <h2 className="h-section">Work across every format</h2>
+          <h2 className="h-section max-w-3xl">Talking head videos that keep people watching</h2>
         </div>
-        <p className="text-sm text-muted" aria-live="polite">
-          Now showing: <span ref={label} className="font-semibold text-accent">{items[0].category}</span>
-        </p>
       </div>
       {/* Right-edge fade so the peeking last card reads as intentional */}
       <div ref={viewport} className="no-scrollbar snap-x snap-mandatory overflow-x-auto overscroll-x-contain [mask-image:linear-gradient(to_right,#000_85%,transparent)]" data-cursor="drag">

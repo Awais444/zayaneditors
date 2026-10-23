@@ -32,6 +32,13 @@ export const verticalReel: RealVideo = realMedia("reel-vertical") ?? sampleVideo
 /** 9:16 cut of the showreel for phones (showreel-vertical.*), falling back to the 16:9 showreel (cropped). */
 export const showreelVertical: RealVideo = realMedia("showreel-vertical") ?? showreel;
 
+/** Real raw/final pair only (null otherwise), for pages that must not show stock. */
+export function realBeforeAfter() {
+  return files.has("videos/before-after-raw.mp4") && files.has("videos/before-after-final.mp4") && files.has("videos/before-after.webp")
+    ? { raw: "/videos/before-after-raw.mp4", final: "/videos/before-after-final.mp4", poster: "/videos/before-after.webp" }
+    : null;
+}
+
 export function beforeAfterMedia() {
   return files.has("videos/before-after-raw.mp4") && files.has("videos/before-after-final.mp4") && files.has("videos/before-after.webp")
     ? { raw: "/videos/before-after-raw.mp4", final: "/videos/before-after-final.mp4", poster: "/videos/before-after.webp" }

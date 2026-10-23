@@ -7,8 +7,8 @@ import { professionalService, videoObject } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
 import { LazyBeforeAfter } from "@/components/sections/Lazy";
-import { beforeAfterMedia, showreel } from "@/data/real-media";
-import { work as portfolioWork } from "@/data/portfolio";
+import { realBeforeAfter, realShowreel } from "@/data/real-media";
+import { getHomeItems, verticalOf } from "@/data/portfolio";
 import { LogoRows } from "@/components/home/LogoRows";
 import { BentoServices } from "@/components/home/BentoServices";
 import { PortfolioRail } from "@/components/home/PortfolioRail";
@@ -26,15 +26,16 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function Home() {
-  // Featured real work, one or two per category
-  const work = portfolioWork.filter((p) => p.featured);
-  const ba = beforeAfterMedia();
+  // Home shows only Talking Head work (see HOME_CATEGORY); other pages keep every category
+  const work = getHomeItems();
+  const ctaClip = work[0] ? verticalOf(work[0]).src : undefined;
+  const ba = realBeforeAfter(); // hidden until a real raw/final pair exists
   return (
     <>
-      <JsonLd data={[professionalService(undefined, verifiedTestimonials), videoObject({ ...showreel, title: "Showreel", duration: "PT1M30S", uploadDate: "2026-01-15", description: `${site.name} showreel` })]} />
+      <JsonLd data={[professionalService(undefined, verifiedTestimonials), ...(realShowreel ? [videoObject({ ...realShowreel, title: "Showreel", duration: "PT1M30S", uploadDate: "2026-01-15", description: `${site.name} showreel` })] : [])]} />
       <Hero />
       <LogoRows />
-      <BentoServices />
+      <BentoServices clips={work.slice(3, 5)} />
       <PortfolioRail items={work} />
       {ba && (
       <section data-tl="Before/After" data-tl-color="rgba(248,113,113,0.4)" className="section">
@@ -52,7 +53,7 @@ export default function Home() {
       <TestimonialsMasonry />
       <PricingFeature />
       <FAQAccordion items={homeFaqs} />
-      <FinalCTA />
+      <FinalCTA videoSrc={ctaClip} />
     </>
   );
 }

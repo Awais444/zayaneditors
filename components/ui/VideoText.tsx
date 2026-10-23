@@ -21,6 +21,7 @@ export function VideoText({
   baseClass = "text-transparent",
   onMediaRef,
   stroke = false,
+  src,
 }: {
   text: string;
   className?: string;
@@ -29,6 +30,8 @@ export function VideoText({
   onMediaRef?: (el: HTMLSpanElement | null) => void;
   /** 1px lime outline so the letter shapes stay readable on dark frames */
   stroke?: boolean;
+  /** video inside the letters; defaults to the showreel */
+  src?: string;
 }) {
   const id = useId().replace(/:/g, "");
   const box = useRef<HTMLSpanElement>(null);
@@ -88,10 +91,10 @@ export function VideoText({
       >
         {/* Fallback until the reel plays: lime gradient letters (never black) */}
         <span className="absolute inset-0 bg-[linear-gradient(120deg,#c6f432,#e4ff8a_45%,#8b5cf6)]" />
-        {load && (
+        {load && (src ?? showreel.src) && (
           <video
             ref={vid}
-            src={showreel.src}
+            src={src ?? showreel.src}
             muted
             loop
             playsInline

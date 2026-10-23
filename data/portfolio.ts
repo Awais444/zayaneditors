@@ -56,3 +56,17 @@ export function relatedWork(tags: string[], limit = 6) {
   const rest = featured.filter((p) => !scored.includes(p));
   return [...scored, ...rest].slice(0, Math.max(3, limit));
 }
+
+/** Category the Home page is limited to (change here to show something else on Home). */
+export const HOME_CATEGORY = "Talking Head";
+
+/** Home-page work: only HOME_CATEGORY items, featured first (other pages keep every category). */
+export function getHomeItems() {
+  return work.filter((p) => p.category === HOME_CATEGORY).sort((a, b) => Number(b.featured) - Number(a.featured));
+}
+
+/** 9:16 source for an item: its vertical preview when generated, else the original (already vertical) preview. */
+export const verticalOf = (p: PortfolioItem) => ({
+  src: p.verticalPreview ?? p.preview.mp4,
+  poster: p.verticalPoster ?? p.poster,
+});

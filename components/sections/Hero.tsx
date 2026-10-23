@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Star } from "lucide-react";
 import { site } from "@/data/site";
 import { editors } from "@/data/team";
-import { work } from "@/data/portfolio";
+import { getHomeItems, verticalOf } from "@/data/portfolio";
 import { Button } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { HeroBackdrop } from "./HeroBackdrop";
@@ -12,16 +12,13 @@ import { HeroReelMobile, HeroReels, type HeroReel } from "./HeroReels";
 /** One staggered reveal line (transform only, so the H1 is painted at first paint for LCP). */
 const line = (i: number) => ({ className: "hero-line block", style: { "--i": i } as React.CSSProperties });
 
-/** Three real vertical clips from different categories for the reels fan (left, centre, right). */
-const pick = (slug: string, label: string): HeroReel | null => {
-  const p = work.find((w) => w.slug === slug);
-  return p?.verticalPreview && p.verticalPoster ? { slug, label, src: p.verticalPreview, poster: p.verticalPoster, alt: p.altText } : null;
-};
-const reels = [
-  pick("foundation-cushion-ugc-ad", "UGC Ad"),
-  pick("doctor-sleep-tips-raw-vs-edit-reel", "Talking Head"),
-  pick("locsmart-ai-story-ad", "AI Video"),
-].filter((r): r is HeroReel => !!r);
+/** Reels fan: the three strongest Home (Talking Head) clips; chips say what the edit added. */
+const editChips = ["Animated captions", "B-roll", "Retention cuts"];
+const homeReels: HeroReel[] = getHomeItems()
+  .slice(0, 3)
+  .map((p, i) => ({ slug: p.slug, label: editChips[i], alt: p.altText, ...verticalOf(p) }));
+// Fan order: left, centre (strongest), right
+const reels = homeReels.length === 3 ? [homeReels[1], homeReels[0], homeReels[2]] : homeReels;
 
 function Trust({ className = "" }: { className?: string }) {
   return (

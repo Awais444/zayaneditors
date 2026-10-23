@@ -3,6 +3,7 @@ import { Clapperboard, Megaphone, Mic, Music, Sparkles } from "lucide-react";
 import { getService, services } from "@/data/services";
 import { SectionHeader } from "@/components/sections/SectionHeader";
 import { BentoGrid, type BentoItem } from "@/components/sections/BentoGrid";
+import { verticalOf, type PortfolioItem } from "@/data/portfolio";
 
 const small = [
   { slug: "video-ad-editing", icon: Megaphone, stat: "5 hooks", note: "per ad concept" },
@@ -11,12 +12,13 @@ const small = [
   { slug: "color-grading", icon: Sparkles, stat: "1 look", note: "across every camera" },
 ];
 
-/** Home services: two large video cards + four stat cards in the shared BentoGrid. */
-export function BentoServices() {
+/** Home services: two large cards (previews from the Home clips, or none) + four stat cards. */
+export function BentoServices({ clips = [] }: { clips?: PortfolioItem[] }) {
   const items: BentoItem[] = [
-    ...["youtube-video-editing", "wedding-video-editing"].map((slug) => {
+    ...["youtube-video-editing", "wedding-video-editing"].map((slug, i) => {
       const s = getService(slug)!;
-      return { href: `/${slug}`, title: s.name, text: s.short, icon: Clapperboard, large: true, video: s.video };
+      const clip = clips[i];
+      return { href: `/${slug}`, title: s.name, text: s.short, icon: Clapperboard, large: true, video: clip ? verticalOf(clip) : undefined };
     }),
     ...small.map(({ slug, icon, stat, note }) => ({ href: `/${slug}`, title: getService(slug)!.name, icon, stat, note })),
   ];
