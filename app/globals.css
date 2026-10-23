@@ -148,10 +148,10 @@
 }
 
 /* Playhead cursor: native cursor hidden only after the custom one mounts; fields keep the native caret */
-html.has-playhead:not(.playhead-kbd), html.has-playhead:not(.playhead-kbd) * { cursor: none !important; }
-html.has-playhead:not(.playhead-kbd) input, html.has-playhead:not(.playhead-kbd) textarea, html.has-playhead:not(.playhead-kbd) select, html.has-playhead:not(.playhead-kbd) [contenteditable] { cursor: auto !important; }
-html.has-playhead:not(.playhead-kbd) input[type=text], html.has-playhead:not(.playhead-kbd) input[type=email], html.has-playhead:not(.playhead-kbd) input[type=url], html.has-playhead:not(.playhead-kbd) input[type=tel], html.has-playhead:not(.playhead-kbd) input[type=search], html.has-playhead:not(.playhead-kbd) textarea { cursor: text !important; }
-html.has-playhead:not(.playhead-kbd) iframe, html.has-playhead:not(.playhead-kbd) video[controls] { cursor: auto !important; }
+html.has-playhead:not(.playhead-kbd):not(.playhead-native), html.has-playhead:not(.playhead-kbd):not(.playhead-native) * { cursor: none !important; }
+html.has-playhead:not(.playhead-kbd):not(.playhead-native) input, html.has-playhead:not(.playhead-kbd):not(.playhead-native) textarea, html.has-playhead:not(.playhead-kbd):not(.playhead-native) select, html.has-playhead:not(.playhead-kbd):not(.playhead-native) [contenteditable] { cursor: auto !important; }
+html.has-playhead:not(.playhead-kbd):not(.playhead-native) input[type=text], html.has-playhead:not(.playhead-kbd):not(.playhead-native) input[type=email], html.has-playhead:not(.playhead-kbd):not(.playhead-native) input[type=url], html.has-playhead:not(.playhead-kbd):not(.playhead-native) input[type=tel], html.has-playhead:not(.playhead-kbd):not(.playhead-native) input[type=search], html.has-playhead:not(.playhead-kbd):not(.playhead-native) textarea { cursor: text !important; }
+html.has-playhead:not(.playhead-kbd):not(.playhead-native) iframe, html.has-playhead:not(.playhead-kbd):not(.playhead-native) video[controls] { cursor: auto !important; }
 
 /* Marquee */
 @keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }

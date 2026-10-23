@@ -55,7 +55,6 @@ export default function VideoModal({
         >
           <div className="chrome absolute inset-0 bg-black/80" onClick={onClose} />
           <motion.div
-            data-cursor="hide"
             className="relative aspect-video w-full max-w-5xl overflow-hidden rounded-2xl border border-line bg-black shadow-2xl"
             initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.4, x: tx, y: ty }}
             animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}

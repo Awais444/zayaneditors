@@ -8,6 +8,9 @@ import { createPortal } from "react-dom";
  * - Ring/pill: one rAF loop with critically damped springs, refs only (no React render per frame).
  * - No layout reads inside the loop; card rects are measured on pointermove/scroll.
  * States come from `data-cursor` attributes: link (auto for a/button), play, drag, hide.
+ * Never cursor-less: whenever the custom cursor is not showing (hide/native targets, an open
+ * modal dialog, window blur, pointer outside the window) <html> gets .playhead-native and the
+ * native cursor is used instead.
  */
 
 type State = "default" | "link" | "play" | "drag" | "hide" | "native";
@@ -93,8 +96,16 @@ export default function PlayheadCursor() {
       if (label.current) label.current.textContent = state === "drag" ? "⟷ DRAG" : "▶ PLAY";
     };
 
+    // Any open modal dialog switches to the native cursor until it closes
+    let modalOpen = false;
+    const checkModal = () => {
+      modalOpen = !!document.querySelector('[role="dialog"][aria-modal="true"]');
+    };
+    checkModal();
+
     const resolve = (el: Element | null): State => {
       card = null;
+      if (modalOpen) return "native";
       if (!el) return "default";
       if (el.closest(NATIVE_SELECTOR)) return "native";
       const tagged = el.closest("[data-cursor]");
@@ -144,6 +155,8 @@ export default function PlayheadCursor() {
     const setVisible = (v: boolean) => {
       visible = v;
       show.t = v ? 1 : 0;
+      // Native cursor takes over the moment ours is not shown
+      root.classList.toggle("playhead-native", !v);
       kick();
     };
 
@@ -224,6 +237,15 @@ export default function PlayheadCursor() {
         setVisible(false);
       }
     };
+    const onBlur = () => setVisible(false);
+    const modalObserver = new MutationObserver(() => {
+      const was = modalOpen;
+      checkModal();
+      if (was === modalOpen) return;
+      state = modalOpen ? "native" : resolve(document.elementFromPoint(px, py));
+      setVisible(!modalOpen && state !== "hide" && state !== "native" && px + py > 0);
+      applyState();
+    });
     const onVis = () => {
       if (document.hidden) {
         cancelAnimationFrame(raf);
@@ -239,6 +261,10 @@ export default function PlayheadCursor() {
     document.addEventListener("mouseout", onOut, opts);
     window.addEventListener("keydown", onKey, opts);
     document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("blur", onBlur);
+    modalObserver.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["aria-modal", "role"] });
+    // Native stays on until the pointer first moves over the page and ours is shown
+    root.classList.add("playhead-native");
     // Hide the native cursor only now that ours is mounted — never a moment with no cursor
     root.classList.add("has-playhead");
 
@@ -246,7 +272,9 @@ export default function PlayheadCursor() {
       cancelAnimationFrame(raf);
       cancelAnimationFrame(scrollRaf);
       clearTimeout(squeeze);
-      root.classList.remove("has-playhead", "playhead-kbd");
+      root.classList.remove("has-playhead", "playhead-kbd", "playhead-native");
+      window.removeEventListener("blur", onBlur);
+      modalObserver.disconnect();
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointerup", onUp);
@@ -258,7 +286,8 @@ export default function PlayheadCursor() {
   }, [mounted]);
 
   if (!mounted) return null;
-  const base = "pointer-events-none fixed top-0 left-0 z-[78] opacity-0 will-change-transform";
+  // Above everything (modals, toasts, mega-menu)
+  const base = "pointer-events-none fixed top-0 left-0 z-[2147483000] opacity-0 will-change-transform";
   // Portal straight into <body> so no transformed/filtered ancestor can break position: fixed
   return createPortal(
     <div aria-hidden>
