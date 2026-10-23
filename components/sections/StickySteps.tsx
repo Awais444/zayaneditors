@@ -55,9 +55,10 @@ export function StickySteps({
     return () => io.disconnect();
   }, []);
 
-  // Desktop: pin the stage and swap cards in place, ~20vh of scroll per step. The incoming card
-  // slides up over the active one (opaque, so nothing shows through); the previous two shrink
-  // back to thin edges above it and anything older fades out. One scrubbed progress bar.
+  // Desktop: one scrubbed ScrollTrigger timeline pins the stack, centred below the header.
+  // Per step: ~25vh with the active card fully readable (dwell), then ~35vh for the next card to
+  // slide up over it. Covered cards fade their content out and sit as blank 12px edges above the
+  // active card (max two); older ones disappear. Scrubbing one timeline keeps reverse symmetric.
   useEffect(() => {
     let revert = () => {};
     let cancelled = false;
@@ -68,36 +69,46 @@ export function StickySteps({
         const ol = list.current!;
         const items = gsap.utils.toArray<HTMLElement>(ol.children);
         const cards = items.map((li) => li.querySelector<HTMLElement>("[data-step]")!);
-        const h = Math.max(...cards.map((c) => c.offsetHeight));
-        gsap.set(ol, { position: "relative", height: h + 32, overflow: "hidden" });
-        gsap.set(items, { position: "absolute", left: 0, right: 0, top: 32 });
-        gsap.set(items.slice(1), { yPercent: 110 });
+        const content = cards.map((c) => c.querySelectorAll<HTMLElement>("[data-content]"));
+        const EDGE = 12;
+        const DWELL = 25; // vh
+        const SLIDE = 35; // vh
+        const h = cards[0].offsetHeight;
+        gsap.set(ol, { position: "relative", height: h + EDGE * 2, overflow: "hidden" });
+        gsap.set(items, { position: "absolute", left: 0, right: 0, top: EDGE * 2 });
+        gsap.set(items.slice(1), { yPercent: 105 });
         cards[0].classList.add("pv-active");
 
+        const header = () => document.querySelector("header")?.getBoundingClientRect().height ?? 72;
+        const offset = () => Math.max(header() + 8, header() + (window.innerHeight - header() - stage.current!.offsetHeight) / 2);
+        const steps = items.length - 1;
+
         const tl = gsap.timeline({
-          defaults: { ease: "none", duration: 1 },
+          defaults: { ease: "none" },
           scrollTrigger: {
             trigger: stage.current,
-            start: "top 88px",
-            end: () => `+=${(items.length - 1) * window.innerHeight * 0.2}`,
+            start: () => `top ${offset()}px`,
+            end: () => `+=${((steps * (DWELL + SLIDE) + DWELL) / 100) * window.innerHeight}`,
             pin: true,
             scrub: 0.4,
             invalidateOnRefresh: true,
             onUpdate: (st) => {
-              const active = Math.round(st.progress * (items.length - 1));
-              cards.slice(0, active + 1).forEach((c) => c.classList.add("pv-active"));
+              // Card k becomes active once its slide-in has finished
+              const t = st.progress * (steps * (DWELL + SLIDE) + DWELL);
+              cards.forEach((c, k) => c.classList.toggle("pv-active", k === 0 || t >= k * (DWELL + SLIDE)));
             },
           },
         });
-        tl.fromTo(bar.current, { scaleX: 1 / items.length }, { scaleX: 1, duration: items.length - 1 }, 0);
+        tl.fromTo(bar.current, { scaleX: 1 / items.length }, { scaleX: 1, duration: steps * (DWELL + SLIDE) }, DWELL);
         items.slice(1).forEach((li, i) => {
-          const at = i;
-          tl.to(li, { yPercent: 0 }, at);
-          tl.to(items[i], { y: -12, scale: 0.96 }, at);
-          tl.to(cards[i].querySelector("[data-dim]"), { opacity: 0.45 }, at);
-          if (items[i - 1]) tl.to(items[i - 1], { y: -24, scale: 0.92 }, at);
-          if (items[i - 2]) tl.to(items[i - 2], { autoAlpha: 0 }, at);
+          const at = i * (DWELL + SLIDE) + DWELL; // slide starts after the active card's dwell
+          tl.to(li, { yPercent: 0, duration: SLIDE }, at);
+          tl.to(items[i], { y: -EDGE, scale: 0.97, duration: SLIDE }, at);
+          tl.to(content[i], { opacity: 0, duration: SLIDE * 0.45 }, at + SLIDE * 0.55); // fades as it gets covered
+          if (items[i - 1]) tl.to(items[i - 1], { y: -EDGE * 2, scale: 0.94, duration: SLIDE }, at);
+          if (items[i - 2]) tl.to(items[i - 2], { autoAlpha: 0, duration: SLIDE * 0.5 }, at);
         });
+        tl.to({}, { duration: DWELL }); // final card dwell before unpinning
       });
       revert = () => mm.revert();
     });
@@ -125,21 +136,21 @@ export function StickySteps({
                 <article
                   data-step
                   className={cn(
-                    "relative grid origin-top overflow-hidden rounded-3xl border border-line bg-surface", Visual && "lg:h-[26.25rem] lg:grid-cols-[2fr_3fr]",
+                    "relative grid origin-top overflow-hidden rounded-3xl border border-line bg-surface lg:h-[27.5rem]", Visual && "lg:grid-cols-[2fr_3fr]",
                     "bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:32px_32px]",
                   )}
                 >
                   {/* Corner glow alternates lime / violet */}
                   <div aria-hidden className={cn("pointer-events-none absolute size-96 rounded-full blur-3xl", i % 2 ? "-right-32 -bottom-40 bg-accent-2/15" : "-top-40 -left-32 bg-accent/10")} />
 
-                  <div className="relative order-2 flex flex-col p-6 md:p-8 lg:order-1">
+                  <div data-content className="relative order-2 flex flex-col p-6 md:p-8 lg:order-1">
                     <p className="text-xs font-semibold tracking-[0.12em] text-muted uppercase">Step {i + 1} of {steps.length}</p>
                     <span className="mt-2 font-sans text-[4.5rem] leading-none font-bold tracking-[-0.05em] text-accent">{String(i + 1).padStart(2, "0")}</span>
                     <h3 className="mt-3 text-2xl font-semibold tracking-tight">{s.title}</h3>
                     {s.text && <p className="mt-2 text-muted lg:line-clamp-2">{s.text}</p>}
                     {s.bullets && (
                       <ul className="mt-4 space-y-1.5 text-sm">
-                        {s.bullets.map((b) => (
+                        {s.bullets.slice(0, 3).map((b) => (
                           <li key={b} className="flex gap-2"><Check className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />{b}</li>
                         ))}
                       </ul>
@@ -152,7 +163,7 @@ export function StickySteps({
                     )}
                   </div>
                   {Visual && (
-                    <div className="relative order-1 p-4 md:p-6 lg:order-2 lg:pl-0">
+                    <div data-content className="relative order-1 p-4 md:p-6 lg:order-2 lg:pl-0">
                       <Visual />
                     </div>
                   )}
