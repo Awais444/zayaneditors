@@ -19,6 +19,7 @@ import { PricingFeature } from "@/components/home/PricingFeature";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PopularServices } from "@/components/home/PopularServices";
+import { AboutBrand } from "@/components/sections/AboutBrand";
 
 export const metadata: Metadata = pageMeta({
   title: `Video Editing Services | Dedicated Editors | ${site.shortName}`,
@@ -54,6 +55,7 @@ export default function Home() {
       <ProcessStack />
       <TestimonialsMasonry />
       <PricingFeature />
+      <AboutBrand />
       <FAQAccordion items={homeFaqs} />
       <FinalCTA videoSrc={ctaClip} />
     </>
