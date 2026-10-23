@@ -1,7 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { usePreviewSound } from "@/lib/sound";
+import { SoundToggle } from "@/components/ui/SoundToggle";
 import { PlayShowreel } from "./PlayShowreel";
 
 export type HeroReel = { slug: string; label: string; src: string; poster: string; alt: string };
@@ -16,12 +18,20 @@ const slots = [
 ];
 
 function Reel({ r, play, className }: { r: HeroReel; play: boolean; className?: string }) {
+  const vid = useRef<HTMLVideoElement>(null);
+  const { unmuted, toggle } = usePreviewSound(r.slug, vid);
+  // Muted loops start after load; the <video> is always mounted so the sound toggle can play it
+  // audibly inside the click itself (required on iOS)
+  useEffect(() => {
+    if (play) vid.current?.play().catch(() => {});
+  }, [play]);
   return (
     <div className={cn("relative aspect-[9/16] overflow-hidden rounded-[24px] border border-white/10 bg-surface shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element -- small local WebP poster */}
       <img src={r.poster} alt={r.alt} className="absolute inset-0 size-full object-cover" />
-      {play && <video src={r.src} poster={r.poster} muted loop playsInline autoPlay preload="none" className="absolute inset-0 size-full object-cover" />}
-      <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
+      <video ref={vid} src={r.src} poster={r.poster} muted loop playsInline preload="none" className="absolute inset-0 size-full object-cover" />
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
+      <SoundToggle unmuted={unmuted} onToggle={toggle} />
     </div>
   );
 }
