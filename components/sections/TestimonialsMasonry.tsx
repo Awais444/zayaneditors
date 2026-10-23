@@ -4,6 +4,9 @@ import { publicTestimonials, type Testimonial } from "@/data/testimonials";
 import { VideoCard } from "@/components/ui/VideoCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+/** "Jane Doe" → "JD" for the avatar fallback (no stock photos). */
+const initials = (name: string) => name.trim().split(/s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() ?? "").join("");
+
 function Quote({ t }: { t: Testimonial }) {
   return (
     <figure className="card break-inside-avoid p-6">
@@ -12,8 +15,15 @@ function Quote({ t }: { t: Testimonial }) {
       </div>
       <blockquote className="mt-3 leading-relaxed">“{t.quote}”</blockquote>
       <figcaption className="mt-4 flex items-center gap-3 text-sm">
-        {t.avatar && <Image src={t.avatar} alt="" width={40} height={40} className="size-10 rounded-full object-cover" />}
-        <span><span className="font-semibold">{t.name}</span><span className="text-muted"> · {t.role}</span></span>
+        {t.avatar ? (
+          <Image src={t.avatar} alt="" width={40} height={40} className="size-10 shrink-0 rounded-full object-cover" />
+        ) : (
+          <span aria-hidden className="grid size-10 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-accent-fg">{initials(t.name)}</span>
+        )}
+        <span className="min-w-0">
+          <span className="block"><span className="font-semibold">{t.name}</span><span className="text-muted"> · {t.role}</span></span>
+          <span className="mt-1 inline-block rounded-full border border-line px-2 py-0.5 text-xs text-muted">{t.platform === "Direct" ? "Direct client" : `via ${t.platform}`}</span>
+        </span>
       </figcaption>
     </figure>
   );
