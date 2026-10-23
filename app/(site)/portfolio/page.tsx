@@ -1,5 +1,5 @@
 import { pageMeta } from "@/lib/metadata";
-import { caseStudies } from "@/data/portfolio";
+import { work, workCategories } from "@/data/portfolio";
 import { homeFaqs } from "@/data/faqs";
 import { PageHero } from "@/components/sections/PageHero";
 import { PortfolioMasonry } from "@/components/sections/PortfolioMasonry";
@@ -9,7 +9,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export const metadata = pageMeta({
   title: "Video Editing Portfolio & Case Studies",
-  description: "Browse our video editing portfolio: long-form YouTube, Shorts, podcasts and ads, with case studies showing views, retention and CTR results.",
+  description: "Browse our video editing portfolio: talking-head reels, UGC and e-commerce ads, VSLs, AI video, 3D and logo animation, real estate and documentary edits.",
   path: "/portfolio",
 });
 
@@ -20,7 +20,7 @@ export default function PortfolioPage() {
         breadcrumbs={[{ name: "Portfolio", href: "/portfolio" }]}
         eyebrow="Portfolio"
         title="OUR WORK"
-        sub={`${caseStudies.length} projects across YouTube, social, ads, weddings, music and podcasts. Hover to preview, click to watch, read the case study for the numbers.`}
+        sub={`${work.length} projects across ${workCategories.length} formats: ${workCategories.map((c) => c.name.toLowerCase()).join(", ")}. Hover to preview, click to watch.`}
       />
       <section data-tl="Work" data-tl-color="rgba(56,189,248,0.4)" className="section pt-0">
         <div className="container-x">

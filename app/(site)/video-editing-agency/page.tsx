@@ -9,7 +9,7 @@ import { faqPage } from "@/lib/schema";
 import { absoluteUrl } from "@/lib/utils";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
-import { caseStudies } from "@/data/portfolio";
+import { toCard, work } from "@/data/portfolio";
 import { processSteps, shortProcess } from "@/data/process";
 import { processVisuals } from "@/components/home/ProcessVisuals";
 import { PageHero } from "@/components/sections/PageHero";
@@ -115,7 +115,7 @@ export default function AgencyPage() {
         title="Looking for a Video Editing Agency? Meet Your Dedicated Team of Editors"
         sub="If you're searching for a video editing agency, you probably want three things: reliable capacity, consistent quality and someone who understands your brand. We deliver all three — as a dedicated team of professional video editors rather than a faceless production line. You get one named editor who learns your style, specialists in colour, sound and motion when a project needs them, and prices that make sense for growing creators and businesses."
         ctas={[{ label: "Get a Free Trial Edit", href: "/free-trial-edit" }, { label: "Meet the editors", href: "/team", variant: "outline" }]}
-        visual={<HeroVideoCard video={caseStudies[0].video} chips={["One named editor", `First cut in ${site.turnaround}`]} />}
+        visual={<HeroVideoCard video={toCard(work.find((p) => p.featured && p.aspectRatio === "16:9") ?? work[0]).video} chips={["One named editor", `First cut in ${site.turnaround}`]} />}
       />
 
       <section data-tl="Why us" data-tl-color="rgba(244,244,245,0.2)" className="section cv-auto pt-4">

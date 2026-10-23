@@ -1,10 +1,9 @@
 import manifest from "./media-manifest.json";
-import { caseStudies, type CaseStudy } from "./portfolio";
 import { sampleVideo } from "./media";
 
 /**
  * Real media lives in /public/videos (listed into media-manifest.json by scripts/media-manifest.mjs):
- *   <case-study-slug>.mp4 + <case-study-slug>.webp   portfolio preview clip + poster frame
+ *   <portfolio-slug>.mp4/.webm + posters/<slug>.webp  portfolio previews (see data/portfolio-items.ts)
  *   showreel.mp4 + showreel.webp                       hero / CTA showreel
  *   reel-vertical.mp4 + reel-vertical.webp             9:16 reel in the hero phone card
  *   showreel-vertical.mp4 + showreel-vertical.webp     9:16 cut of the showreel for the mobile hero
@@ -32,14 +31,6 @@ export const showreel: RealVideo = realMedia("showreel") ?? stockShowreel;
 export const verticalReel: RealVideo = realMedia("reel-vertical") ?? sampleVideo("Vertical reel", 2);
 /** 9:16 cut of the showreel for phones (showreel-vertical.*), falling back to the 16:9 showreel (cropped). */
 export const showreelVertical: RealVideo = realMedia("showreel-vertical") ?? showreel;
-
-/** Every case study, with `video` swapped for the real clip and poster when they exist. */
-export function caseStudiesWithRealMedia(): CaseStudy[] {
-  return caseStudies.map((c) => {
-    const m = realMedia(c.slug);
-    return m ? { ...c, video: { ...c.video, ...m } } : c;
-  });
-}
 
 export function beforeAfterMedia() {
   return files.has("videos/before-after-raw.mp4") && files.has("videos/before-after-final.mp4") && files.has("videos/before-after.webp")

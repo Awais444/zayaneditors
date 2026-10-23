@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock, Film, Layers, Music, Palette, Sparkles, Subtitles, Type, Wand2, type LucideIcon } from "lucide-react";
 import { getService, services, type ServiceCategory } from "@/data/services";
-import { caseStudiesByTags, portfolioFilters } from "@/data/portfolio";
+import { relatedWork, toCard } from "@/data/portfolio";
 import { processSteps, shortProcess } from "@/data/process";
 import { whatsappUrl } from "@/data/site";
 import { getPost } from "@/lib/blog";
@@ -44,18 +44,17 @@ const categoryChip: Record<ServiceCategory, string> = {
   "Post-Production Add-ons": "Pixel-level finish",
 };
 const includedIcons: LucideIcon[] = [Wand2, Layers, Film, Type, Music, Palette, Subtitles, Sparkles];
-const catLabel = (v: string) => portfolioFilters.find((f) => f.value === v)?.label ?? v;
 
 export default async function ServicePage({ params }: Props) {
   const s = getService((await params).service);
   if (!s) notFound();
-  const work = caseStudiesByTags(s.portfolioTags, 6);
+  const work = relatedWork(s.portfolioTags, 6);
   const related = s.related.map(getService).filter((x): x is NonNullable<typeof x> => !!x);
   const posts = s.blog.map((b) => getPost(b)?.meta).filter((x): x is NonNullable<typeof x> => !!x);
   const firstCut = s.turnaround.split("·")[0].trim();
 
   const included: BentoItem[] = [
-    { title: `${s.name}, done properly`, text: s.short, large: true, video: work[0]?.video ?? s.video, icon: Film },
+    { title: `${s.name}, done properly`, text: s.short, large: true, video: work[0] ? toCard(work[0]).video : s.video, icon: Film },
     ...s.included.map((t, i) => ({ title: t, icon: includedIcons[i % includedIcons.length] })),
   ];
   const relatedItems: BentoItem[] = related.map((r, i) => ({ href: `/${r.slug}`, title: r.name, text: r.short, icon: includedIcons[(i + 2) % includedIcons.length] }));
@@ -75,7 +74,7 @@ export default async function ServicePage({ params }: Props) {
           </>
         }
         ctas={[{ label: "Get a Free Trial Edit", href: "/free-trial-edit" }, { label: "See pricing", href: "#pricing", variant: "outline" }]}
-        visual={<HeroVideoCard video={work[0]?.video ?? s.video} chips={[categoryChip[s.category], firstCut]} />}
+        visual={<HeroVideoCard video={work[0] ? toCard(work[0]).video : s.video} chips={[categoryChip[s.category], firstCut]} />}
       />
 
       <section data-tl="Included" data-tl-color="rgba(139,92,246,0.45)" className="section cv-auto pt-4">
@@ -106,7 +105,7 @@ export default async function ServicePage({ params }: Props) {
       <section data-tl="Work" data-tl-color="rgba(56,189,248,0.4)" className="section cv-auto pt-0">
         <div className="container-x">
           <SectionHeader eyebrow="Work" title={`${s.name} samples`} intro="Real projects from this category. Hover to preview, click for the full case study." />
-          <VideoRow items={work.map((c) => ({ slug: c.slug, title: c.title, meta: `${catLabel(c.category)} · ${c.highlight}`, video: c.video }))} />
+          <VideoRow items={work.map(toCard)} />
         </div>
       </section>
 

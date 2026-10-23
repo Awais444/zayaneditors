@@ -4,7 +4,7 @@ import type { Country } from "@/data/locations";
 import { locationName } from "@/data/locations";
 import { perVideo } from "@/data/pricing";
 import { getService } from "@/data/services";
-import { caseStudies, portfolioFilters } from "@/data/portfolio";
+import { toCard, work } from "@/data/portfolio";
 import { processSteps, shortProcess } from "@/data/process";
 import { formatMoney } from "@/lib/utils";
 import { professionalService } from "@/lib/schema";
@@ -41,7 +41,6 @@ const zones: Record<string, string> = {
 
 type Place = { slug: string; name: string; h1: string; intro: string; paragraphs: { heading: string; text: string }[]; niches: string[]; timeOverlap: string; faqs: { q: string; a: string }[]; nearby: string[]; localProof?: { quote: string; name: string } };
 
-const catLabel = (v: string) => portfolioFilters.find((f) => f.value === v)?.label ?? v;
 
 export function LocationTemplate({
   place,
@@ -139,7 +138,7 @@ export function LocationTemplate({
       <section data-tl="Work" data-tl-color="rgba(56,189,248,0.4)" className="section cv-auto pt-0">
         <div className="container-x">
           <SectionHeader eyebrow="Work" title="Recent edits" intro="Hover to preview, click for the full case study." />
-          <VideoRow items={caseStudies.slice(0, 6).map((c) => ({ slug: c.slug, title: c.title, meta: `${catLabel(c.category)} · ${c.highlight}`, video: c.video }))} />
+          <VideoRow items={work.filter((p) => p.featured).slice(0, 6).map(toCard)} />
         </div>
       </section>
 

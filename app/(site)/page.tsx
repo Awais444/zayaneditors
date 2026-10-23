@@ -7,7 +7,8 @@ import { professionalService, videoObject } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
 import { LazyBeforeAfter } from "@/components/sections/Lazy";
-import { beforeAfterMedia, caseStudiesWithRealMedia, showreel } from "@/data/real-media";
+import { beforeAfterMedia, showreel } from "@/data/real-media";
+import { work as portfolioWork } from "@/data/portfolio";
 import { LogoRows } from "@/components/home/LogoRows";
 import { BentoServices } from "@/components/home/BentoServices";
 import { PortfolioRail } from "@/components/home/PortfolioRail";
@@ -25,7 +26,8 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function Home() {
-  const work = caseStudiesWithRealMedia();
+  // Featured real work, one or two per category
+  const work = portfolioWork.filter((p) => p.featured);
   const ba = beforeAfterMedia();
   return (
     <>

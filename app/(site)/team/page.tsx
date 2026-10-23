@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { team } from "@/data/team";
-import { caseStudies } from "@/data/portfolio";
 import { faqCategories } from "@/data/faqs";
 import { pageMeta } from "@/lib/metadata";
 import { PageHero } from "@/components/sections/PageHero";
@@ -27,9 +25,7 @@ export default function TeamPage() {
         <div className="container-x">
           <h2 className="sr-only">Team</h2>
           <ul className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-            {team.map((m) => {
-              const work = caseStudies.filter((c) => c.editor === m.slug);
-              return (
+            {team.map((m) => (
                 <li key={m.slug} id={m.slug} className="scroll-mt-28">
                   <TeamCard m={m} />
                   <p className="mt-5 text-muted">{m.bio}</p>
@@ -38,19 +34,8 @@ export default function TeamPage() {
                       <li key={s} className="rounded-full border border-line px-3 py-1 text-xs text-muted">{s}</li>
                     ))}
                   </ul>
-                  {work.length > 0 && (
-                    <div className="mt-5 border-t border-line pt-4">
-                      <p className="mb-2 text-xs font-semibold tracking-[0.12em] text-muted uppercase">Projects</p>
-                      <ul className="space-y-1.5 text-sm">
-                        {work.map((c) => (
-                          <li key={c.slug}><Link href={`/portfolio/${c.slug}`} className="hover:text-accent">{c.title} →</Link></li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
                 </li>
-              );
-            })}
+            ))}
           </ul>
         </div>
       </section>
