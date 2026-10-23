@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Check, ShieldCheck } from "lucide-react";
-import { addons, comparison, guarantee, perProject, plans, pricingFaqs } from "@/data/pricing";
+import { addons, comparison, guarantee, perProject, perVideo, plans, pricingFaqs } from "@/data/pricing";
+import { offerCatalog } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMeta } from "@/lib/metadata";
 import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeader } from "@/components/sections/SectionHeader";
@@ -17,6 +19,12 @@ export const metadata = pageMeta({
 export default function PricingPage() {
   return (
     <>
+      <JsonLd
+        data={offerCatalog("Video editing prices", [
+          ...perVideo.map((p) => ({ name: `${p.name} video editing`, price: p.from, unit: `from, ${p.unit}`, description: p.desc })),
+          ...perProject.map((p) => ({ name: p.name, price: p.from, unit: `from, ${p.unit}` })),
+        ])}
+      />
       <PageHero
         breadcrumbs={[{ name: "Pricing", href: "/pricing" }]}
         eyebrow="Pricing"

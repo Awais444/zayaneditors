@@ -8,6 +8,8 @@ import { whatsappUrl } from "@/data/site";
 import { getPost } from "@/lib/blog";
 import { pageMeta } from "@/lib/metadata";
 import { faqPage, serviceSchema, videoObject } from "@/lib/schema";
+import { firstPublished } from "@/lib/lastmod";
+import { previewDuration } from "@/data/portfolio";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/sections/PageHero";
 import { HeroVideoCard } from "@/components/sections/HeroVideoCard";
@@ -61,7 +63,16 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <>
-      <JsonLd data={[serviceSchema(s), videoObject({ ...s.video, description: s.short }), faqPage(s.faqs)]} />
+      <JsonLd
+        data={[
+          serviceSchema(s),
+          // A real portfolio clip for this service (never the stock sample)
+          ...(work[0]
+            ? [videoObject({ title: work[0].title, description: work[0].description, poster: work[0].poster, src: work[0].preview.mp4, uploadDate: firstPublished("data/portfolio-items.ts").toISOString(), duration: `PT${previewDuration(work[0])}S`, page: `/portfolio/${work[0].slug}` })]
+            : []),
+          faqPage(s.faqs),
+        ]}
+      />
 
       <PageHero
         breadcrumbs={[{ name: "Services", href: "/services" }, { name: s.name, href: `/${s.slug}` }]}

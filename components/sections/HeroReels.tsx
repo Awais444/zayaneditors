@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -27,8 +28,7 @@ function Reel({ r, play, className }: { r: HeroReel; play: boolean; className?: 
   }, [play]);
   return (
     <div className={cn("relative aspect-[9/16] overflow-hidden rounded-[24px] border border-white/10 bg-surface shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- small local WebP poster */}
-      <img src={r.poster} alt={r.alt} className="absolute inset-0 size-full object-cover" />
+      <Image src={r.poster} alt={r.alt} fill sizes="(min-width: 1024px) 260px, 60vw" className="object-cover" />
       <video ref={vid} src={r.src} poster={r.poster} muted loop playsInline preload="none" className="absolute inset-0 size-full object-cover" />
       <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
       <SoundToggle unmuted={unmuted} onToggle={toggle} />

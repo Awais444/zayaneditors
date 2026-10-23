@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
-import { getWorkItem, isVertical, work } from "@/data/portfolio";
+import { getWorkItem, isVertical, previewDuration, work } from "@/data/portfolio";
+import { firstPublished } from "@/lib/lastmod";
 import { pageMeta } from "@/lib/metadata";
-import { videoObject } from "@/lib/schema";
+import { creativeWork, videoObject } from "@/lib/schema";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SectionHeader } from "@/components/sections/SectionHeader";
@@ -42,7 +43,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
-      <JsonLd data={videoObject({ title: p.title, description: p.description, poster: p.poster, src: p.preview.mp4, duration: `PT${Math.round(p.duration)}S` })} />
+      <JsonLd data={[videoObject({ title: p.title, description: p.description, poster: p.poster, src: p.preview.mp4, uploadDate: firstPublished("data/portfolio-items.ts").toISOString(), duration: `PT${previewDuration(p)}S`, page: `/portfolio/${p.slug}` }), creativeWork(p)]} />
 
       <section data-tl="Intro" data-tl-color="rgba(198,244,50,0.35)" className="relative isolate overflow-hidden">
         <div aria-hidden className="glow -top-48 right-0 -z-10 size-[36rem]" />

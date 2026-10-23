@@ -9,6 +9,10 @@ export type Editor = {
   bio: string;
   avatar: string;
   reel: { src: string; poster: string; title: string };
+  /** Set true only for a real team member (then Person schema is published for them) */
+  verified?: boolean;
+  /** Real profile URLs (LinkedIn, Behance…) for Person.sameAs */
+  profiles?: string[];
 };
 
 // TODO: replace with real team members, photos (put images in /public/images/team) and reels.

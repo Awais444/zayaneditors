@@ -1,4 +1,6 @@
 import { team } from "@/data/team";
+import { person } from "@/lib/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { faqCategories } from "@/data/faqs";
 import { pageMeta } from "@/lib/metadata";
 import { PageHero } from "@/components/sections/PageHero";
@@ -15,6 +17,8 @@ export const metadata = pageMeta({
 export default function TeamPage() {
   return (
     <>
+      {/* Person schema only for verified (real) team members, never placeholders */}
+      <JsonLd data={team.filter((m) => m.verified).map((m) => person({ ...m, sameAs: m.profiles }))} />
       <PageHero
         breadcrumbs={[{ name: "Team", href: "/team" }]}
         eyebrow="Meet your editors"

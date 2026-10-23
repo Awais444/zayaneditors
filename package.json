@@ -11,7 +11,9 @@
     "postbuild": "node scripts/check-placeholders.mjs",
     "check:placeholders": "node scripts/check-placeholders.mjs",
     "predev": "node scripts/media-manifest.mjs",
-    "prebuild": "node scripts/media-manifest.mjs"
+    "prebuild": "node scripts/media-manifest.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "seo:check": "node scripts/seo-check.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

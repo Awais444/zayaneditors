@@ -59,7 +59,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <>
-      <JsonLd data={blogPosting(meta)} />
+      <JsonLd data={blogPosting({ ...meta, authorUrl: `/team#${author.slug}` })} />
       <div aria-hidden className="read-progress fixed inset-x-0 top-0 z-[60] h-[3px] bg-accent shadow-[0_0_12px_rgba(198,244,50,0.6)]" />
       <article data-tl="Article" data-tl-color="rgba(198,244,50,0.3)" className="section pt-10">
         <div className="container-x">

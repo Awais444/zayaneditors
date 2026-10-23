@@ -70,3 +70,6 @@ export const verticalOf = (p: PortfolioItem) => ({
   src: p.verticalPreview ?? p.preview.mp4,
   poster: p.verticalPoster ?? p.poster,
 });
+
+/** Length in seconds of the hosted preview clip (what contentUrl points at): up to 12s of the original. */
+export const previewDuration = (p: PortfolioItem) => Math.max(1, Math.min(12, Math.round(p.duration)));
