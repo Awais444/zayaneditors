@@ -13,7 +13,7 @@ import { LogoRows } from "@/components/home/LogoRows";
 import { BentoServices } from "@/components/home/BentoServices";
 import { PortfolioRail } from "@/components/home/PortfolioRail";
 import { StatsBand } from "@/components/sections/StatsBand";
-import { ProcessStack } from "@/components/home/ProcessStack";
+import { HowItWorks } from "@/components/home/HowItWorks";
 import { TestimonialsMasonry } from "@/components/sections/TestimonialsMasonry";
 import { PricingFeature } from "@/components/home/PricingFeature";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -42,7 +42,7 @@ export default function Home() {
       <PortfolioRail items={work} />
       {ba && <BeforeAfter {...ba} />}
       <StatsBand />
-      <ProcessStack />
+      <HowItWorks />
       <TestimonialsMasonry />
       <PricingFeature />
       <AboutBrand />
