@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const files = ["videos", "posters"]
+const files = ["videos", "posters", "videos/before-after"]
   .flatMap((d) => {
     const dir = path.join(process.cwd(), "public", d);
     return fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => /\.(mp4|webm|webp|jpg|png)$/i.test(f)).map((f) => `${d}/${f}`) : [];

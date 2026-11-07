@@ -7,8 +7,7 @@ import { sampleVideo } from "./media";
  *   showreel.mp4 + showreel.webp                       hero / CTA showreel
  *   reel-vertical.mp4 + reel-vertical.webp             9:16 reel in the hero phone card
  *   showreel-vertical.mp4 + showreel-vertical.webp     9:16 cut of the showreel for the mobile hero
- *   before-after-raw.mp4 + before-after-final.mp4 + before-after.webp
- *                                                      one clip, ungraded vs final, identical framing
+ *   before-after/raw.mp4 + edited.mp4 (+ .webp posters)   one 9:16 clip, raw vs edited, same timing
  * Posters may also live in /public/posters/<name>.webp.
  * Real files always win; until they exist, the stock sample media is used as a fallback.
  */
@@ -32,15 +31,10 @@ export const verticalReel: RealVideo = realMedia("reel-vertical") ?? sampleVideo
 /** 9:16 cut of the showreel for phones (showreel-vertical.*), falling back to the 16:9 showreel (cropped). */
 export const showreelVertical: RealVideo = realMedia("showreel-vertical") ?? showreel;
 
-/** Real raw/final pair only (null otherwise), for pages that must not show stock. */
+/** Real raw/edited 9:16 pair (videos/before-after/*), or null so the section stays hidden. */
 export function realBeforeAfter() {
-  return files.has("videos/before-after-raw.mp4") && files.has("videos/before-after-final.mp4") && files.has("videos/before-after.webp")
-    ? { raw: "/videos/before-after-raw.mp4", final: "/videos/before-after-final.mp4", poster: "/videos/before-after.webp" }
+  const need = ["raw.mp4", "edited.mp4", "raw.webp", "edited.webp"].map((f) => `videos/before-after/${f}`);
+  return need.every((f) => files.has(f))
+    ? { raw: "/videos/before-after/raw.mp4", edited: "/videos/before-after/edited.mp4", rawPoster: "/videos/before-after/raw.webp", editedPoster: "/videos/before-after/edited.webp" }
     : null;
-}
-
-export function beforeAfterMedia() {
-  return files.has("videos/before-after-raw.mp4") && files.has("videos/before-after-final.mp4") && files.has("videos/before-after.webp")
-    ? { raw: "/videos/before-after-raw.mp4", final: "/videos/before-after-final.mp4", poster: "/videos/before-after.webp" }
-    : { raw: stockShowreel.src, final: stockShowreel.src, poster: stockShowreel.poster }; // same clip in both halves
 }

@@ -1,128 +1,146 @@
 "use client";
-import { animate, motion, useMotionValue, useMotionTemplate, useReducedMotion, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import { ArrowRight, Check, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
+type Props = { raw: string; edited: string; rawPoster: string; editedPoster: string };
 
-/** Snap stops for the divider: all raw, half/half, all edited (and the quarters). */
-const SNAPS = [0, 25, 50, 75, 100];
+const changes = ["Tight cuts & pacing", "Animated captions", "Color & sound"];
 
-/** Rubber-band past the edges (iOS-style). */
-const rubber = (v: number, min: number, max: number, c = 0.25) =>
-  v < min ? min - (min - v) * c : v > max ? max + (v - max) * c : v;
-
-/** One real clip in two versions (raw vs final edit) with identical framing; see lib/real-media.ts. */
-export default function BeforeAfter({ raw: RAW, final: FINAL, poster: POSTER }: { raw: string; final: string; poster: string }) {
-  const box = useRef<HTMLDivElement>(null);
-  const raw = useRef<HTMLVideoElement>(null);
-  const fin = useRef<HTMLVideoElement>(null);
-  const pos = useMotionValue(50); // percent
-  const clip = useMotionTemplate`inset(0 0 0 ${pos}%)`;
-  const left = useTransform(pos, (p) => `${p}%`);
-  const [playing, setPlaying] = useState(false);
+/**
+ * Home Before/After: one real 9:16 clip split into its raw and edited versions (same timing),
+ * shown as two phone cards that play in sync. EDITED is the master clock; RAW follows it.
+ */
+export function BeforeAfter({ raw, edited, rawPoster, editedPoster }: Props) {
+  const section = useRef<HTMLElement>(null);
+  const rawRef = useRef<HTMLVideoElement>(null);
+  const editRef = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
-  const drag = useRef<{ startX: number; startPos: number; moved: boolean; lastX: number; lastT: number; v: number } | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const [sound, setSound] = useState(false);
+  /** The user paused on purpose: don't auto-resume when scrolling back. */
+  const userPaused = useRef(false);
 
-  // Keep the raw clip in sync with the final edit
+  const play = () => {
+    const r = rawRef.current, e = editRef.current;
+    if (!r || !e) return;
+    r.currentTime = e.currentTime;
+    const start = () => Promise.all([e.play(), r.play()]);
+    start()
+      .catch(() => {
+        // Sound blocked by the browser: fall back to muted so both stay in sync
+        if (e.muted) throw new Error("blocked");
+        e.muted = true;
+        setSound(false);
+        return start();
+      })
+      .then(() => setPlaying(true))
+      .catch(() => {
+        r.pause();
+        e.pause();
+        setPlaying(false);
+      });
+  };
+  const pause = () => {
+    rawRef.current?.pause();
+    editRef.current?.pause();
+    setPlaying(false);
+  };
+
+  // Keep RAW locked to EDITED; resync on drift > 0.1s
   useEffect(() => {
-    const f = fin.current, r = raw.current;
-    if (!f || !r) return;
-    const sync = () => {
-      if (Math.abs(r.currentTime - f.currentTime) > 0.15) r.currentTime = f.currentTime;
+    let id = 0;
+    const tick = () => {
+      const r = rawRef.current, e = editRef.current;
+      if (r && e && !e.paused && Math.abs(r.currentTime - e.currentTime) > 0.1) r.currentTime = e.currentTime;
+      id = requestAnimationFrame(tick);
     };
-    f.addEventListener("timeupdate", sync);
-    return () => f.removeEventListener("timeupdate", sync);
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
   }, []);
 
+  // Autoplay (muted) while in view, unless reduced motion or the user paused
+  useEffect(() => {
+    if (reduce) return;
+    const el = section.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([en]) => {
+      if (en.isIntersecting && !userPaused.current) play();
+      else if (!en.isIntersecting) pause();
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduce]);
+
   const toggle = () => {
-    const f = fin.current, r = raw.current;
-    if (!f || !r) return;
-    if (f.paused) {
-      r.currentTime = f.currentTime;
-      Promise.all([f.play(), r.play()]).then(() => setPlaying(true)).catch(() => {});
+    if (playing) {
+      userPaused.current = true;
+      pause();
     } else {
-      f.pause();
-      r.pause();
-      setPlaying(false);
+      userPaused.current = false;
+      play();
+    }
+  };
+  const toggleSound = () => {
+    const e = editRef.current;
+    if (!e) return;
+    e.muted = !e.muted;
+    setSound(!e.muted);
+    if (!e.muted && e.paused) {
+      userPaused.current = false;
+      play();
     }
   };
 
-  const toPct = (dx: number) => (dx / box.current!.clientWidth) * 100;
-
-  const onDown = (e: React.PointerEvent) => {
-    pos.stop();
-    const rect = box.current!.getBoundingClientRect();
-    const startPos = e.target === box.current || (e.target as HTMLElement).dataset.track ? ((e.clientX - rect.left) / rect.width) * 100 : pos.get();
-    drag.current = { startX: e.clientX, startPos, moved: false, lastX: e.clientX, lastT: e.timeStamp, v: 0 };
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  };
-  const onMove = (e: React.PointerEvent) => {
-    const d = drag.current;
-    if (!d) return;
-    const dx = e.clientX - d.startX;
-    if (!d.moved && Math.abs(dx) < 10 && e.pointerType !== "mouse") return; // touch threshold
-    d.moved = true;
-    const dt = Math.max(1, e.timeStamp - d.lastT);
-    d.v = toPct(e.clientX - d.lastX) / dt; // %/ms
-    d.lastX = e.clientX;
-    d.lastT = e.timeStamp;
-    pos.set(rubber(d.startPos + toPct(dx), 0, 100));
-  };
-  const onUp = () => {
-    const d = drag.current;
-    drag.current = null;
-    if (!d) return;
-    if (!d.moved) {
-      // tap: jump to the tapped point
-      animate(pos, Math.min(100, Math.max(0, d.startPos)), { type: "spring", bounce: 0, duration: reduce ? 0 : 0.35 });
-      return;
-    }
-    // Momentum projection, clamped, with a little bounce after a flick
-    // Project momentum (Apple-style decay), then snap to the nearest stop
-    const projected = pos.get() + ((d.v * 1000) / 1000) * (0.998 / (1 - 0.998)) * 0.2;
-    const target = SNAPS.reduce((a, b) => (Math.abs(b - projected) < Math.abs(a - projected) ? b : a));
-    animate(pos, target, { type: "spring", velocity: d.v * 1000, bounce: reduce ? 0 : 0.15, duration: 0.5 });
-  };
-  const onKey = (e: React.KeyboardEvent) => {
-    const step = e.shiftKey ? 10 : 2;
-    if (e.key === "ArrowLeft") pos.set(Math.max(0, pos.get() - step));
-    if (e.key === "ArrowRight") pos.set(Math.min(100, pos.get() + step));
-  };
-
+  const card = "relative aspect-[9/16] overflow-hidden rounded-[28px] border bg-surface shadow-2xl";
   return (
-    <div>
-      <div
-        ref={box}
-        data-track="1"
-        data-cursor="drag"
-        className="relative aspect-video touch-pan-y overflow-hidden rounded-3xl border border-line bg-black select-none"
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerCancel={onUp}
-      >
-        <video ref={raw} src={RAW} poster={POSTER} muted loop playsInline preload="none" className="pointer-events-none absolute inset-0 size-full object-cover grayscale-[0.6] saturate-50 contrast-75" />
-        <motion.video ref={fin} src={FINAL} poster={POSTER} muted loop playsInline preload="none" style={{ clipPath: clip }} className="pointer-events-none absolute inset-0 size-full object-cover" />
-        <span className="chrome pointer-events-none absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-bold tracking-[0.14em]">RAW</span>
-        <span className="pointer-events-none absolute top-4 right-4 rounded-full bg-accent px-3 py-1 text-xs font-bold tracking-[0.14em] text-accent-fg">EDITED</span>
-        <motion.div style={{ left }} className="absolute inset-y-0 w-0.5 -translate-x-1/2 cursor-ew-resize bg-white">
-          <div
-            role="slider"
-            tabIndex={0}
-            aria-label="Compare raw footage and final edit"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={50}
-            onKeyDown={onKey}
-            className="absolute top-1/2 left-1/2 grid size-12 -translate-1/2 place-items-center rounded-full bg-white text-black shadow-xl"
-          >
-            <svg viewBox="0 0 24 24" className="size-5" aria-hidden><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
+    <section ref={section} data-tl="Before/After" data-tl-color="rgba(248,113,113,0.4)" className="py-10 lg:py-10">
+      <div className="container-x grid items-center gap-10 lg:max-h-[720px] lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+        <div>
+          <p className="eyebrow mb-4">Before / after</p>
+          <h2 className="h-section mb-5 max-w-xl lg:mb-6">Same footage. Different result.</h2>
+          <ul className="mb-6 space-y-2 text-lg text-muted lg:mb-8 lg:space-y-3">
+            {changes.map((c) => (
+              <li key={c} className="flex items-center gap-3">
+                <Check aria-hidden className="size-5 shrink-0 text-accent" />
+                {c}
+              </li>
+            ))}
+          </ul>
+          <Button href="/contact" size="lg">Start a Project</Button>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <div className="flex items-center gap-1 sm:gap-4">
+            <figure className="flex w-[40vw] flex-col items-center gap-3 lg:w-[236px]">
+              <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-semibold tracking-[0.14em] text-muted">RAW</span>
+              <div className={cn(card, "w-full border-line")}>
+                <video ref={rawRef} src={raw} poster={rawPoster} muted loop playsInline preload="metadata" className="size-full object-cover" aria-label="Raw footage, before editing" />
+              </div>
+            </figure>
+            <ArrowRight aria-hidden className="mt-8 size-4 shrink-0 text-accent sm:size-6" />
+            <figure className="relative z-10 flex w-[43vw] flex-col items-center gap-3 lg:w-[260px]">
+              <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold tracking-[0.14em] text-bg">EDITED</span>
+              <div className={cn(card, "w-full border-accent/40 shadow-[0_30px_80px_-30px_rgba(198,244,50,0.35)]")}>
+                <video ref={editRef} src={edited} poster={editedPoster} muted loop playsInline preload="metadata" className="size-full object-cover" aria-label="The same footage after editing" />
+              </div>
+            </figure>
           </div>
-        </motion.div>
+          <div className="mt-5 flex items-center gap-3">
+            <button type="button" onClick={toggle} className="pressable inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-sm font-semibold hover:border-accent hover:text-accent">
+              {playing ? <Pause aria-hidden className="size-4" /> : <Play aria-hidden className="size-4" />}
+              {playing ? "Pause" : "Play both"}
+            </button>
+            <button type="button" onClick={toggleSound} aria-pressed={sound} aria-label={sound ? "Mute the edited video" : "Turn on sound for the edited video"} className="pressable inline-flex size-11 items-center justify-center rounded-full border border-line hover:border-accent hover:text-accent">
+              {sound ? <Volume2 aria-hidden className="size-4" /> : <VolumeX aria-hidden className="size-4" />}
+            </button>
+          </div>
+        </div>
       </div>
-      <button type="button" onClick={toggle} className="pressable mt-5 inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 text-sm font-semibold hover:bg-white/5">
-        {playing ? <Pause className="size-4" /> : <Play className="size-4" />} {playing ? "Pause" : "Play both"}
-      </button>
-    </div>
+    </section>
   );
 }
+
+export default BeforeAfter;
