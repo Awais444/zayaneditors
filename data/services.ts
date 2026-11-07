@@ -118,7 +118,7 @@ export { sampleVideo } from "./media";
  * `related` = adjacent work shown under "Related work from our editors" when no exact match exists.
  * Services not listed (or with nothing in data) hide the samples section. Never padded with random items.
  */
-type SampleCategory = "Talking Head" | "UGC Ads" | "E-commerce Ads" | "VSL" | "3D Animation" | "Logo Animation" | "AI Generation" | "Documentary" | "Real Estate";
+type SampleCategory = "Talking Head" | "UGC Ads" | "E-commerce Ads" | "VSL" | "3D Animation" | "Logo Animation" | "AI Generation" | "Documentary" | "Real Estate" | "Business Promos" | "Motion Graphics";
 export const servicePortfolio: Record<string, { exact?: SampleCategory[]; related?: SampleCategory[] }> = {
   "youtube-video-editing": { exact: ["Talking Head", "Documentary"] },
   "long-form-video-editing": { exact: ["Talking Head", "Documentary"] },
@@ -131,7 +131,8 @@ export const servicePortfolio: Record<string, { exact?: SampleCategory[]; relate
   "instagram-reels-editing": { exact: ["Talking Head", "UGC Ads"] },
   "tiktok-video-editing": { exact: ["Talking Head", "UGC Ads"] },
   "youtube-shorts-editing": { exact: ["Talking Head", "UGC Ads"] },
-  "social-media-video-editing": { exact: ["Talking Head", "UGC Ads", "E-commerce Ads"] },
+  "social-media-video-editing": { exact: ["Talking Head", "UGC Ads", "E-commerce Ads", "Business Promos"] },
+  "corporate-video-editing": { exact: ["Business Promos"] },
   "video-ad-editing": { exact: ["E-commerce Ads", "UGC Ads"] },
   "ugc-ad-editing": { exact: ["UGC Ads"] },
   "product-video-editing": { exact: ["E-commerce Ads"] },
@@ -144,7 +145,7 @@ export const servicePortfolio: Record<string, { exact?: SampleCategory[]; relate
   "podcast-video-editing": { related: ["Talking Head"] },
   "podcast-clips-editing": { related: ["Talking Head"] },
   "color-grading": { related: ["Real Estate", "Documentary"] },
-  "motion-graphics": { related: ["Logo Animation", "3D Animation", "E-commerce Ads"] },
+  "motion-graphics": { exact: ["Motion Graphics"], related: ["Logo Animation", "3D Animation", "E-commerce Ads"] },
   "captions-and-subtitles": { related: ["Talking Head", "UGC Ads"] },
   "youtube-thumbnail-design": { related: ["Talking Head", "Documentary"] },
   "video-repurposing": { related: ["Talking Head"] },

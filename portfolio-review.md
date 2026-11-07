@@ -126,8 +126,8 @@ Analysed from 10 frames each. No local transcription tool was available, so copy
 | N2 | `new/02.mp4` | `islamic-reminder-2d-animation-reel` | Islamic Reminder Reel in 2D Animation with Arabic Type | Motion Graphics (new filter) | 9:16 | 0:14 | [DeU5h4cOUdO](https://www.instagram.com/reel/DeU5h4cOUdO/) | 48 KB / 716 KB / 776 KB |
 | N3 | `new/03.mp4` | `creator-before-after-edit-reel` | Creator Intro Reel: Before vs After Edit | Talking Head | 9:16 | 0:12 | [Dcvt66bRSAT](https://www.instagram.com/reel/Dcvt66bRSAT/) | 44 KB / 1.2 MB / 1.5 MB |
 | N4 | `new/04.mp4` | `bodybuilding-podcast-motivational-reel` | Bodybuilding Podcast Motivational Reel with Mixed-Type Captions | Talking Head | 9:16 | 0:24 | [DdHOmeVRKJJ](https://www.instagram.com/reel/DdHOmeVRKJJ/) | 32 KB / 1.4 MB / 1.2 MB |
-| N5 | `new/05.mp4` | `concrete-contractor-promo-reel` | Concrete Contractor Promo Reel with Call-to-Action Card | E-commerce Ads | 9:16 | 0:32 | [DcbQ3z-xIja](https://www.instagram.com/reel/DcbQ3z-xIja/) | 56 KB / 2.8 MB / 4.4 MB |
-| N6 | `new/06.mp4` | `barbershop-experience-promo-reel` | Barbershop Experience Promo Reel | E-commerce Ads | 9:16 | 1:11 | [DZm3k_2RgpD](https://www.instagram.com/reel/DZm3k_2RgpD/) | 48 KB / 2.1 MB / 1.7 MB |
+| N5 | `new/05.mp4` | `concrete-contractor-promo-reel` | Concrete Contractor Promo Reel with Call-to-Action Card | Business Promos | 9:16 | 0:32 | [DcbQ3z-xIja](https://www.instagram.com/reel/DcbQ3z-xIja/) | 56 KB / 2.8 MB / 4.4 MB |
+| N6 | `new/06.mp4` | `barbershop-experience-promo-reel` | Barbershop Experience Promo Reel | Business Promos | 9:16 | 1:11 | [DZm3k_2RgpD](https://www.instagram.com/reel/DZm3k_2RgpD/) | 48 KB / 2.1 MB / 1.7 MB |
 | N7 | `new/07.mp4` | `content-strategy-motion-graphics-reel` | Content Strategy Reel with 3D Motion Graphics | Talking Head | 9:16 | 0:57 | [DXIKDeYEe2R](https://www.instagram.com/reel/DXIKDeYEe2R/) | 40 KB / 1.3 MB / 1.1 MB |
 
 ### Flags (new items)

@@ -749,7 +749,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     slug: "concrete-contractor-promo-reel",
     title: "Concrete Contractor Promo Reel with Call-to-Action Card",
-    category: "E-commerce Ads",
+    category: "Business Promos",
     tags: ["local business", "contractor", "promo", "captions"],
     shortDescription: "On-site contractor promo with glowing captions and a click-to-call end card.",
     description: "A 32-second promo for a concrete repair company: the owners talk on a job site, with glowing word captions, job-site cutaways and a closing call-now card with the estimate phone line.",
@@ -772,7 +772,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     slug: "barbershop-experience-promo-reel",
     title: "Barbershop Experience Promo Reel",
-    category: "E-commerce Ads",
+    category: "Business Promos",
     tags: ["barbershop", "local business", "promo", "cinematic"],
     shortDescription: "Cinematic barbershop promo with close-up cuts and bold two-tone captions.",
     description: "A 71-second promo for a barbershop: the owner walks through the full experience while cinematic close-ups of fades, steam towels, the drinks bar and the hex-lit studio are cut in, with bold two-tone captions.",
