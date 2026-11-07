@@ -139,7 +139,7 @@ export const postServices: ServiceCopy[] = [
       { q: "Can you reframe horizontal video for vertical?", a: "Yes. We track speakers, build split-screen layouts and use B-roll so vertical clips look intentional." },
       { q: "Do you write the post captions?", a: "Content kits and monthly plans include suggested post copy and hashtags." },
       { q: "Can you post the clips for me?", a: "Yes, with our channel management add-on." },
-      { q: "Can I try it first?", a: "Yes — send a recording and we'll turn part of it into a free sample clip." },
+      { q: "Can I see more samples before I order?", a: "Yes — browse our portfolio or ask us on WhatsApp for samples in your niche." },
     ],
     related: ["podcast-clips-editing", "short-form-video-editing", "social-media-video-editing", "captions-and-subtitles"],
     portfolioTags: ["shorts", "podcast"],

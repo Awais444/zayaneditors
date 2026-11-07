@@ -10,7 +10,7 @@ export function PricingFeature() {
   return (
     <section data-tl="Pricing" data-tl-color="rgba(52,211,153,0.4)" className="section cv-auto">
       <div className="container-x">
-        <SectionHeading eyebrow="Pricing" title="Simple pricing, no surprises" sub="Per-video, monthly or per-project. Every plan includes revisions and a free trial edit." center />
+        <SectionHeading eyebrow="Pricing" title="Simple pricing, no surprises" sub="Per-video, monthly or per-project. Every plan includes revisions." center />
         <div className="grid items-stretch gap-5 md:grid-cols-3">
           {perVideo.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.06}>

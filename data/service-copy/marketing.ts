@@ -2,8 +2,8 @@ import type { ServiceCopy } from "../services";
 import { sampleVideo } from "../media";
 
 const trialFaq = {
-  q: "Can I see a sample first?",
-  a: "Yes. Send a few minutes of footage and we'll return a free 30–60 second sample edit so you can judge our work on your own material.",
+  q: "Can I see more samples before I order?",
+  a: "Yes — browse our portfolio or ask us on WhatsApp for samples in your niche.",
 };
 
 export const marketingServices: ServiceCopy[] = [

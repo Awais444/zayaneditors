@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   trailingSlash: false,
+  async redirects() {
+    return [{ source: "/free-trial-edit", destination: "/contact", statusCode: 301 }];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

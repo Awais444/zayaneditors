@@ -62,7 +62,7 @@ export function Hero() {
           </p>
           <div {...line(4)} className="hero-line mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
             <Magnetic>
-              <Button href="/free-trial-edit" size="lg">Get a Free Trial Edit</Button>
+              <Button href="/contact" size="lg">Start a Project</Button>
             </Magnetic>
             <Link href="/portfolio" className="font-semibold underline-offset-4 hover:text-accent hover:underline">Watch our work →</Link>
           </div>

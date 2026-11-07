@@ -9,7 +9,7 @@ export const longFormServices: ServiceCopy[] = [
     keyword: "youtube video editing services",
     metaTitle: "YouTube Video Editing Services | Retention-First Edits",
     metaDescription:
-      "Professional YouTube video editing services built for retention: sharp hooks, tight pacing, sound design and thumbnails. First cut in 48h. Free trial edit.",
+      "Professional YouTube video editing services built for retention: sharp hooks, tight pacing, sound design and thumbnails. First cut in 48h.",
     h1: "YouTube Video Editing Services That Hold Attention",
     short: "Retention-first edits for creators who want watch time, not just a tidy timeline.",
     intro:
@@ -70,7 +70,7 @@ export const longFormServices: ServiceCopy[] = [
       { q: "Who owns the edited video?", a: "You do. Full rights to the final video and project files transfer to you on payment. We only show work in our portfolio with your permission." },
       { q: "Can you work from a script or outline?", a: "Absolutely. A script helps us place B-roll and graphics precisely, but we're equally comfortable with unscripted, talk-to-camera footage." },
       { q: "What software do you use?", a: "Premiere Pro and DaVinci Resolve for editing and colour, After Effects for motion graphics, and iZotope RX for audio repair." },
-      { q: "Can I try you before committing?", a: "Yes — we offer a free 30–60 second trial edit so you can judge our style on your own footage." },
+      { q: "Can I see more samples before I order?", a: "Yes — browse our portfolio or ask us on WhatsApp for samples in your niche." },
     ],
     related: ["long-form-video-editing", "youtube-thumbnail-design", "youtube-shorts-editing", "youtube-channel-management"],
     portfolioTags: ["long-form", "youtube"],

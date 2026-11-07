@@ -17,8 +17,6 @@ export default function TermsPage() {
       <p>Each plan includes the number of revision rounds stated in your quote. Additional rounds or changes outside the original brief may be billed separately.</p>
       <h2>Ownership</h2>
       <p>On full payment, you own all rights to the final deliverables. You confirm you own or have licensed all footage and materials you supply. We may show work in our portfolio only with your permission.</p>
-      <h2>Free trial edit</h2>
-      <p>The free trial is a one-time 30–60 second sample per client, with no obligation to purchase.</p>
       <h2>Cancellation</h2>
       <p>You can cancel a monthly plan at any time before the next billing date. Work already started in the current period will be completed.</p>
       <h2>Liability</h2>

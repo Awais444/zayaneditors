@@ -8,7 +8,7 @@ export const lengths = ["Under 1 min", "1–10 min", "10–30 min", "30+ min"] a
 const url = z.string().trim().max(500).url("Enter a full link starting with https://").or(z.literal(""));
 
 export const leadSchema = z.object({
-  kind: z.enum(["contact", "quote", "trial"]),
+  kind: z.enum(["contact", "quote"]),
   name: z.string().trim().min(2, "Please enter your name").max(80),
   email: z.string().trim().email("Enter a valid email").max(120),
   whatsapp: z.string().trim().max(30).optional().default(""),
@@ -23,7 +23,6 @@ export const leadSchema = z.object({
   /** Honeypot — must stay empty */
   company: z.string().max(0).optional().default(""),
 }).superRefine((d, ctx) => {
-  if (d.kind === "trial" && !d.footage) ctx.addIssue({ code: "custom", path: ["footage"], message: "Add a link to your footage" });
 });
 
 export type Lead = z.input<typeof leadSchema>;

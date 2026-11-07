@@ -35,10 +35,10 @@ export function FinalCTA({ text = "LET’S EDIT", sub, videoSrc }: { text?: stri
             <VideoText text={text} src={videoSrc} filled={show} baseClass={show ? "text-transparent transition-colors duration-700" : "text-fg transition-colors duration-700"} />
           </h2>
         </div>
-        <p className="mx-auto mt-8 max-w-xl text-lg text-muted">{sub ?? `Send a few minutes of footage. Get a free sample edit back in ${site.turnaround} — no card, no obligation.`}</p>
+        <p className="mx-auto mt-8 max-w-xl text-lg text-muted">{sub ?? "Tell us about your video. We'll reply with a plan and price within 4 hours."}</p>
         <div className="mt-9 flex justify-center">
           <Magnetic strength={0.4}>
-            <Button href="/free-trial-edit" size="lg" className="h-16 px-10 text-lg">Get a Free Trial Edit</Button>
+            <Button href="/contact" size="lg" className="h-16 px-10 text-lg">Start a Project</Button>
           </Magnetic>
         </div>
         <div className="mt-10 flex items-center justify-center gap-3 text-sm text-muted">

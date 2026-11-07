@@ -33,7 +33,7 @@ Run each in ChatGPT (search on), Perplexity, Gemini, Copilot and Claude in a log
 16. What is Frameforge Studio?
 17. Is Frameforge Studio a good video editing company?
 18. Frameforge Studio pricing.
-19. Video editing companies that offer a free trial edit.
+19. Video editing companies with a public portfolio by niche.
 20. Wedding / corporate / real estate video editing service recommendations.
 
 ## Log

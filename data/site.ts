@@ -10,7 +10,7 @@ export const site = {
   ).replace(/\/$/, ""),
   tagline: "Professional video editing for every kind of video",
   description:
-    "A dedicated team of professional video editors for YouTube, social, ads, brand films, weddings, events, music videos and podcasts. First cut in 48 hours, free trial edit.",
+    "A dedicated team of professional video editors for YouTube, social, ads, brand films, weddings, events, music videos and podcasts. First cut in 48 hours.",
   owner: {
     name: "Alex Carter", // TODO: owner / lead editor name
     role: "Founder & Lead Editor",

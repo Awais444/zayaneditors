@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ["/glossary", ["app/(site)/glossary", "data/glossary.ts"], 0.6],
     ["/video-editing-agency", ["app/(site)/video-editing-agency"], 0.8],
     ["/contact", ["app/(site)/contact"], 0.7],
-    ["/free-trial-edit", ["app/(landing)/free-trial-edit"], 0.7],
     ["/blog", ["app/(site)/blog/page.tsx", "content/blog"], 0.7],
     ["/about", ["app/(site)/about"], 0.6],
     ["/team", ["app/(site)/team", "data/team.ts"], 0.6],

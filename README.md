@@ -34,7 +34,7 @@ npm run lint
 - `data/locations.ts`: country → state → city pages (read the **no mass generation** rule at the top).
 - `content/blog/*.mdx`: blog posts.
 - `app/actions/submit-lead.ts`: the server action behind every form (zod validation, honeypot, rate limit, Resend, UTM capture).
-- `lib/analytics.ts`: GA4 events (`generate_lead`, `whatsapp_click`, `calendly_open`, `pricing_toggle`, `video_play`, `free_trial_start`) and UTM cookie capture.
+- `lib/analytics.ts`: GA4 events (`generate_lead`, `whatsapp_click`, `calendly_open`, `pricing_toggle`, `video_play`, `project_start`) and UTM cookie capture.
 - `app/globals.css`: design tokens. Change `--color-accent` to re-brand.
 
 ## How to…

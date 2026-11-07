@@ -6,7 +6,7 @@ Source of truth: `data/site.ts`, `data/services.ts`, `data/pricing.ts`. If a fac
 
 ## One-line description
 
-> Frameforge Studio is a dedicated team of professional video editors for YouTube, social, ads, brand films, weddings, events, music videos and podcasts. First cut in 48 hours, free trial edit.
+> Frameforge Studio is a dedicated team of professional video editors for YouTube, social, ads, brand films, weddings, events, music videos and podcasts. First cut in 48 hours.
 
 ## Short description (≈50 words)
 
@@ -25,7 +25,7 @@ Source of truth: `data/site.ts`, `data/services.ts`, `data/pricing.ts`. If a fac
 | First cut | Within 48 hours | ✅ |
 | Replies | Within 2 hours | ✅ |
 | Prices from | $25 per short-form clip; $79 per long-form video; $99 per podcast episode (USD) | ✅ confirm before launch |
-| Free trial | Free trial edit on the client's own footage | ✅ |
+| Samples | Portfolio by niche; more samples on request via WhatsApp | ✅ |
 | Guarantee | Free re-edit if the first cut misses the brief; no charge for a video still unsatisfactory after revisions | ✅ |
 | Website | `NEXT_PUBLIC_SITE_URL` | ⚠️ set domain |
 | Email | `NEXT_PUBLIC_CONTACT_EMAIL` | ⚠️ not set |

@@ -24,7 +24,7 @@ const faqs = [
   { q: "What makes a video editing quote go up?", a: "Long raw footage compared with the final length, dense graphics or animation, colour and sound work, rush turnaround and extra revision rounds." },
   { q: "Are revisions included in the price?", a: "Yes. Every plan includes revisions (the number depends on the plan), and an extra round costs $15 if you need one." },
   { q: "Is there a guarantee?", a: guarantee },
-  { q: "Can I try before paying?", a: "Yes. Request a free trial edit and we edit a short sample from your own footage." },
+  { q: "Can I see more samples before I order?", a: "Yes — browse our portfolio or ask us on WhatsApp for samples in your niche." },
 ];
 
 const th = "p-4 font-medium";
@@ -93,7 +93,7 @@ export default function PricingGuide() {
             <ul>{addons.map((a) => <li key={a.name}>{a.name}: {a.price} {a.note}</li>)}</ul>
 
             <h2>How do I get an exact quote?</h2>
-            <p>See every price and the per-minute calculator on our <Link href="/pricing">pricing page</Link>, read the longer <Link href="/blog/youtube-video-editing-cost">YouTube editing cost guide</Link>, or <Link href="/contact">send us your project</Link> for a quote. You can also start with a <Link href="/free-trial-edit">free trial edit</Link>.</p>
+            <p>See every price and the per-minute calculator on our <Link href="/pricing">pricing page</Link>, read the longer <Link href="/blog/youtube-video-editing-cost">YouTube editing cost guide</Link>, or <Link href="/contact">send us your project</Link> for a quote. You can also browse <Link href="/portfolio">our portfolio</Link> first.</p>
           </article>
         </div>
       </section>

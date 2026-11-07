@@ -75,7 +75,7 @@ export async function submitLead(input: Lead): Promise<LeadResult> {
       from,
       to: lead.email,
       subject: `We got your request — ${site.name}`,
-      html: `<p>Hi ${esc(lead.name.split(" ")[0])},</p><p>Thanks for reaching out! We've received your ${lead.kind === "trial" ? "free trial edit request" : "project details"} and will reply within a few hours.</p><p>Want to talk sooner? <a href="${site.calendly}">Book a call</a> or <a href="https://wa.me/${site.whatsapp}">message us on WhatsApp</a>.</p><p>— ${site.owner.name}, ${site.name}</p>`,
+      html: `<p>Hi ${esc(lead.name.split(" ")[0])},</p><p>Thanks for reaching out! We've received your project details and will reply within a few hours.</p><p>Want to talk sooner? <a href="${site.calendly}">Book a call</a> or <a href="https://wa.me/${site.whatsapp}">message us on WhatsApp</a>.</p><p>— ${site.owner.name}, ${site.name}</p>`,
     });
     return { ok: true };
   } catch (e) {

@@ -92,8 +92,8 @@ export function LocationTemplate({
             </div>
             <div className="flex flex-col items-start gap-5 lg:items-end">
               <div className="flex flex-wrap gap-3">
-                <Magnetic><Button href="/free-trial-edit" size="lg">Get a Free Trial Edit</Button></Magnetic>
-                <Button href="/contact" size="lg" variant="outline">Start a Project</Button>
+                <Magnetic><Button href="/contact" size="lg">Start a Project</Button></Magnetic>
+                <Button href="/portfolio" size="lg" variant="outline">Watch our work →</Button>
               </div>
             </div>
           </div>

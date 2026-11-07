@@ -46,6 +46,7 @@ export function ContactForm() {
 
   const submit = () => {
     if (!validate()) return;
+    track("project_start");
     start(async () => {
       const res = await submitLead({ kind: "contact", ...data });
       if (res.ok) {

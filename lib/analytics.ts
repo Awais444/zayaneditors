@@ -14,7 +14,7 @@ export type LeadEvent =
   | "calendly_open"
   | "pricing_toggle"
   | "video_play"
-  | "free_trial_start"
+  | "project_start"
   | "ai_referral";
 
 /** Fires a GA4 event. No-op until consent has loaded gtag. */

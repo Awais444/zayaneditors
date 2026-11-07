@@ -77,7 +77,7 @@ const faqs = [
   { q: "How much do your video editing services cost?", a: `Short-form edits start at $${perVideo[0].from}, long-form at $${perVideo[1].from} and podcasts at $${perVideo[2].from}. Monthly plans reduce the per-video price, and weddings, music videos, ads and corporate projects are priced per project.` },
   { q: "Can you handle large volumes like an agency?", a: "Yes. Our team works in shifts with specialists across formats, so we can scale from one video a month to dozens without changing who leads your account." },
   { q: "Do you work white-label for other agencies?", a: "Yes. Many production companies and marketing agencies use us as their post-production team, under NDA and without our branding." },
-  { q: "How do I start?", a: "Request a free trial edit or start a project. We'll reply within hours with a recommended plan, price and the editor we'd pair you with." },
+  { q: "How do I start?", a: "Start a project or message us on WhatsApp. We'll reply within hours with a recommended plan, price and the editor we'd pair you with." },
 ];
 
 const serviceSchema = {
@@ -114,7 +114,7 @@ export default function AgencyPage() {
         eyebrow="Video editing agency alternative"
         title="Looking for a Video Editing Agency? Meet Your Dedicated Team of Editors"
         sub="If you're searching for a video editing agency, you probably want three things: reliable capacity, consistent quality and someone who understands your brand. We deliver all three — as a dedicated team of professional video editors rather than a faceless production line. You get one named editor who learns your style, specialists in colour, sound and motion when a project needs them, and prices that make sense for growing creators and businesses."
-        ctas={[{ label: "Get a Free Trial Edit", href: "/free-trial-edit" }, { label: "Meet the editors", href: "/team", variant: "outline" }]}
+        ctas={[{ label: "Start a Project", href: "/contact" }, { label: "Meet the editors", href: "/team", variant: "outline" }]}
         visual={<HeroVideoCard video={toCard(work.find((p) => p.featured && p.aspectRatio === "16:9") ?? work[0]).video} chips={["One named editor", `First cut in ${site.turnaround}`]} />}
       />
 

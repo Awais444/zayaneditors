@@ -23,7 +23,7 @@ import { AboutBrand } from "@/components/sections/AboutBrand";
 
 export const metadata: Metadata = pageMeta({
   title: `Video Editing Services | Dedicated Editors | ${site.shortName}`,
-  description: "Dedicated professional editors for every format: talking-head reels, YouTube, ads and podcasts. Not a faceless agency. First cut in 48h, free trial.",
+  description: "Dedicated professional editors for every format: talking-head reels, YouTube, ads and podcasts. Not a faceless agency. First cut in 48h.",
   path: "/",
 });
 

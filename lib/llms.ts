@@ -16,7 +16,6 @@ export function llmsTxt(full = false) {
     `- Clients in: ${site.markets.join(", ")}`,
     `- First cut: within ${site.turnaround}`,
     `- Prices from: $${Math.min(...perVideo.map((p) => p.from))} per video (USD)`,
-    `- Free trial edit: ${u("/free-trial-edit")}`,
     `- Contact: ${u("/contact")}${site.email ? ` · ${site.email}` : ""}`,
     "",
   );

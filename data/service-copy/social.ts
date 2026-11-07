@@ -8,7 +8,7 @@ export const socialServices: ServiceCopy[] = [
     keyword: "social media video editing services",
     metaTitle: "Social Media Video Editing Services | Every Platform",
     metaDescription:
-      "Social media video editing for Instagram, TikTok, LinkedIn, Facebook, X and YouTube. A month of platform-native posts from your footage. Free trial edit.",
+      "Social media video editing for Instagram, TikTok, LinkedIn, Facebook, X and YouTube. A month of platform-native posts from your footage.",
     h1: "Social Media Video Editing Services for Every Platform",
     short: "A full month of platform-native video for Instagram, TikTok, LinkedIn, Facebook and more.",
     intro:
@@ -70,7 +70,7 @@ export const socialServices: ServiceCopy[] = [
       { q: "Will you write captions and hashtags?", a: "Yes, Growth and Always-on plans include suggested post captions and hashtags in your brand voice. You can edit or approve them before posting." },
       { q: "Can you post for us?", a: "Yes. Add channel management and we'll schedule and publish posts, and handle basic community replies if you'd like." },
       { q: "How do you keep posts on-brand?", a: "We build a social style guide in the first week covering fonts, colours, caption style, music mood and logo use, and apply it to every post." },
-      { q: "Can I try before committing to a monthly plan?", a: "Yes. Request a free trial edit and we'll turn a few minutes of your footage into a sample post." },
+      { q: "Can I see more samples before I order?", a: "Yes — browse our portfolio or ask us on WhatsApp for samples in your niche." },
     ],
     related: ["instagram-reels-editing", "tiktok-video-editing", "video-repurposing", "captions-and-subtitles"],
     portfolioTags: ["shorts", "social"],

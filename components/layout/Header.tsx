@@ -304,9 +304,6 @@ export function Header({ groups }: { groups: NavGroup[] }) {
               <Button href="/contact" size="lg" className="mt-6 w-full">
                 Start a Project
               </Button>
-              <Button href="/free-trial-edit" variant="outline" size="lg" className="mt-2 w-full">
-                Get a Free Trial Edit
-              </Button>
             </motion.nav>
           </motion.div>
         )}

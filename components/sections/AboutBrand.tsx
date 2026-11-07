@@ -15,7 +15,7 @@ export function AboutBrand() {
     { label: "Clients in", value: site.markets.join(", ") },
     { label: "First cut", value: `Within ${site.turnaround}` },
     { label: "Prices from", value: `$${lowestPrice} per video` },
-    { label: "Free trial", value: "Yes, on your own footage" },
+    { label: "Samples", value: "Portfolio by niche, more on request" },
   ];
   return (
     <section data-tl="About" data-tl-color="rgba(244,244,245,0.2)" className="section cv-auto pt-0">

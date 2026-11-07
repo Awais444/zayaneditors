@@ -10,7 +10,7 @@ export function PricingPreview() {
     <section className="section relative">
       <div className="glow -right-40 bottom-0 size-[28rem]" />
       <div className="container-x">
-        <SectionHeading eyebrow="Pricing" title="Simple pricing, no surprises" sub="Per-video pricing or monthly plans. Every plan includes revisions and a free trial edit." />
+        <SectionHeading eyebrow="Pricing" title="Simple pricing, no surprises" sub="Per-video pricing or monthly plans. Every plan includes revisions." />
         <div className="grid gap-5 md:grid-cols-3">
           {perVideo.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08} className={cn("card flex flex-col p-7", p.featured && "border-accent/60 bg-[linear-gradient(180deg,var(--color-accent-soft),transparent_60%)]")}>
@@ -30,7 +30,7 @@ export function PricingPreview() {
         </div>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Button href="/pricing" size="lg">See all pricing</Button>
-          <Button href="/free-trial-edit" size="lg" variant="outline">Try a free edit first</Button>
+          <Button href="/contact" size="lg" variant="outline">Start a Project</Button>
         </div>
       </div>
     </section>

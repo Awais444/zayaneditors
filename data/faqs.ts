@@ -9,7 +9,7 @@ export const homeFaqs: Faq[] = [
   { q: "How fast will I get my first cut?", a: "Within 48 hours of receiving your footage and brief for most videos. Long or graphics-heavy edits may take 3–4 days, and we confirm the timeline before starting." },
   { q: "How do I send my footage?", a: "Share a Google Drive, Dropbox, Frame.io or WeTransfer link. We never need you to install anything." },
   { q: "How many revisions do I get?", a: "Most plans include two rounds of revisions per video, delivered within 24 hours each. Pro plans include unlimited minor revisions." },
-  { q: "Is the free trial edit really free?", a: "Yes. Send a few minutes of footage and we'll return a 30–60 second sample edit. No card, no obligation." },
+  { q: "Can I see more samples before I order?", a: "Yes — browse our portfolio or ask us on WhatsApp for samples in your niche." },
   agencyFaq,
   { q: "What kinds of videos do you edit?", a: "Almost everything: YouTube videos, Shorts and Reels, ads, product and explainer videos, brand films, corporate content, weddings, events, music videos, travel films, sports highlights, short films and podcasts." },
   { q: "Do you work with clients outside the US?", a: "We work with creators and brands across the USA, UK, Canada, Australia and UAE, with overlapping working hours for each time zone." },

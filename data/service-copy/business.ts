@@ -14,7 +14,7 @@ export const businessServices: ServiceCopy[] = [
     keyword: "ugc ad editing services",
     metaTitle: "UGC Ad Editing Services | Scroll-Stopping Paid Social",
     metaDescription:
-      "UGC ad editing for Meta, TikTok and YouTube ads. Hook variations, captions, b-roll and fast iterations built for testing. Free trial edit.",
+      "UGC ad editing for Meta, TikTok and YouTube ads. Hook variations, captions, b-roll and fast iterations built for testing.",
     h1: "UGC Ad Editing Services Built for Testing and Scale",
     short: "Creator-style ads with multiple hooks, cut for Meta, TikTok and YouTube placements.",
     intro:
@@ -237,7 +237,7 @@ export const businessServices: ServiceCopy[] = [
     keyword: "gaming video editing",
     metaTitle: "Gaming Video Editing Services | YouTube & Stream Edits",
     metaDescription:
-      "Gaming video editing for YouTube, Twitch highlights and Shorts. Meme timing, SFX, facecam layouts and stream-to-video edits. Free trial edit.",
+      "Gaming video editing for YouTube, Twitch highlights and Shorts. Meme timing, SFX, facecam layouts and stream-to-video edits.",
     h1: "Gaming Video Editing With Timing That Lands",
     short: "Stream highlights, gameplay videos and Shorts with meme timing and punchy SFX.",
     intro:

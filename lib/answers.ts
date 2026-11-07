@@ -17,13 +17,13 @@ export function serviceAnswer(s: Service) {
   const build = (n: number, tail: string) =>
     `${site.name}'s ${s.name} service: ${short.charAt(0).toLowerCase()}${short.slice(1)}. A dedicated editor handles ${list(s.included.slice(0, n).map((x) => x.toLowerCase()))}. ${s.turnaround}. ${startingPrice(s)}${tail}`;
   // Longest version that stays within 60 words
-  const options = [build(3, ", with revisions included and a free trial edit available."), build(2, ", with revisions included and a free trial edit available."), build(2, ", revisions included.")];
+  const options = [build(2, ", revisions included.")];
   return options.find((o) => words(o) <= 60) ?? options[options.length - 1];
 }
 
 export function locationAnswer(place: { name: string; niches: string[]; timeOverlap: string }) {
   const from = perVideo.map((p) => `$${p.from} ${p.unit}`);
-  return `${site.name} edits videos for creators and businesses in ${place.name} remotely, from YouTube and podcasts to short-form for ${list(place.niches.slice(0, 2).map((n) => n.toLowerCase()))}. First cuts arrive in ${site.turnaround}. Prices start at ${list(from)}, and you can try a free trial edit first.`;
+  return `${site.name} edits videos for creators and businesses in ${place.name} remotely, from YouTube and podcasts to short-form for ${list(place.niches.slice(0, 2).map((n) => n.toLowerCase()))}. First cuts arrive in ${site.turnaround}. Prices start at ${list(from)}, and you can browse the portfolio for samples in your niche.`;
 }
 
 export const words = (s: string) => s.trim().split(/\s+/).length;
@@ -35,7 +35,7 @@ export function serviceFacts(s: Service, workCount: number) {
     { label: "Pricing", value: startingPrice(s) },
     { label: "Plans", value: s.pricing.map((p) => p.name).join(" · ") },
     { label: "Revisions", value: "Included in every plan" },
-    { label: "Free trial", value: "Yes — a short sample on your footage" },
+    { label: "Samples", value: "Portfolio by niche, more on request" },
     { label: "Portfolio", value: `${workCount} real ${workCount === 1 ? "project" : "projects"} shown on this page` },
   ];
 }

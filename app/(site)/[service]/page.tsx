@@ -95,7 +95,7 @@ export default async function ServicePage({ params }: Props) {
             <p className="mt-4 flex items-center gap-2 text-sm"><Clock className="size-4 text-accent" aria-hidden /> {s.turnaround}</p>
           </>
         }
-        ctas={[{ label: "Get a Free Trial Edit", href: "/free-trial-edit" }, { label: "See pricing", href: "#pricing", variant: "outline" }]}
+        ctas={[{ label: "Start a Project", href: "/contact" }, { label: "See pricing", href: "#pricing", variant: "outline" }]}
         visual={<HeroVideoCard video={work[0] ? toCard(work[0]).video : s.video} chips={[categoryChip[s.category], firstCut]} />}
       />
 

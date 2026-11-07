@@ -35,11 +35,11 @@ function InlineCTA() {
     <aside className="not-prose relative my-12 flex flex-col gap-5 overflow-hidden rounded-3xl border border-accent/30 bg-surface/70 p-7 shadow-[0_30px_80px_-40px_rgba(198,244,50,0.4)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
       <div aria-hidden className="pointer-events-none absolute -top-20 -left-16 size-56 rounded-full bg-accent/15 blur-3xl" />
       <div className="relative">
-        <p className="text-xs font-semibold tracking-[0.14em] text-accent uppercase">Free trial edit</p>
+        <p className="text-xs font-semibold tracking-[0.14em] text-accent uppercase">Start a project</p>
         <p className="mt-2 text-xl font-semibold text-fg">Want a pro to edit your next video?</p>
-        <p className="mt-1 text-sm text-muted">Get a free 30–60s sample edit from your own footage in 48 hours.</p>
+        <p className="mt-1 text-sm text-muted">Tell us about your video. We'll reply with a plan and price within 4 hours.</p>
       </div>
-      <Button href="/free-trial-edit" className="relative shrink-0">Free Trial Edit</Button>
+      <Button href="/contact" className="relative shrink-0">Start a Project</Button>
     </aside>
   );
 }
