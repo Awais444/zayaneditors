@@ -37,7 +37,7 @@ function InlineCTA() {
       <div className="relative">
         <p className="text-xs font-semibold tracking-[0.14em] text-accent uppercase">Start a project</p>
         <p className="mt-2 text-xl font-semibold text-fg">Want a pro to edit your next video?</p>
-        <p className="mt-1 text-sm text-muted">Tell us about your video. We'll reply with a plan and price within 4 hours.</p>
+        <p className="mt-1 text-sm text-muted">Tell us about your video. We&apos;ll reply with a plan and price within 4 hours.</p>
       </div>
       <Button href="/contact" className="relative shrink-0">Start a Project</Button>
     </aside>

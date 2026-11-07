@@ -22,7 +22,6 @@ export const leadSchema = z.object({
   references: z.string().trim().max(1000).optional().default(""),
   /** Honeypot — must stay empty */
   company: z.string().max(0).optional().default(""),
-}).superRefine((d, ctx) => {
 });
 
 export type Lead = z.input<typeof leadSchema>;

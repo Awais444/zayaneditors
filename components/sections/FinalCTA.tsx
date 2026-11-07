@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { site } from "@/data/site";
 import { VideoText } from "@/components/ui/VideoText";
 import { editors } from "@/data/team";
 import { Button } from "@/components/ui/Button";
