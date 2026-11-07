@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
-      <JsonLd data={[videoObject({ title: p.title, description: p.description, poster: p.poster, src: p.preview.mp4, uploadDate: firstPublished("data/portfolio-items.ts").toISOString(), duration: `PT${previewDuration(p)}S`, page: `/portfolio/${p.slug}` }), creativeWork(p)]} />
+      <JsonLd data={[videoObject({ title: p.title, description: p.description, poster: p.poster, src: p.preview.mp4, uploadDate: firstPublished("data/portfolio-items.ts").toISOString(), duration: `PT${previewDuration(p)}S`, page: `/portfolio/${p.slug}`, sameAs: p.instagramUrl }), creativeWork(p)]} />
 
       <section data-tl="Intro" data-tl-color="rgba(198,244,50,0.35)" className="relative isolate overflow-hidden">
         <div aria-hidden className="glow -top-48 right-0 -z-10 size-[36rem]" />
@@ -95,6 +95,9 @@ export default async function ProjectPage({ params }: Props) {
               ))}
             </ul>
             <Link href="/contact" className="mt-8 inline-flex font-semibold hover:text-accent">Want an edit like this? Start a project →</Link>
+            {p.instagramUrl && (
+              <a href={p.instagramUrl} target="_blank" rel="noopener noreferrer" className="mt-3 flex font-semibold text-muted hover:text-accent">View on Instagram ↗</a>
+            )}
           </div>
         </div>
       </section>

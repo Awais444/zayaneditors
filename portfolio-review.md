@@ -7,20 +7,11 @@ Approve or edit, then I'll wire it into the site and commit. Unpublished items a
 | # | File | Slug | Title | Category | Ratio | Duration | Featured | Published | Why |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | `3D ANIMATIONS/01.mp4` | `news-channel-3d-globe-intro` | 3D News Channel Intro with Rotating Globe | 3D Animation | 16:9 | 0:20 | ★ | yes | Clean, polished broadcast look; strongest piece in the category. |
-| 2 | `3D ANIMATIONS/03.mp4` | `tile-collection-ai-interior-reel` | Tile Collection Reel with AI-Rendered Interiors | 3D Animation | 9:16 | 0:12 |  | yes | Good product idea; contains a short black gap between scenes. |
 | 3 | `3D ANIMATIONS/02.mp4` | `birthday-magazine-cover-animation` | Birthday Magazine Cover Animation | 3D Animation | 1:1 | 0:15 |  | **no** | Nice motion design, but it shows a private person's name, age and photos. |
-| 4 | `AI GENERATION & EDITS/02.mp4` | `locsmart-ai-story-ad` | LocSmart AI Story Ad with Kinetic Captions | AI Generation | 9:16 | 0:24 | ★ | yes | Clear problem-solution story with consistent AI characters. |
 | 5 | `AI GENERATION & EDITS/04.mp4` | `ai-cinematic-short-film` | AI Cinematic Short Film with Narrated Voiceover | AI Generation | 16:9 | 1:54 | ★ | yes | Most cinematic AI piece; strong look and character consistency. |
-| 6 | `AI GENERATION & EDITS/05.mp4` | `locsmart-motion-graphics-explainer` | LocSmart Product Explainer with Motion Graphics | AI Generation | 9:16 | 0:19 |  | yes | Solid explainer; on-screen typo "Styled smater". |
 | 7 | `AI GENERATION & EDITS/01.mp4` | `activewear-ai-fashion-film` | AI-Generated Activewear Fashion Film | AI Generation | 9:16 | 0:08 |  | yes | Realistic AI fashion footage, but very short. |
 | 8 | `AI GENERATION & EDITS/03.mp4` | `locsmart-ai-product-visuals` | LocSmart AI Product Visuals with Focus Pulls | AI Generation | 9:16 | 0:18 |  | yes | Pleasant visuals but less story than the other LocSmart pieces. |
-| 9 | `DOCUMENTARY_/01.mp4` | `gas-prices-economy-documentary` | News-Style Documentary on Rising US Gas Prices | Documentary | 16:9 | 8:41 | ★ | yes | Only long-form documentary; strong research-style edit. |
-| 10 | `E COMMERCE ADS VIDEOS/05.mp4` | `locsmart-product-ad-reel` | LocSmart Product Ad Reel with Bold Word Captions | E-commerce Ads | 9:16 | 0:18 | ★ | yes | Punchy pacing and clear call to action. |
-| 11 | `E COMMERCE ADS VIDEOS/03.mp4` | `counselling-practice-social-ad` | Counselling Practice Ad with Kinetic Script Captions | E-commerce Ads | 9:16 | 0:29 | ★ | yes | Well-crafted captions and mood; clear brand finish. |
-| 12 | `E COMMERCE ADS VIDEOS/02.mp4` | `car-dealer-social-ad` | Car Dealership Social Ad with Animated Captions | E-commerce Ads | 9:16 | 0:15 |  | yes | Clean and on-brand; built mostly from stock footage. |
-| 13 | `E COMMERCE ADS VIDEOS/04.mp4` | `orthodontic-clinic-promo-reel` | Orthodontic Clinic Promo Reel with Animated Captions | E-commerce Ads | 9:16 | 0:24 |  | yes | Real clinic footage edited well. |
 | 14 | `E COMMERCE ADS VIDEOS/01.mp4` | `cost-of-comfort-motivational-ad` | Motivational Brand Ad with Kinetic Script Captions | E-commerce Ads | 9:16 | 0:15 |  | yes | Good caption craft; no brand or product shown. |
-| 15 | `E COMMERCE ADS VIDEOS/06.mp4` | `dental-clinic-oral-health-reel` | Dental Clinic Oral-Health Tips Reel | E-commerce Ads | 9:16 | 0:16 |  | yes | Useful format, but footage looks flat and ungraded. |
 | 16 | `LOGO ANIMATIONS/ALL LOGO ANIMATIONS.mp4` | `logo-animation-showreel` | Logo Animation Showreel: 20+ Brand Reveals | Logo Animation | 16:9 | 1:00 | ★ | yes | Shows range in one minute; good homepage teaser. |
 | 17 | `REAL ESTATE EDITS/01.mp4` | `arizona-home-tour-reel` | Arizona Home Tour Reel Near a Spring-Training Ballpark | Real Estate | 9:16 | 0:39 | ★ | yes | Location-first storytelling; real footage. |
 | 18 | `REAL ESTATE EDITS/02.mp4` | `beachfront-condo-3d-walkthrough` | Beachfront Condo Development 3D Walkthrough | Real Estate | 9:16 | 0:20 |  | yes | Premium renders; no sound or narration. |
@@ -42,19 +33,11 @@ Approve or edit, then I'll wire it into the site and commit. Unpublished items a
 | 34 | `UGC ADS/02.mp4` | `foundation-cushion-ugc-ad-mature-skin` | Foundation Cushion UGC Ad: Wrinkles and Age Spots | UGC Ads | 9:16 | 0:38 |  | yes | Solid; longest of the three. |
 | 35 | `VSL/03.mp4` | `dtc-growth-agency-vsl` | DTC Growth Agency VSL with Neon Motion Graphics | VSL | 16:9 | 1:38 | ★ | yes | Best production value of the VSLs. |
 | 36 | `VSL/01.mp4` | `coaching-offer-vsl` | Coaching Offer VSL with Editorial Text Slides | VSL | 16:9 | 6:18 |  | yes | Calm, premium VSL format; long. |
-| 37 | `VSL/02.mp4` | `ai-mini-stores-vsl` | AI Mini-Stores VSL with Animated Data Cutaways | VSL | 16:9 | 1:22 |  | yes | Good graphics; contains income claims. |
 
 ## Flags
 
-- `3D ANIMATIONS/03.mp4` (tile-collection-ai-interior-reel): Short fully black section mid-video (scene gap)
 - `3D ANIMATIONS/02.mp4` (birthday-magazine-cover-animation): Private individual's name, age and photos — needs her permission before publishing
-- `AI GENERATION & EDITS/05.mp4` (locsmart-motion-graphics-explainer): On-screen typo: "Styled smater"
 - `AI GENERATION & EDITS/03.mp4` (locsmart-ai-product-visuals): Some intentionally blurred frames (focus transitions)
-- `DOCUMENTARY_/01.mp4` (gas-prices-economy-documentary): Long (8m40s) and 1.2 GB — host the full version on YouTube/Vimeo
-- `DOCUMENTARY_/01.mp4` (gas-prices-economy-documentary): Covers a war and politics; contains third-party logos and news imagery
-- `E COMMERCE ADS VIDEOS/04.mp4` (orthodontic-clinic-promo-reel): Shows patients, including what appear to be minors — confirm the clinic has consent to publish
-- `E COMMERCE ADS VIDEOS/06.mp4` (dental-clinic-oral-health-reel): Footage looks flat/ungraded (low contrast, washed out)
-- `E COMMERCE ADS VIDEOS/06.mp4` (dental-clinic-oral-health-reel): Patients visible — confirm consent
 - `LOGO ANIMATIONS/ALL LOGO ANIMATIONS.mp4` (logo-animation-showreel): Includes the Pringles logo (third-party trademark) — remove unless it was real client work
 - `LOGO ANIMATIONS/ALL LOGO ANIMATIONS.mp4` (logo-animation-showreel): Contains many client logos — confirm you may show them
 - `REAL ESTATE EDITS/01.mp4` (arizona-home-tour-reel): Shows MLB/Cubs ballpark branding
@@ -68,27 +51,17 @@ Approve or edit, then I'll wire it into the site and commit. Unpublished items a
 - `UGC ADS/01.mp4` (foundation-cushion-ugc-ad): Product named "Dermalift" in voiceover but the store page shows "Olauty" — check brand naming
 - `VSL/03.mp4` (dtc-growth-agency-vsl): Revenue claim on screen ("$3.6M") — the client must be able to back it up
 - `VSL/01.mp4` (coaching-offer-vsl): Long (6m17s) and 774 MB — host the full version externally
-- `VSL/02.mp4` (ai-mini-stores-vsl): Income claims on screen (e.g. "$13,933") — check the client is comfortable showing them
 
 ## Generated assets
 
 | Slug | Poster | Preview mp4 | Preview webm | Window |
 |---|---|---|---|---|
 | news-channel-3d-globe-intro | 32 KB | 3.44 MB | 2.04 MB | 0:07–0:19 |
-| tile-collection-ai-interior-reel | 34 KB | 3.14 MB | 2.4 MB | 0:00–0:12 |
 | birthday-magazine-cover-animation | 39 KB | 3.33 MB | 2.01 MB | 0:00–0:12 |
-| locsmart-ai-story-ad | 67 KB | 3.52 MB | 2.51 MB | 0:00–0:12 |
 | ai-cinematic-short-film | 72 KB | 3.46 MB | 2.8 MB | 0:30–0:42 |
-| locsmart-motion-graphics-explainer | 34 KB | 2.9 MB | 2.12 MB | 0:00–0:12 |
 | activewear-ai-fashion-film | 28 KB | 2.34 MB | 1.5 MB | 0:00–0:08 |
 | locsmart-ai-product-visuals | 68 KB | 3.52 MB | 2.31 MB | 0:00–0:12 |
-| gas-prices-economy-documentary | 24 KB | 3.51 MB | 2.53 MB | 0:00–0:12 |
-| locsmart-product-ad-reel | 78 KB | 3.69 MB | 2.34 MB | 0:00–0:12 |
-| counselling-practice-social-ad | 51 KB | 3.4 MB | 2.25 MB | 0:00–0:12 |
-| car-dealer-social-ad | 43 KB | 3.39 MB | 2.28 MB | 0:00–0:12 |
-| orthodontic-clinic-promo-reel | 27 KB | 3.35 MB | 2.27 MB | 0:00–0:12 |
 | cost-of-comfort-motivational-ad | 44 KB | 3.39 MB | 2.26 MB | 0:00–0:12 |
-| dental-clinic-oral-health-reel | 24 KB | 3.41 MB | 2.19 MB | 0:00–0:12 |
 | logo-animation-showreel | 59 KB | 3.49 MB | 1.89 MB | 0:00–0:12 |
 | arizona-home-tour-reel | 72 KB | 3.46 MB | 2.57 MB | 0:00–0:12 |
 | beachfront-condo-3d-walkthrough | 69 KB | 3.68 MB | 2.43 MB | 0:00–0:12 |
@@ -110,27 +83,17 @@ Approve or edit, then I'll wire it into the site and commit. Unpublished items a
 | foundation-cushion-ugc-ad-mature-skin | 48 KB | 3.39 MB | 2.92 MB | 0:00–0:12 |
 | dtc-growth-agency-vsl | 23 KB | 3.44 MB | 2.16 MB | 0:00–0:12 |
 | coaching-offer-vsl | 38 KB | 2.79 MB | 2.0 MB | 0:00–0:12 |
-| ai-mini-stores-vsl | 56 KB | 3.55 MB | 2.23 MB | 0:00–0:12 |
 
 ## SEO fields
 
 | Slug | metaTitle (chars) | metaDescription (chars) |
 |---|---|---|
 | news-channel-3d-globe-intro | 3D News Channel Intro with Rotating Globe | Portfolio (53) | Broadcast-style 3D globe opener that resolves into a news channel logo. 3D Animation project by our video editing team. (119) |
-| tile-collection-ai-interior-reel | Tile Collection Reel with AI-Rendered Interiors | Portfolio (59) | Tile slabs placed into rendered living rooms and bathrooms, with product codes. 3D Animation project by our video editing team. (127) |
 | birthday-magazine-cover-animation | Birthday Magazine Cover Animation | Portfolio (45) | Animated magazine-cover birthday tribute with photo collage cards. 3D Animation project by our video editing team. (114) |
-| locsmart-ai-story-ad | LocSmart AI Story Ad with Kinetic Captions | Portfolio (54) | AI-generated mini story: missed plans, then the styling tool saves the night. AI Generation project by our video editing team. (126) |
 | ai-cinematic-short-film | AI Cinematic Short Film with Narrated Voiceover | Portfolio (59) | Cinematic AI short about outgrowing small rooms, with glowing portals and narration. AI Generation project by our video editing team. (133) |
-| locsmart-motion-graphics-explainer | LocSmart Product Explainer with Motion Graphics | Portfolio (59) | Feature callouts, AI lifestyle shots and a branded end card for a loc styler. AI Generation project by our video editing team. (126) |
 | activewear-ai-fashion-film | AI-Generated Activewear Fashion Film | Portfolio (48) | Studio-style AI fashion film for an activewear set, ending on logo close-ups. AI Generation project by our video editing team. (126) |
 | locsmart-ai-product-visuals | LocSmart AI Product Visuals with Focus Pulls | Portfolio (56) | Moody AI product and model shots with rack-focus transitions. AI Generation project by our video editing team. (110) |
-| gas-prices-economy-documentary | News-Style Documentary on Rising US Gas Prices | Portfolio (58) | 8-minute explainer on why US gas prices jumped, with archive B-roll and kinetic text. Documentary project by our video editing team. (132) |
-| locsmart-product-ad-reel | LocSmart Product Ad Reel with Bold Word Captions | Portfolio (60) | Fast product ad with heat-display close-ups, bold captions and a shop-now end card. E-commerce Ads project by our video editing team. (133) |
-| counselling-practice-social-ad | Counselling Practice Ad with Kinetic Script Captions (52) | Calm, emotive ad for a counselling practice with script-style captions. E-commerce Ads project by our video editing team. (121) |
-| car-dealer-social-ad | Car Dealership Social Ad with Animated Captions | Portfolio (59) | Dealership ad about transparent car buying, with elegant mixed-type captions. E-commerce Ads project by our video editing team. (127) |
-| orthodontic-clinic-promo-reel | Orthodontic Clinic Promo Reel with Animated Captions (52) | Clinic reel showing scans, consults and treatment, ending on a booking prompt. E-commerce Ads project by our video editing team. (128) |
 | cost-of-comfort-motivational-ad | Motivational Brand Ad with Kinetic Script Captions (50) | 15-second motivational piece on the cost of staying comfortable. E-commerce Ads project by our video editing team. (114) |
-| dental-clinic-oral-health-reel | Dental Clinic Oral-Health Tips Reel | Portfolio (47) | Brushing-technique tips over real clinic footage, ending on a booking prompt. E-commerce Ads project by our video editing team. (127) |
 | logo-animation-showreel | Logo Animation Showreel: 20+ Brand Reveals | Portfolio (54) | One-minute reel of 20+ logo reveals — smoke, fire, glass, particles and light. Logo Animation project by our video editing team. (128) |
 | arizona-home-tour-reel | Arizona Home Tour Reel Near a Spring-Training Ballpark (54) | Lifestyle-led home tour: ballpark and drone views, then kitchen, bath and bedroom. Real Estate project by our video editing team. (129) |
 | beachfront-condo-3d-walkthrough | Beachfront Condo Development 3D Walkthrough | Portfolio (55) | Rendered aerials, balconies, rooftop pool and interiors for an off-plan development. Real Estate project by our video editing team. (131) |
@@ -152,4 +115,25 @@ Approve or edit, then I'll wire it into the site and commit. Unpublished items a
 | foundation-cushion-ugc-ad-mature-skin | Foundation Cushion UGC Ad: Wrinkles and Age Spots (49) | Problem-first variant opening on wrinkles and age spots. UGC Ads project by our video editing team. (99) |
 | dtc-growth-agency-vsl | DTC Growth Agency VSL with Neon Motion Graphics | Portfolio (59) | Agency VSL on DTC revenue growth, with neon icon graphics and store screens. VSL project by our video editing team. (115) |
 | coaching-offer-vsl | Coaching Offer VSL with Editorial Text Slides | Portfolio (57) | 6-minute VSL for a high-ticket coaching offer, with editorial text slides. VSL project by our video editing team. (113) |
-| ai-mini-stores-vsl | AI Mini-Stores VSL with Animated Data Cutaways | Portfolio (58) | Offer VSL with chart and dashboard cutaways and big number callouts. VSL project by our video editing team. (107) |
+
+## New items (batch 2026-11-07) — awaiting approval
+
+Analysed from 10 frames each. No local transcription tool was available, so copy is based on on-screen text and visuals, not the audio. Posters are frames with a clear face/subject; previews are the first 12s with audio (video 3 is 11.9s, so it is the full clip).
+
+| # | File | Slug | Title | Category | Ratio | Duration | Instagram | Poster / mp4 / webm |
+|---|---|---|---|---|---|---|---|---|
+| N1 | `new/01.mp4` | `kinetic-typography-attention-reel` | Kinetic Typography Reel with Timeline Breakdown | Motion Graphics (new filter) | 9:16 | 0:26 | [DbI2MBmhJB_](https://www.instagram.com/reel/DbI2MBmhJB_/) | 40 KB / 608 KB / 572 KB |
+| N2 | `new/02.mp4` | `islamic-reminder-2d-animation-reel` | Islamic Reminder Reel in 2D Animation with Arabic Type | Motion Graphics (new filter) | 9:16 | 0:14 | [DeU5h4cOUdO](https://www.instagram.com/reel/DeU5h4cOUdO/) | 48 KB / 716 KB / 776 KB |
+| N3 | `new/03.mp4` | `creator-before-after-edit-reel` | Creator Intro Reel: Before vs After Edit | Talking Head | 9:16 | 0:12 | [Dcvt66bRSAT](https://www.instagram.com/reel/Dcvt66bRSAT/) | 44 KB / 1.2 MB / 1.5 MB |
+| N4 | `new/04.mp4` | `bodybuilding-podcast-motivational-reel` | Bodybuilding Podcast Motivational Reel with Mixed-Type Captions | Talking Head | 9:16 | 0:24 | [DdHOmeVRKJJ](https://www.instagram.com/reel/DdHOmeVRKJJ/) | 32 KB / 1.4 MB / 1.2 MB |
+| N5 | `new/05.mp4` | `concrete-contractor-promo-reel` | Concrete Contractor Promo Reel with Call-to-Action Card | E-commerce Ads | 9:16 | 0:32 | [DcbQ3z-xIja](https://www.instagram.com/reel/DcbQ3z-xIja/) | 56 KB / 2.8 MB / 4.4 MB |
+| N6 | `new/06.mp4` | `barbershop-experience-promo-reel` | Barbershop Experience Promo Reel | E-commerce Ads | 9:16 | 1:11 | [DZm3k_2RgpD](https://www.instagram.com/reel/DZm3k_2RgpD/) | 48 KB / 2.1 MB / 1.7 MB |
+| N7 | `new/07.mp4` | `content-strategy-motion-graphics-reel` | Content Strategy Reel with 3D Motion Graphics | Talking Head | 9:16 | 0:57 | [DXIKDeYEe2R](https://www.instagram.com/reel/DXIKDeYEe2R/) | 40 KB / 1.3 MB / 1.1 MB |
+
+### Flags (new items)
+
+- N1: "@cutcraft" watermark on screen. Confirm it's your own handle.
+- N3: "@zppnfx" watermark and a "Dm EDIT" CTA. Confirm it's yours.
+- N4: Uses a well-known bodybuilder's podcast and competition footage. Confirm you're allowed to show it.
+- N5: Shows the client's phone number and website on the end card.
+- N2: Religious content. Fine to show, but check you're happy for it to be on the site.

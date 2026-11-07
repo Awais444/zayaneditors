@@ -27,7 +27,7 @@ function useColumns() {
 }
 
 /** Filter order by importance (display names); categories not listed follow alphabetically. */
-const ORDER = ["Talking Head", "E-commerce Ads", "AI Video", "UGC Ads", "VSLs", "3D Animation", "Real Estate", "Documentary", "Logo Animation"];
+const ORDER = ["Talking Head", "E-commerce Ads", "AI Video", "UGC Ads", "VSLs", "3D Animation", "Real Estate", "Logo Animation"];
 const rank = (c: string) => (ORDER.indexOf(categoryLabel(c)) + 1 || 99);
 
 const featuredFirst = (a: PortfolioItem, b: PortfolioItem) => Number(b.featured) - Number(a.featured);

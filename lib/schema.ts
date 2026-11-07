@@ -95,7 +95,7 @@ export const faqPage = (faqs: Faq[]) => ({
 });
 
 /** VideoObject for a hosted clip. uploadDate = when it was published on this site (pass it in). */
-export const videoObject = (v: { title: string; poster: string; src: string; uploadDate: string; description?: string; duration?: string; page?: string }) => ({
+export const videoObject = (v: { title: string; poster: string; src: string; uploadDate: string; description?: string; duration?: string; page?: string; sameAs?: string }) => ({
   "@context": "https://schema.org",
   "@type": "VideoObject",
   name: v.title,
@@ -105,11 +105,12 @@ export const videoObject = (v: { title: string; poster: string; src: string; upl
   ...(v.duration ? { duration: v.duration } : {}),
   contentUrl: absoluteUrl(v.src),
   ...(v.page ? { embedUrl: absoluteUrl(v.page) } : {}),
+  ...(v.sameAs ? { sameAs: [v.sameAs] } : {}),
   publisher: { "@id": `${site.url}/#org` },
 });
 
 /** Portfolio project as a CreativeWork made by the organisation. */
-export const creativeWork = (p: { title: string; description: string; slug: string; poster: string; category: string; tags: string[] }) => ({
+export const creativeWork = (p: { title: string; description: string; slug: string; poster: string; category: string; tags: string[]; instagramUrl?: string }) => ({
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   name: p.title,
@@ -118,6 +119,7 @@ export const creativeWork = (p: { title: string; description: string; slug: stri
   image: absoluteUrl(p.poster),
   genre: p.category,
   keywords: p.tags.join(", "),
+  ...(p.instagramUrl ? { sameAs: [p.instagramUrl] } : {}),
   creator: { "@id": `${site.url}/#org` },
 });
 
